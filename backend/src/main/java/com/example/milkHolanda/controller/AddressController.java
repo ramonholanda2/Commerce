@@ -44,4 +44,13 @@ public class AddressController {
         return ResponseEntity.ok().body("Endereço atualizado com sucesso!");
     }
 
+
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<String> deleteAddress(@PathVariable Long id) {
+
+        addressService.deleteAddressById(id);
+
+        return ResponseEntity.ok().body("Endereço deletado com sucesso!");
+    }
+
 }

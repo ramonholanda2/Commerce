@@ -1,23 +1,26 @@
 package com.example.milkHolanda.entities;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_client")
-@Transactional
 public class Client implements Serializable {
 
     @Id
     @Column(name = "id")
-    @NotNull
     private String id;
 
     private String name;
+
+    @OneToOne(mappedBy = "client")
+    private AddressClient address;
+
+    @OneToMany(mappedBy = "client")
+    private List<RequestProduct> products = new ArrayList<>();
 
     public Client() {
     }
@@ -41,6 +44,22 @@ public class Client implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public AddressClient getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressClient address) {
+        this.address = address;
+    }
+
+    public List<RequestProduct> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<RequestProduct> products) {
+        this.products = products;
     }
 
     @Override

@@ -6,4 +6,6 @@ public interface AddressFacade {
     void addAddressClient(AddressClientDTO address);
 
     void updateAddressByClient(Long id, AddressClientDTO addressClient);
+
+    void deleteAddressById(Long id);
 }

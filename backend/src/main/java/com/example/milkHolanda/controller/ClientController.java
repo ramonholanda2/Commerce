@@ -65,6 +65,7 @@ public class ClientController {
 
         return ResponseEntity.ok().body("Cliente adicionado!!!");
     }
+
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> removeClient(@PathVariable String id) {
 

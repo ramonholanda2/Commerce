@@ -21,7 +21,7 @@ public class RequestProduct implements Serializable {
     private Double price;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "tb_client_product")
     private Collection<Client> client;
 

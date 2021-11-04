@@ -2,7 +2,6 @@ package com.example.milkHolanda.facade.impl;
 import com.example.milkHolanda.dto.RequestProductDTO;
 import com.example.milkHolanda.dto.pks.ClientProductDTO;
 
-import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 import com.example.milkHolanda.facade.ProductFacade;
@@ -90,6 +89,23 @@ public class DefaultProductFacade implements ProductFacade {
 
         productRepository.addProductWithClient(idClient, idProduct);
 
+    }
+
+    @Override
+    public void updateProductById(Long id, RequestProductDTO productDTO) {
+
+        boolean existsThisProduct = productRepository.existsById(id);
+
+        if(existsThisProduct){
+
+            RequestProduct newProduct = productRepository.findById(id).get();
+
+            newProduct.setId(id);
+            newProduct.setName(productDTO.getName());
+            newProduct.setPrice(productDTO.getPrice());
+
+            productRepository.save(newProduct);
+        }
     }
 
 

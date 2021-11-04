@@ -23,4 +23,9 @@ public class DefaultAddressService implements AddressService {
     public void updateAddressForClient(Long id, AddressClientDTO addressClient) {
         addressFacade.updateAddressByClient(id, addressClient);
     }
+
+    @Override
+    public void deleteAddressById(Long id) {
+        addressFacade.deleteAddressById(id);
+    }
 }

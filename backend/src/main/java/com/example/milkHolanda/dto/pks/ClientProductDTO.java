@@ -1,9 +1,17 @@
 package com.example.milkHolanda.dto.pks;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ClientProductDTO {
 
+    @NotNull
+    @NotEmpty
     private String idClient;
 
+    @Min(1)
+    @NotNull
     private Long idProduct;
 
     public ClientProductDTO(String idClient, Long idProduct) {

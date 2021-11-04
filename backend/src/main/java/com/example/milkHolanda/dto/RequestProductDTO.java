@@ -1,24 +1,23 @@
 package com.example.milkHolanda.dto;
 
-import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.jetbrains.annotations.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 
 public class RequestProductDTO {
 
     private Long id;
 
+    @Size(min = 3, max = 15, message = "Valor minimo 3 e maximo 15!")
     private String name;
 
+    @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
 
     private ProductItem items;
-
-    @JsonIgnore
-    private Client client;
 
     public RequestProductDTO() {
     }
@@ -66,14 +65,6 @@ public class RequestProductDTO {
 
     public void setItems(ProductItem items) {
         this.items = items;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     @Override

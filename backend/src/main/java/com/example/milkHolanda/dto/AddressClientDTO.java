@@ -25,7 +25,6 @@ public class AddressClientDTO {
     @NotEmpty(message = "Campo Cidade é obrigatório!")
     private String city;
 
-    @NotNull
     private Client client;
 
     public AddressClientDTO() {

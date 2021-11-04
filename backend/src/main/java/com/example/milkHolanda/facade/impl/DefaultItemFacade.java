@@ -10,7 +10,6 @@ import com.example.milkHolanda.repository.ClientRepository;
 import com.example.milkHolanda.repository.ItemRepository;
 import com.example.milkHolanda.repository.ProductRepository;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +31,7 @@ public class DefaultItemFacade implements ItemFacade {
     private ItemPopulator itemPopulator;
 
     @Override
-    public void updateItem(ProductItemDTO itemDTO, String idClient) {
+        public void updateItem(ProductItemDTO itemDTO, String idClient) {
 
         ProductItem productItem = itemPopulator.updateItem(itemDTO);
 

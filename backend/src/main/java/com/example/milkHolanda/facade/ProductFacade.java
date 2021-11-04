@@ -11,4 +11,6 @@ public interface ProductFacade {
     void addProduct(RequestProductDTO productDTO);
 
     void addProductForClient(ClientProductDTO clientProductDTO);
+
+    void updateProductById(Long id, RequestProductDTO productDTO);
 }

@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,12 +30,51 @@ public class ProductController {
         return ResponseEntity.ok().body(products);
     }
 
-    @PostMapping
-    public ResponseEntity<String> addProduct(@RequestBody RequestProductDTO productDTO) {
+    @PostMapping(path = "/save")
+    public ResponseEntity<String> addProduct(@Valid @RequestBody RequestProductDTO productDTO, @NotNull BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            List<String> errors = new ArrayList<>();
+
+            String quantErrors = bindingResult.getErrorCount() + " Erros encontrados!";
+            errors.add(quantErrors);
+            bindingResult.getAllErrors().stream().forEach(error -> {
+                String message = error.getDefaultMessage();
+                errors.add(message);
+            });
+
+            return ResponseEntity.badRequest().body(errors.toString());
+        }
 
         productService.addProduct(productDTO);
 
         return ResponseEntity.ok().body("Produto Adicionado com sucesso!");
+    }
+
+    @PutMapping(path = "/update/{id}")
+    public ResponseEntity<String> updateProduct(
+            @PathVariable Long id,
+            @Valid @RequestBody RequestProductDTO productDTO,
+            @NotNull BindingResult bindingResult){
+
+        List<String> errors = new ArrayList<>();
+
+        if(bindingResult.hasErrors()) {
+
+            String quantErrors = bindingResult.getErrorCount() + " Erros encontrados!";
+            errors.add(quantErrors);
+            bindingResult.getAllErrors().stream().forEach(error -> {
+                String message = error.getDefaultMessage();
+                errors.add(message);
+            });
+
+            return ResponseEntity.badRequest().body(errors.toString());
+
+        }
+
+        productService.updateproduct(id, productDTO);
+
+        return ResponseEntity.ok().body("Produto atualizado com sucesso!");
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/add-product")

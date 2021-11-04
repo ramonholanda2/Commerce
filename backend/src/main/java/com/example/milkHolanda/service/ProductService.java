@@ -11,4 +11,6 @@ public interface ProductService {
     void addProduct(RequestProductDTO productDTO);
 
     void addProductForClient(ClientProductDTO clientProductDTO);
+
+    void updateproduct(Long id, RequestProductDTO productDTO);
 }

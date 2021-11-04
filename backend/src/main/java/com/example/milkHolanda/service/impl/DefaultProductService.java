@@ -29,4 +29,9 @@ public class DefaultProductService implements ProductService {
     public void addProductForClient(ClientProductDTO clientProductDTO) {
         productFacade.addProductForClient(clientProductDTO);
     }
+
+    @Override
+    public void updateproduct(Long id, RequestProductDTO productDTO) {
+        productFacade.updateProductById(id, productDTO);
+    }
 }

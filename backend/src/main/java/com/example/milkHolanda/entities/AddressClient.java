@@ -21,7 +21,6 @@ public class AddressClient implements Serializable {
     private String city;
 
     @OneToOne
-    @JsonIgnore
     private Client client;
 
     public AddressClient() {
