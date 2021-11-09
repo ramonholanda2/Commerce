@@ -1,6 +1,6 @@
 package com.example.milkHolanda.controller;
 
-import com.example.milkHolanda.dto.RequestProductDTO;
+import com.example.milkHolanda.dto.ProductDTO;
 import com.example.milkHolanda.dto.pks.ClientProductDTO;
 import com.example.milkHolanda.service.ProductService;
 import org.jetbrains.annotations.NotNull;
@@ -23,15 +23,15 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<List<RequestProductDTO>> findAllProducts() {
+    public ResponseEntity<List<ProductDTO>> findAllProducts() {
 
-        List<RequestProductDTO> products = productService.findAll();
+        List<ProductDTO> products = productService.findAll();
 
         return ResponseEntity.ok().body(products);
     }
 
     @PostMapping(path = "/save")
-    public ResponseEntity<String> addProduct(@Valid @RequestBody RequestProductDTO productDTO, @NotNull BindingResult bindingResult) {
+    public ResponseEntity<String> addProduct(@Valid @RequestBody ProductDTO productDTO, @NotNull BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             List<String> errors = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ProductController {
     @PutMapping(path = "/update/{id}")
     public ResponseEntity<String> updateProduct(
             @PathVariable Long id,
-            @Valid @RequestBody RequestProductDTO productDTO,
+            @Valid @RequestBody ProductDTO productDTO,
             @NotNull BindingResult bindingResult){
 
         List<String> errors = new ArrayList<>();

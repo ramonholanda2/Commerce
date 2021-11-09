@@ -1,7 +1,6 @@
 package com.example.milkHolanda.facade.impl;
 
 import com.example.milkHolanda.dto.ProductItemDTO;
-import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 import com.example.milkHolanda.facade.ItemFacade;
@@ -9,11 +8,8 @@ import com.example.milkHolanda.populator.ItemPopulator;
 import com.example.milkHolanda.repository.ClientRepository;
 import com.example.milkHolanda.repository.ItemRepository;
 import com.example.milkHolanda.repository.ProductRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service("itemFacade")
 public class DefaultItemFacade implements ItemFacade {
@@ -31,45 +27,26 @@ public class DefaultItemFacade implements ItemFacade {
     private ItemPopulator itemPopulator;
 
     @Override
-        public void updateItem(ProductItemDTO itemDTO, String idClient) {
+        public void updateItem(ProductItemDTO itemDTO, Long id) {
 
-        ProductItem productItem = itemPopulator.updateItem(itemDTO);
+        final boolean existsThisItem = itemRepository.existsById(id);
 
-        Long idProduct = itemDTO.getProduct().getId();
+        if(existsThisItem) {
+            ProductItem item = itemRepository.findById(id).get();
 
-        if(idProduct != null) {
+            item.setId(id);
+            item.setQuantity(itemDTO.getQuantity());
 
-            long existsMoreOneItemForClientProduct =
-                    itemRepository.countItemForClientAndProduct(idClient, idProduct);
-            long existsThisClient = existsClient(idClient);
-            if(existsThisClient != 1
-                    ||
-                    (existsMoreOneItemForClientProduct == 1
-                            && itemDTO.getId() == null)) return;
-
-            RequestProduct product = getProduct(idProduct);
-
-            if(existsMoreOneItemForClientProduct >= 1 && itemDTO.getClient().getId() != null) {
-                productItem.setId(itemDTO.getId());
-                productItem.getClient().setId(idClient);
-            }
+            RequestProduct product = item.getProduct();
 
             Double price = product.getPrice();
-            Integer quantity = productItem.getQuantity();
+            Integer quantity = item.getQuantity();
 
             if(price!=null && quantity != null) {
-                productItem.setSubtotal(price * quantity);
+                item.setSubtotal(price * quantity);
             }
 
-            itemRepository.save(productItem);
+            itemRepository.save(item);
         }
-    }
-
-    private @NotNull RequestProduct getProduct(Long idProduct) {
-        return productRepository.findById(idProduct).get();
-    }
-
-    private long existsClient(String idClient) {
-        return clientRepository.existsByIdClient(idClient);
     }
 }

@@ -1,4 +1,5 @@
 package com.example.milkHolanda.dto;
+import com.example.milkHolanda.entities.AddressClient;
 import com.example.milkHolanda.entities.Client;
 
 import javax.validation.constraints.*;
@@ -25,18 +26,16 @@ public class AddressClientDTO {
     @NotEmpty(message = "Campo Cidade é obrigatório!")
     private String city;
 
-    private Client client;
-
     public AddressClientDTO() {
     }
 
-    public AddressClientDTO(Long id, String street, Integer number, String complement, String cep, String city) {
-        this.id = id;
-        this.street = street;
-        this.number = number;
-        this.complement = complement;
-        this.cep = cep;
-        this.city = city;
+    public AddressClientDTO(AddressClient address) {
+        this.id = address.getId();
+        this.street = address.getStreet();
+        this.number = address.getNumber();
+        this.complement = address.getComplement();
+        this.cep = address.getCep();
+        this.city = address.getCity();
     }
 
     public Long getId() {
@@ -85,14 +84,6 @@ public class AddressClientDTO {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
     }
 
     @Override

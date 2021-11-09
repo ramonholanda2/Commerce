@@ -19,7 +19,7 @@ public class Client implements Serializable {
     @OneToOne(mappedBy = "client")
     private AddressClient address;
 
-    @OneToMany(mappedBy = "client")
+    @ManyToMany(mappedBy = "client")
     private List<RequestProduct> products = new ArrayList<>();
 
     public Client() {
@@ -28,6 +28,13 @@ public class Client implements Serializable {
     public Client(String id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Client(String id, String name, AddressClient address, List<RequestProduct> products) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.products = products;
     }
 
     public String getId() {
@@ -65,8 +72,10 @@ public class Client implements Serializable {
     @Override
     public String toString() {
         return "Client{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", address=" + address +
+                ", products=" + products +
                 '}';
     }
 

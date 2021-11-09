@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_product")
@@ -20,9 +21,15 @@ public class RequestProduct implements Serializable {
 
     private Double price;
 
+    @OneToOne(mappedBy = "product")
+    private ProductItem item;
+
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "tb_client_product")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "tb_client_product",
+               joinColumns = @JoinColumn(name = "product_id"),
+               inverseJoinColumns = @JoinColumn(name = "client_id")
+    )
     private Collection<Client> client;
 
     public Collection<Client> getClient() {
@@ -65,13 +72,24 @@ public class RequestProduct implements Serializable {
         this.price = price;
     }
 
+    public ProductItem getItem() {
+        return item;
+    }
+
+    public void setItem(ProductItem item) {
+        this.item = item;
+    }
+
     @Override
-    public String toString() {
-        return "RequestProduct{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", items=" + price +
-                ", client=" + client +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RequestProduct product = (RequestProduct) o;
+        return Objects.equals(id, product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

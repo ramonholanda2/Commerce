@@ -34,7 +34,7 @@ public class DefaultBusinesClientFacade implements BusinesClientFacade {
     @Override
     public BusinessClientDTO findBusinesClient(String id) {
 
-        Client businessClient = clientRepository.findClientById(id).get(0);
+        Client businessClient = clientRepository.findClientById(id);
 
         List<Client> clients = clientRepository.findAll();
         List<ClientDTO> clientDTOS = new ArrayList<>();

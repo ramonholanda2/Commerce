@@ -45,15 +45,7 @@ public class DefaultClientFacade implements ClientFacade {
 
         for (Client client : clients) {
 
-            AddressClient addressModel = addressRepository.findAddressForClient(client.getId());
-
-            List<RequestProduct> products = productRepository.findProductsByClientId(client.getId());
-
-            ClientDTO clientDTO = convert(
-                            client,
-                            products,
-                            addressModel
-                        );
+            ClientDTO clientDTO = convert(client);
 
             clientDTOS.add(clientDTO);
         }
@@ -64,20 +56,20 @@ public class DefaultClientFacade implements ClientFacade {
 
     @Override
     public ClientDTO findClientById(String id) {
-        Client client = clientRepository.findClientById(id).get(0);
+        Client client = clientRepository.findClientById(id);
 
         AddressClient addressModel = addressRepository.findAddressForClient(client.getId());
         List<RequestProduct> products = productRepository.findProductsByClientId(client.getId());
 
         ClientDTO clientDTO =
-                convert(client, products, addressModel);
+                convert(client);
 
         return clientDTO;
 
     }
 
     @Override
-    public void addClient(@NotNull ClientDTO clientDTO) {
+    public void addClient(ClientDTO clientDTO) {
 
         String idClient = clientDTO.getId().replace(" ", "");
 
@@ -91,15 +83,16 @@ public class DefaultClientFacade implements ClientFacade {
     }
 
     @Override
-    public void updateClient(String id, @NotNull ClientDTO clientDTO) {
+    public void updateClient(String id, ClientDTO clientDTO) {
 
         long existsThisClient = clientRepository.existsByIdClient(id);
 
-        if(clientDTO != null && existsThisClient == 1 && (id.intern() == clientDTO.getId().intern())) {
+        if(clientDTO != null && existsThisClient == 1) {
 
             Client client = clientPopulator.addClient(clientDTO);
 
             Client newClient = new Client(client.getId(), client.getName());
+            newClient.setId(id);
 
             clientRepository.save(newClient);
         }
@@ -111,7 +104,7 @@ public class DefaultClientFacade implements ClientFacade {
         long existsThisClient = clientRepository.existsByIdClient(id);
 
         if(existsThisClient == 1) {
-            Client client = clientRepository.findClientById(id).get(0);
+            Client client = clientRepository.findClientById(id);
 
             long existsAddressForClient = addressRepository.existsAddressWithThisClient(id);
 
@@ -133,50 +126,47 @@ public class DefaultClientFacade implements ClientFacade {
         }
     }
 
-    public ClientDTO convert(Client client,
-                             List<RequestProduct> products,
-                             AddressClient address)
+    public ClientDTO convert(@NotNull Client client)
     {
 
-        AddressClientDTO addressClient = new AddressClientDTO();
+        AddressClient address = addressRepository.findAddressForClient(client.getId());
+        AddressClientDTO addressClient;
 
         if(address != null) {
-            addressClient.setId(address.getId());
-            addressClient.setComplement(address.getComplement());
-            addressClient.setNumber(address.getNumber());
-            addressClient.setCity(address.getCity());
-            addressClient.setCep(address.getCep());
-            addressClient.setStreet(address.getStreet());
+            addressClient = new AddressClientDTO(address);
+        } else {
+            addressClient = new AddressClientDTO();
         }
 
-        List<RequestProductDTO> productDTOList = new ArrayList<>();
+        List<RequestProduct> products = productRepository.findProductsByClientId(client.getId());
+        List<RequestProductDTO> productsDTO = new ArrayList<>();
 
         if (products != null && !products.isEmpty()) {
-
             for (RequestProduct product : products) {
-
-                ProductItem item = itemRepository.findItemForProductAndClient(product.getId(), client.getId());
-
+                ProductItem item = itemRepository
+                        .findItemForProductAndClient(product.getId(), client.getId());
                 RequestProductDTO productDTO;
+                
                 if(item != null) {
+
                     productDTO = new RequestProductDTO(
                             product,
                             item
                     );
+
                 } else {
                     productDTO = new RequestProductDTO(product);
-
                 }
-                productDTOList.add(productDTO);
 
+                productsDTO.add(productDTO);
             }
-
         }
 
         ClientDTO clientDTO =
-                new ClientDTO(client.getId(), client.getName(), productDTOList, addressClient);
+                new ClientDTO(client.getId(), client.getName(), productsDTO, addressClient);
 
         return clientDTO;
 
     }
+
 }

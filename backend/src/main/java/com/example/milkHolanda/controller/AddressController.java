@@ -17,14 +17,14 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @PostMapping(path = "/save")
-    public ResponseEntity<String> addAddressForClient(@RequestBody @Valid AddressClientDTO address, @NotNull BindingResult bindingResult) {
+    @PostMapping(path = "/save/{idClient}")
+    public ResponseEntity<String> addAddressForClient(@PathVariable String idClient, @RequestBody @Valid AddressClientDTO address, @NotNull BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()){
             return ResponseEntity.badRequest().body("Campos do endereço preencidos incorretamente!");
         }
 
-        addressService.addAddressForClient(address);
+        addressService.addAddressForClient(address, idClient);
 
         return ResponseEntity.ok().body("endereço criado com sucesso");
     }

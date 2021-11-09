@@ -1,6 +1,7 @@
 package com.example.milkHolanda.dto;
 
 import com.example.milkHolanda.entities.Client;
+import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 
 public class ProductItemDTO {
@@ -14,7 +15,7 @@ public class ProductItemDTO {
     private Client client;
 
 
-    public ProductItemDTO() {
+    public ProductItemDTO(ProductItem item) {
     }
 
     public ProductItemDTO(Long id, Integer quantity, Double subtotal, RequestProduct product) {

@@ -1,7 +1,7 @@
 package com.example.milkHolanda.facade.impl;
-import com.example.milkHolanda.dto.RequestProductDTO;
+import com.example.milkHolanda.dto.ProductDTO;
 import com.example.milkHolanda.dto.pks.ClientProductDTO;
-
+import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 import com.example.milkHolanda.facade.ProductFacade;
@@ -28,32 +28,20 @@ public class DefaultProductFacade implements ProductFacade {
     @Autowired
     private ItemRepository itemRepository;
 
-
     @Autowired
     private ProductPopulator productPopulator;
 
-
     @Override
-    public List<RequestProductDTO> findAll() {
+    public List<ProductDTO> findAll() {
         List<RequestProduct> products = productRepository.findAll();
 
-        List<RequestProductDTO> productDTOS = new ArrayList<>();
+        List<ProductDTO> productDTOS = new ArrayList<>();
 
         for (RequestProduct product : products) {
 
-            ProductItem item = itemRepository.findItemForProduct(product.getId());
+            ProductDTO productDTO = new ProductDTO(product);
 
-            RequestProductDTO productDTO;
-
-            if(item != null) {
-
-                productDTO = new RequestProductDTO(product, item);
-
-            } else {
-                productDTO = new RequestProductDTO(product);
-            }
             productDTOS.add(productDTO);
-
 
         }
 
@@ -61,7 +49,7 @@ public class DefaultProductFacade implements ProductFacade {
     }
 
     @Override
-    public void addProduct(RequestProductDTO productDTO) {
+    public void addProduct(ProductDTO productDTO) {
         RequestProduct product = productPopulator.addProduct(productDTO);
 
         productRepository.save(product);
@@ -69,7 +57,6 @@ public class DefaultProductFacade implements ProductFacade {
 
     @Override
     public void addProductForClient(@NotNull ClientProductDTO clientProductDTO) {
-
 
         String idClient = clientProductDTO.getIdClient();
         long idProduct = clientProductDTO.getIdProduct();
@@ -87,12 +74,18 @@ public class DefaultProductFacade implements ProductFacade {
             return;
         }
 
+        ProductItem item = addItemToProduct(idClient, idProduct);
+
         productRepository.addProductWithClient(idClient, idProduct);
+
+        if(item !=null) {
+            itemRepository.save(item);
+        }
 
     }
 
     @Override
-    public void updateProductById(Long id, RequestProductDTO productDTO) {
+    public void updateProductById(Long id, ProductDTO productDTO) {
 
         boolean existsThisProduct = productRepository.existsById(id);
 
@@ -104,8 +97,38 @@ public class DefaultProductFacade implements ProductFacade {
             newProduct.setName(productDTO.getName());
             newProduct.setPrice(productDTO.getPrice());
 
+            List<ProductItem> items = itemRepository.findAllItemsWithThisProduct(id);
+
+            if(!items.isEmpty() && items != null) {
+                for (ProductItem item : items) {
+                    item.setSubtotal(newProduct.getPrice() * item.getQuantity());
+                }
+
+                items.stream().map(x -> itemRepository.save(x));
+            }
+
             productRepository.save(newProduct);
         }
+    }
+
+
+    public ProductItem addItemToProduct(String idClient, Long idProduct) {
+
+        RequestProduct product = productRepository.findById(idProduct).get();
+        Client client = clientRepository.findClientById(idClient);
+
+        ProductItem productItem = new ProductItem();
+        Double price = product.getPrice();
+
+        productItem.setProduct(product);
+        productItem.setClient(client);
+
+        if(price != null) {
+            productItem.setQuantity(1);
+            productItem.setSubtotal(price);
+        }
+
+        return productItem;
     }
 
 

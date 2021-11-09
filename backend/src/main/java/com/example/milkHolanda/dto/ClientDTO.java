@@ -8,8 +8,6 @@ import java.util.List;
 
 public class ClientDTO {
 
-    @NotNull(message = "Campo id nulo")
-    @NotBlank(message = "id obrigatório!")
     private String id;
 
     @NotNull(message = "nulo")

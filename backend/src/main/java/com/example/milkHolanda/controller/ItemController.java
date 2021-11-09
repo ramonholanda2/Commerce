@@ -14,11 +14,11 @@ public class ItemController {
     private ItemService itemService;
 
 
-    @PostMapping(value = "/{idClient}/update")
+    @PostMapping(value = "/update/{id}")
     public ResponseEntity<String> updateItemProduct(@RequestBody ProductItemDTO itemDTO,
-                                                    @PathVariable String idClient) {
+                                                    @PathVariable Long id) {
 
-        itemService.updateItem(itemDTO, idClient);
+        itemService.updateItem(itemDTO, id);
 
         return ResponseEntity.ok().body("Item Adicionado/Atualizado");
     }

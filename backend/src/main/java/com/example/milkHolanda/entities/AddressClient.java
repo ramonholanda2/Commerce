@@ -83,7 +83,6 @@ public class AddressClient implements Serializable {
         this.city = city;
     }
 
-    @JsonIgnore
     public Client getClient() {
         return client;
     }
@@ -95,12 +94,13 @@ public class AddressClient implements Serializable {
     @Override
     public String toString() {
         return "AddressClient{" +
-                "id='" + id + '\'' +
-                ", rua='" + street + '\'' +
+                "id=" + id +
+                ", street='" + street + '\'' +
                 ", number=" + number +
                 ", complement='" + complement + '\'' +
                 ", cep='" + cep + '\'' +
                 ", city='" + city + '\'' +
+                ", client=" + client +
                 '}';
     }
 

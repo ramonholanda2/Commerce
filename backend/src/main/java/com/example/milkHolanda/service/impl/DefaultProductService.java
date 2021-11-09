@@ -1,6 +1,7 @@
 package com.example.milkHolanda.service.impl;
 
-import com.example.milkHolanda.dto.RequestProductDTO;
+import com.example.milkHolanda.dto.ProductDTO;
+import com.example.milkHolanda.dto.ProductDTO;
 import com.example.milkHolanda.dto.pks.ClientProductDTO;
 import com.example.milkHolanda.facade.ProductFacade;
 import com.example.milkHolanda.service.ProductService;
@@ -16,12 +17,12 @@ public class DefaultProductService implements ProductService {
     private ProductFacade productFacade;
 
     @Override
-    public List<RequestProductDTO> findAll() {
+    public List<ProductDTO> findAll() {
         return productFacade.findAll();
     }
 
     @Override
-    public void addProduct(RequestProductDTO productDTO) {
+    public void addProduct(ProductDTO productDTO) {
         productFacade.addProduct(productDTO);
     }
 
@@ -31,7 +32,7 @@ public class DefaultProductService implements ProductService {
     }
 
     @Override
-    public void updateproduct(Long id, RequestProductDTO productDTO) {
+    public void updateproduct(Long id, ProductDTO productDTO) {
         productFacade.updateProductById(id, productDTO);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.milkHolanda.populator.impl;
 import com.example.milkHolanda.dto.ClientDTO;
+import com.example.milkHolanda.dto.ProductDTO;
 import com.example.milkHolanda.dto.RequestProductDTO;
 import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.entities.RequestProduct;
@@ -16,7 +17,7 @@ public class DefaultProductPopulator implements ProductPopulator {
     private ModelMapperService modelMapperService;
 
     @Override
-    public RequestProduct addProduct(RequestProductDTO productDTO) {
+    public RequestProduct addProduct(ProductDTO productDTO) {
         return modelMapperService.modelMapper().map(productDTO, RequestProduct.class);
     }
 }

@@ -1,41 +1,33 @@
 package com.example.milkHolanda.dto;
 
-import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 import org.hibernate.validator.constraints.Length;
 import org.jetbrains.annotations.NotNull;
+
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
-
-public class RequestProductDTO {
+public class ProductDTO implements Serializable {
 
     private Long id;
 
-    @Length(min = 3, max = 15, message = "Tamanho minimo 3 e maximo 15!")
+    @NotEmpty(message = "este campo não pode ser vazio!")
+    @Length(min = 3, max = 15, message = "Valor minimo 3 e maximo 15!")
     private String name;
 
     @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
 
-    private ProductItem item;
 
-    public RequestProductDTO() {
+    public ProductDTO() {
     }
 
-    public RequestProductDTO(@NotNull RequestProduct product, @NotNull ProductItem item) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.item = item;
-        this.price = product.getPrice();
-    }
-
-    public RequestProductDTO(@NotNull RequestProduct product) {
+    public ProductDTO(@NotNull RequestProduct product) {
         this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
     }
-
     public Long getId() {
         return id;
     }
@@ -60,13 +52,8 @@ public class RequestProductDTO {
         this.price = price;
     }
 
-    public ProductItem getItem() {
-        return item;
-    }
 
-    public void setItem(ProductItem item) {
-        this.item = item;
-    }
+
 
     @Override
     public String toString() {
@@ -74,7 +61,8 @@ public class RequestProductDTO {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", items=" + price +
-                ", items=" + item +
                 '}';
     }
+
+
 }

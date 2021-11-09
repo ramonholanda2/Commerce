@@ -13,9 +13,9 @@ public class DefaultItemService implements ItemService {
     private ItemFacade itemFacade;
 
     @Override
-    public void updateItem(ProductItemDTO itemDTO, String idClient) {
+    public void updateItem(ProductItemDTO itemDTO, Long id) {
 
-        itemFacade.updateItem(itemDTO, idClient);
+        itemFacade.updateItem(itemDTO, id);
 
     }
 }

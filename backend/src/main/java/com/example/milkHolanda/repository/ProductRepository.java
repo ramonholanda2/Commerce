@@ -15,19 +15,19 @@ public interface ProductRepository extends JpaRepository<RequestProduct, Long> {
             "TB_PRODUCT AS RP " +
             "JOIN TB_CLIENT_PRODUCT AS RPC " +
             "ON RPC.CLIENT_ID = ? " +
-            "WHERE RP.ID = RPC.REQUEST_PRODUCT_ID")
+            "WHERE RP.ID = RPC.PRODUCT_ID")
     List<RequestProduct> findProductsByClientId(String id);
 
     @Modifying
     @Query(nativeQuery = true, value =
             "INSERT INTO TB_CLIENT_PRODUCT" +
-                    "(CLIENT_ID , REQUEST_PRODUCT_ID) " +
+                    "(CLIENT_ID , PRODUCT_ID) " +
                     "VALUES (?, ?)")
     void addProductWithClient(String idClient, long idProduct);
 
     @Query(nativeQuery = true, value =
             "SELECT COUNT(*) FROM TB_CLIENT_PRODUCT AS CP " +
-                    "WHERE CP.CLIENT_ID = ? AND CP.REQUEST_PRODUCT_ID = ?")
+                    "WHERE CP.CLIENT_ID = ? AND CP.PRODUCT_ID = ?")
     long existsProductWithClient(String idClient, long idProduct);
 
 }

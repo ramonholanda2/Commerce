@@ -1,4 +1,5 @@
 package com.example.milkHolanda.entities;
+import com.example.milkHolanda.dto.ProductItemDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -28,10 +29,13 @@ public class ProductItem implements Serializable {
     public ProductItem() {
     }
 
-    public ProductItem(Long id, Integer quantity, Double subtotal) {
+
+    public ProductItem(Long id, Integer quantity, Double subtotal, RequestProduct product, Client client) {
         this.id = id;
         this.quantity = quantity;
         this.subtotal = subtotal;
+        this.product = product;
+        this.client = client;
     }
 
     public Long getId() {
@@ -57,9 +61,11 @@ public class ProductItem implements Serializable {
     public void setSubtotal(Double subtotal) {
         this.subtotal = subtotal;
     }
+
     public RequestProduct getProduct() {
         return product;
     }
+
     public void setProduct(RequestProduct product) {
         this.product = product;
     }

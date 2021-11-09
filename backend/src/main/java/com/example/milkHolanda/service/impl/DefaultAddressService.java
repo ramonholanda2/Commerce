@@ -13,9 +13,9 @@ public class DefaultAddressService implements AddressService {
     private AddressFacade addressFacade;
 
     @Override
-    public void addAddressForClient(AddressClientDTO address) {
+    public void addAddressForClient(AddressClientDTO address, String id) {
 
-        addressFacade.addAddressClient(address);
+        addressFacade.addAddressClient(address, id);
 
     }
 
