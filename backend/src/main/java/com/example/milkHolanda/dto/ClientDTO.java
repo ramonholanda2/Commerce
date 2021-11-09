@@ -1,7 +1,5 @@
 package com.example.milkHolanda.dto;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +8,6 @@ public class ClientDTO {
 
     private String id;
 
-    @NotNull(message = "nulo")
-    @NotEmpty(message = "vazio")
     @NotBlank(message = "nome obrigatório!")
     private String name;
 

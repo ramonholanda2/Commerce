@@ -11,6 +11,7 @@ import com.example.milkHolanda.repository.AddressRepository;
 import com.example.milkHolanda.repository.ClientRepository;
 import com.example.milkHolanda.repository.ItemRepository;
 import com.example.milkHolanda.repository.ProductRepository;
+import com.example.milkHolanda.service.ClientService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class DefaultClientFacade implements ClientFacade {
 
     @Autowired
     private ClientRepository clientRepository;
+
+    @Autowired
+    private ClientService clientService;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -56,10 +60,8 @@ public class DefaultClientFacade implements ClientFacade {
 
     @Override
     public ClientDTO findClientById(String id) {
-        Client client = clientRepository.findClientById(id);
 
-        AddressClient addressModel = addressRepository.findAddressForClient(client.getId());
-        List<RequestProduct> products = productRepository.findProductsByClientId(client.getId());
+        Client client = clientService.getClientById(id);
 
         ClientDTO clientDTO =
                 convert(client);
@@ -71,59 +73,17 @@ public class DefaultClientFacade implements ClientFacade {
     @Override
     public void addClient(ClientDTO clientDTO) {
 
-        String idClient = clientDTO.getId().replace(" ", "");
-
-        long existsClientWithThisId = clientRepository.existsByIdClient(idClient);
-
-        if(existsClientWithThisId == 0 && idClient.intern() != "") {
-            clientDTO.setId(idClient);
-            Client client = clientPopulator.addClient(clientDTO);
-            clientRepository.save(client);
-        }
+        clientService.addClient(clientDTO);
     }
 
     @Override
     public void updateClient(String id, ClientDTO clientDTO) {
-
-        long existsThisClient = clientRepository.existsByIdClient(id);
-
-        if(clientDTO != null && existsThisClient == 1) {
-
-            Client client = clientPopulator.addClient(clientDTO);
-
-            Client newClient = new Client(client.getId(), client.getName());
-            newClient.setId(id);
-
-            clientRepository.save(newClient);
-        }
+        clientService.updateClient(id, clientDTO);
     }
 
     @Override
     public void deleteClient(String id) {
-
-        long existsThisClient = clientRepository.existsByIdClient(id);
-
-        if(existsThisClient == 1) {
-            Client client = clientRepository.findClientById(id);
-
-            long existsAddressForClient = addressRepository.existsAddressWithThisClient(id);
-
-            if(existsAddressForClient == 1) {
-                AddressClient address = addressRepository.findAddressForClient(id);
-                addressRepository.delete(address);
-            };
-
-//            List<RequestProduct> productDTOS = productRepository.findProductsByClientId(id);
-//            if(productDTOS!=null && !productDTOS.isEmpty()) {
-//                for (RequestProduct product : productDTOS) {
-//                    productRepository.delete(product);
-//                }
-//            }
-
-            clientRepository.delete(client);
-
-//            addressRepository.delete(client.getAddressClient());
-        }
+        clientService.deleteClient(id);
     }
 
     public ClientDTO convert(@NotNull Client client)
