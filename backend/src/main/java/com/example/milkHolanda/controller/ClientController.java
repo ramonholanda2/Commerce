@@ -1,8 +1,6 @@
 package com.example.milkHolanda.controller;
 
-import com.example.milkHolanda.dto.BusinessClientDTO;
 import com.example.milkHolanda.dto.ClientDTO;
-import com.example.milkHolanda.exceptions.MethodArgumentNotValidException;
 import com.example.milkHolanda.exceptions.ObjectNotFoundException;
 import com.example.milkHolanda.facade.ClientFacade;
 import com.example.milkHolanda.service.ClientService;
@@ -35,17 +33,9 @@ public class ClientController {
     @GetMapping(path = "/{id}")
     public ResponseEntity<Object> getClientByCode(@PathVariable String id) {
 
-        if(id.intern() != "qwert") {
+        ClientDTO clientDTO = clientFacade.findClientById(id);
 
-            ClientDTO clientDTO = clientFacade.findClientById(id);
-
-//            ClientDTO clientDTO = clientService.getClientById(id);
-            return ResponseEntity.ok().body(clientDTO);
-        }
-
-        BusinessClientDTO businessclientDTO = clientService.getBusinessClientById(id);
-
-        return ResponseEntity.ok().body(businessclientDTO);
+        return ResponseEntity.ok().body(clientDTO);
     }
 
     @PutMapping(path = "/update/{id}")
@@ -54,8 +44,6 @@ public class ClientController {
             @Valid @RequestBody ClientDTO clientDTO) {
 
         clientFacade.updateClient(id, clientDTO);
-
-//        clientService.updateClient(id, clientDTO);
 
         return ResponseEntity.noContent().build();
     }
@@ -82,8 +70,6 @@ public class ClientController {
 
         clientFacade.deleteClient(id);
 
-//        clientService.deleteClient(id);
-
-        return ResponseEntity.ok().body("Cliente Removido com sucesso!");
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,56 +1,52 @@
 package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.AddressClientDTO;
+import com.example.milkHolanda.facade.AddressFacade;
 import com.example.milkHolanda.service.AddressService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/address")
 public class AddressController {
 
     @Autowired
-    private AddressService addressService;
+    private AddressFacade addressFacade;
 
     @PostMapping(path = "/save/{idClient}")
-    public ResponseEntity<String> addAddressForClient(@PathVariable String idClient, @RequestBody @Valid AddressClientDTO address, @NotNull BindingResult bindingResult) {
+    public ResponseEntity<URI> addAddressForClient(@PathVariable String idClient, @Valid @RequestBody AddressClientDTO address) {
 
-        if(bindingResult.hasErrors()){
-            return ResponseEntity.badRequest().body("Campos do endereço preencidos incorretamente!");
-        }
+        addressFacade.addAddressClient(address, idClient);
 
-        addressService.addAddressForClient(address, idClient);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .buildAndExpand().toUri();
 
-        return ResponseEntity.ok().body("endereço criado com sucesso");
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(path = "/update/{id}")
     public ResponseEntity<String> updateAddressForClient(
             @PathVariable Long id,
-            @Valid@RequestBody AddressClientDTO addressClient,
-            @NotNull BindingResult bindingResult) {
+            @Valid@RequestBody AddressClientDTO addressClient) {
 
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Campos inválidos para atualização do endereço!");
-        }
+        addressFacade.updateAddressByClient(id, addressClient);
 
-        addressService.updateAddressForClient(id, addressClient);
-
-        return ResponseEntity.ok().body("Endereço atualizado com sucesso!");
+        return ResponseEntity.noContent().build();
     }
 
 
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<String> deleteAddress(@PathVariable Long id) {
 
-        addressService.deleteAddressById(id);
+        addressFacade.deleteAddressById(id);
 
-        return ResponseEntity.ok().body("Endereço deletado com sucesso!");
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -14,13 +14,14 @@ public class AddressClientDTO {
 
     @Positive
     @Min(value = 2)
+    @NotNull(message = "Numero não pode ser nulo!")
     private Integer number;
 
     @Size(max = 20)
     private String complement;
 
     @NotEmpty(message = "Campo cep é obrigatório!")
-    @Size(min = 8, max = 8)
+    @Size(min = 8, max = 9, message = "cep tem que ter 8 digitos!")
     private String cep;
 
     @NotEmpty(message = "Campo Cidade é obrigatório!")
