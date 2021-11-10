@@ -3,9 +3,9 @@ package com.example.milkHolanda.dto;
 import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 import org.hibernate.validator.constraints.Length;
-import org.jetbrains.annotations.NotNull;
+
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 
 
 public class RequestProductDTO {
@@ -15,6 +15,7 @@ public class RequestProductDTO {
     @Length(min = 3, max = 15, message = "Tamanho minimo 3 e maximo 15!")
     private String name;
 
+    @NotNull(message = "O preço é obrigatório!")
     @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
 
@@ -23,14 +24,14 @@ public class RequestProductDTO {
     public RequestProductDTO() {
     }
 
-    public RequestProductDTO(@NotNull RequestProduct product, @NotNull ProductItem item) {
+    public RequestProductDTO(RequestProduct product, ProductItem item) {
         this.id = product.getId();
         this.name = product.getName();
         this.item = item;
         this.price = product.getPrice();
     }
 
-    public RequestProductDTO(@NotNull RequestProduct product) {
+    public RequestProductDTO(RequestProduct product) {
         this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();

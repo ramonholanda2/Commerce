@@ -1,17 +1,17 @@
 package com.example.milkHolanda.service;
 
 import com.example.milkHolanda.dto.ProductDTO;
-import com.example.milkHolanda.dto.ProductDTO;
-import com.example.milkHolanda.dto.pks.ClientProductDTO;
+import com.example.milkHolanda.entities.RequestProduct;
 
 import java.util.List;
 
 public interface ProductService {
-    List<ProductDTO> findAll();
+    List<RequestProduct> findAll();
 
     void addProduct(ProductDTO productDTO);
 
-    void addProductForClient(ClientProductDTO clientProductDTO);
+    void updateProduct(Long id, ProductDTO productDTO);
 
-    void updateproduct(Long id, ProductDTO productDTO);
+    void deleteProductById(Long id);
+
 }

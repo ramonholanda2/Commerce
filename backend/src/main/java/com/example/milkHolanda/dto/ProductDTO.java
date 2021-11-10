@@ -2,9 +2,9 @@ package com.example.milkHolanda.dto;
 
 import com.example.milkHolanda.entities.RequestProduct;
 import org.hibernate.validator.constraints.Length;
-import org.jetbrains.annotations.NotNull;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
 
@@ -12,10 +12,11 @@ public class ProductDTO implements Serializable {
 
     private Long id;
 
-    @NotEmpty(message = "este campo não pode ser vazio!")
+    @NotEmpty(message = "Este campo não pode ser vazio!")
     @Length(min = 3, max = 15, message = "Valor minimo 3 e maximo 15!")
     private String name;
 
+    @NotNull(message = "O preço não pode ser nulo!")
     @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
 
@@ -23,7 +24,7 @@ public class ProductDTO implements Serializable {
     public ProductDTO() {
     }
 
-    public ProductDTO(@NotNull RequestProduct product) {
+    public ProductDTO(RequestProduct product) {
         this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
@@ -51,9 +52,6 @@ public class ProductDTO implements Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-
-
 
     @Override
     public String toString() {

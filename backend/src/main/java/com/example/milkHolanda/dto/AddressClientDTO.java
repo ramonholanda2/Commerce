@@ -13,7 +13,6 @@ public class AddressClientDTO {
     private String street;
 
     @Positive
-    @Min(value = 2)
     @NotNull(message = "Numero não pode ser nulo!")
     private Integer number;
 

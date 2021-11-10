@@ -25,6 +25,14 @@ public interface ProductRepository extends JpaRepository<RequestProduct, Long> {
                     "VALUES (?, ?)")
     void addProductWithClient(String idClient, long idProduct);
 
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM TB_CLIENT_PRODUCT AS CP WHERE CP.PRODUCT_ID = ?")
+    void removeProductClientByProduct(long idProduct);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "DELETE FROM TB_CLIENT_PRODUCT AS CP WHERE CP.CLIENT_ID = ? AND CP.PRODUCT_ID = ?")
+    void removeProductWithClient(String idClient, long idProduct);
+
     @Query(nativeQuery = true, value =
             "SELECT COUNT(*) FROM TB_CLIENT_PRODUCT AS CP " +
                     "WHERE CP.CLIENT_ID = ? AND CP.PRODUCT_ID = ?")

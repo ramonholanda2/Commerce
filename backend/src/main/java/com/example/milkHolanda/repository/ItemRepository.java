@@ -34,6 +34,6 @@ public interface ItemRepository extends JpaRepository<ProductItem, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM TB_PRODUCT_ITEM AS PI WHERE PI.PRODUCT_ID = ?")
     List<ProductItem> findAllItemsWithThisProduct(Long id);
 
-    @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM TB_PRODUCT_ITEM AS PI WHERE PI.ID = ? AND PI.PRODUCT_ID = ? AND PI.CLIENT_ID = ?")
-    long existsItemWithThisClientAndProduct(Long id, Long idProduct, String idClient);
+    @Query(nativeQuery = true, value = "SELECT * FROM TB_PRODUCT_ITEM AS PI WHERE PI.PRODUCT_ID = ? AND PI.CLIENT_ID = ?")
+    ProductItem findItemWithThisProductAndClient(long idProduct, String idClient);
 }

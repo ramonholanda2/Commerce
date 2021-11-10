@@ -2,6 +2,7 @@ package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.ProductDTO;
 import com.example.milkHolanda.dto.pks.ClientProductDTO;
+import com.example.milkHolanda.facade.ProductFacade;
 import com.example.milkHolanda.service.ProductService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,75 +22,43 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private ProductFacade productFacade;
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAllProducts() {
 
-        List<ProductDTO> products = productService.findAll();
+        List<ProductDTO> products = productFacade.findAll();
 
         return ResponseEntity.ok().body(products);
     }
 
-    @PostMapping(path = "/save")
-    public ResponseEntity<String> addProduct(@Valid @RequestBody ProductDTO productDTO, @NotNull BindingResult bindingResult) {
+    @PostMapping
+    public ResponseEntity<URI> addProduct(@Valid @RequestBody ProductDTO productDTO) {
 
-        if (bindingResult.hasErrors()) {
-            List<String> errors = new ArrayList<>();
+        productFacade.addProduct(productDTO);
 
-            String quantErrors = bindingResult.getErrorCount() + " Erros encontrados!";
-            errors.add(quantErrors);
-            bindingResult.getAllErrors().stream().forEach(error -> {
-                String message = error.getDefaultMessage();
-                errors.add(message);
-            });
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .buildAndExpand().toUri();
 
-            return ResponseEntity.badRequest().body(errors.toString());
-        }
-
-        productService.addProduct(productDTO);
-
-        return ResponseEntity.ok().body("Produto Adicionado com sucesso!");
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(path = "/update/{id}")
     public ResponseEntity<String> updateProduct(
             @PathVariable Long id,
-            @Valid @RequestBody ProductDTO productDTO,
-            @NotNull BindingResult bindingResult){
+            @Valid @RequestBody ProductDTO productDTO){
 
-        List<String> errors = new ArrayList<>();
+        productFacade.updateProductById(id, productDTO);
 
-        if(bindingResult.hasErrors()) {
-
-            String quantErrors = bindingResult.getErrorCount() + " Erros encontrados!";
-            errors.add(quantErrors);
-            bindingResult.getAllErrors().stream().forEach(error -> {
-                String message = error.getDefaultMessage();
-                errors.add(message);
-            });
-
-            return ResponseEntity.badRequest().body(errors.toString());
-
-        }
-
-        productService.updateproduct(id, productDTO);
-
-        return ResponseEntity.ok().body("Produto atualizado com sucesso!");
+        return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/add-product")
-    public ResponseEntity<String> addProductForClient(@Valid @RequestBody ClientProductDTO clientProductDTO, @NotNull BindingResult bindingResult) {
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity deleteProduct(@PathVariable Long id) {
+        productFacade.deleteProductById(id);
 
-        if(bindingResult.hasErrors()){
-            return ResponseEntity.badRequest().body("Erros foram encontrados!");
-        }
-
-        if (clientProductDTO != null) {
-            productService.addProductForClient(clientProductDTO);
-        }
-
-        return ResponseEntity.ok().body("Produto adicionado ao cliente");
+        return ResponseEntity.noContent().build();
     }
 
 }

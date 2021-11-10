@@ -48,7 +48,7 @@ public class ClientController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/save")
+    @PostMapping
     public ResponseEntity<URI> addClient(@Valid @RequestBody ClientDTO clientDTO) {
 
         if(clientDTO.getId() == null) {
