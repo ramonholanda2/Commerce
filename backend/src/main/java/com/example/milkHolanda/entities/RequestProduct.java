@@ -81,6 +81,15 @@ public class RequestProduct implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "RequestProduct{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

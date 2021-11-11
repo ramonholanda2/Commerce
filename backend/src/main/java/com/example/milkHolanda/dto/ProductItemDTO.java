@@ -4,16 +4,21 @@ import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 public class ProductItemDTO {
 
     private Long id;
+
+    @NotNull
+    @Positive
     private Integer quantity = 1;
+
     private Double subtotal;
 
     private RequestProduct product;
-
     private Client client;
-
 
     public ProductItemDTO(ProductItem item) {
     }
