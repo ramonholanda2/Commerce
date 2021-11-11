@@ -12,7 +12,6 @@ import com.example.milkHolanda.repository.ClientRepository;
 import com.example.milkHolanda.repository.ItemRepository;
 import com.example.milkHolanda.repository.ProductRepository;
 import com.example.milkHolanda.service.ClientService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,7 +85,7 @@ public class DefaultClientFacade implements ClientFacade {
         clientService.deleteClient(id);
     }
 
-    public ClientDTO convert(@NotNull Client client)
+    public ClientDTO convert(Client client)
     {
 
         AddressClient address = addressRepository.findAddressForClient(client.getId());

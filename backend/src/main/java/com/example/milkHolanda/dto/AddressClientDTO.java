@@ -1,7 +1,5 @@
 package com.example.milkHolanda.dto;
 import com.example.milkHolanda.entities.AddressClient;
-import com.example.milkHolanda.entities.Client;
-
 import javax.validation.constraints.*;
 import java.util.Objects;
 

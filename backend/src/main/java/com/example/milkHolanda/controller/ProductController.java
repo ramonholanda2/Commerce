@@ -1,14 +1,10 @@
 package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.ProductDTO;
-import com.example.milkHolanda.dto.pks.ClientProductDTO;
 import com.example.milkHolanda.facade.ProductFacade;
-import com.example.milkHolanda.service.ProductService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

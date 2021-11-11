@@ -1,7 +1,5 @@
 package com.example.milkHolanda.dto;
 
-import com.example.milkHolanda.entities.Client;
-
 import java.util.ArrayList;
 import java.util.List;
 

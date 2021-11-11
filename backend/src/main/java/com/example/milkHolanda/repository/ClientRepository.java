@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
-
     @Query(nativeQuery = true, value = "SELECT * FROM TB_CLIENT AS cl WHERE cl.id = ?")
     Client findClientById(String id);
 
