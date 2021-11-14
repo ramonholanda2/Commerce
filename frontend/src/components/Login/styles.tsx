@@ -81,7 +81,6 @@ export const InputField = styled.input`
 
 export const LinkNewAccount = styled.a `
     color: purple;
-    width: 100%;
     text-align: right;
     margin-top: 1rem;
     margin-bottom: 3rem;

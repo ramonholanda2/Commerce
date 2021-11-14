@@ -1,7 +1,9 @@
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import { useForm } from "react-hook-form";
-import {
+import { useHistory } from "react-router-dom";
+import { useAuthContext } from "../../contexts/AuthContext"
+import { 
   LoginContainer,
   LoginBox,
   Title,
@@ -14,6 +16,7 @@ import {
   OtherLogin,
   LinkNewAccount
 } from "./styles";
+import { useEffect } from "react";
 
 type FormValues = {
   email: string;
@@ -31,10 +34,17 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+  const { signInWithGoogle, user, loginWithEmailAndPassword } = useAuthContext();
+  const history = useHistory();
 
+  useEffect(() => {
+    if(user) {
+      history.push("/");
+    }
+  }, [history, user])
 
-  function onSubmit(loginData: LoginData) {
-    console.log(loginData);
+  async function onSubmit(loginData: LoginData) {
+    await loginWithEmailAndPassword(loginData.email, loginData.password);
   }
 
   return (
@@ -67,7 +77,7 @@ const Login = () => {
               {...register("password", { required: true, minLength: 8 })}
             />
 
-            <LinkNewAccount href="/create-account">Criar uma conta</LinkNewAccount>
+              <LinkNewAccount href="/create-account">Criar uma conta</LinkNewAccount>
 
             <LoginButton type="submit">Entrar</LoginButton>
             <div style={{display: "flex", marginTop: "1.5rem"}}>
@@ -75,14 +85,14 @@ const Login = () => {
                   <BsFacebook size="1.8rem" color="blue" />
               </OtherLogin>
               <OtherLogin>
-                  <FcGoogle size="1.8rem" />
+                  <FcGoogle onClick={signInWithGoogle} size="1.8rem" />
               </OtherLogin>
             </div>
           </LoginFieldsContainer>
         </FormLogin>
         {errors.email && <ErrorMessage>Email inválido</ErrorMessage>}
         {errors.password && errors.password.type === "minLength" && (
-          <ErrorMessage>Senha precisa ter 8 letras</ErrorMessage>
+          <ErrorMessage>Senha precisa ter pelo menos 8 letras</ErrorMessage>
         )}
       </LoginBox>
     </LoginContainer>
