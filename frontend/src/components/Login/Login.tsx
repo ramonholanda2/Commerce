@@ -34,11 +34,11 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const { signInWithGoogle, user, loginWithEmailAndPassword } = useAuthContext();
+  const {user, signInWithGoogle, loginWithEmailAndPassword } = useAuthContext();
   const history = useHistory();
 
   useEffect(() => {
-    if(user) {
+    if(localStorage.getItem("token")) {
       history.push("/");
     }
   }, [history, user])
@@ -72,12 +72,11 @@ const Login = () => {
             <InputField
               required
               type={"password"}
-              style={{  }}
               className="password"
               {...register("password", { required: true, minLength: 8 })}
             />
 
-              <LinkNewAccount href="/create-account">Criar uma conta</LinkNewAccount>
+              <LinkNewAccount href="/criar-conta">Criar uma conta</LinkNewAccount>
 
             <LoginButton type="submit">Entrar</LoginButton>
             <div style={{display: "flex", marginTop: "1.5rem"}}>

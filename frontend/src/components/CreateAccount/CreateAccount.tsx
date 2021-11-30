@@ -36,13 +36,12 @@ const CreateAccount = () => {
 
   async function onSubmit(loginData: FormValues) {
     const name = loginData.name + " " + loginData.surname;
-
     await createAccountWithEmailAndPassword(
       loginData.email,
       loginData.password,
       name
     ).then(resp => {
-      push("/login");
+        push("/login")
     });    
   }
 
@@ -118,7 +117,7 @@ const CreateAccount = () => {
             </Div>
           </LoginFieldsContainer>
         </FormLogin>
-        {error !== undefined && error === "auth/email-already-in-use" && (
+        {error === "auth/email-already-in-use" && (
           <ErrorMessage>Este email já está em uso</ErrorMessage>
         )}
         {errors.email && <ErrorMessage>Email inválido</ErrorMessage>}

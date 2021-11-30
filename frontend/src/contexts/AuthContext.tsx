@@ -21,7 +21,14 @@ interface Address {
 interface Product {
   id: Long;
   name: string;
-  price: Float32Array;
+  price: Number;
+  item: Item
+}
+
+interface Item {
+  id: Long;
+  quantity: number;
+  subtotal: number;
 }
 
 interface User {
@@ -105,6 +112,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           .then((result) => {
             console.log(result.data);
             setUser(result.data);
+          })
+          .catch((error) => {
+            setError(error.message);
           });
       });
   }
@@ -115,7 +125,11 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         const { uid } = user;
 
         if (!uid) {
-          throw new Error("Missing information from google");
+          throw new Error("Missing Collect information");
+        }
+
+        if (!localStorage.getItem("token")) {
+          localStorage.setItem("token", "logged");
         }
 
         axios

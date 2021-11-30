@@ -199,7 +199,7 @@ font-family: 'Poppins', sans-serif;
   background-color: #f12323;
   color: white;
   width: 100%;
-  font-size: .8rem;
+  font-size: 1rem;
 
   margin: .5px;
 

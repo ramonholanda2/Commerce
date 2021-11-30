@@ -24,7 +24,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f ./.env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
-    "@types/styled-components": "^5.1.15"
+    "@types/styled-components": "^5.1.15",
+    "env-cmd": "^10.1.0"
   }
 }
