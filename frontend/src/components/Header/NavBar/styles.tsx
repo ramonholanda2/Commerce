@@ -86,6 +86,7 @@ export const LoggoutButton = styled.button `
   border-radius: 10px;
   border: none;
   margin-top: 1rem;
+  margin-bottom: 2.5rem;
   padding: .2rem 0rem;
   background-color: #fff;
 `;
