@@ -1,20 +1,29 @@
 import styled from "styled-components";
 
 export const ChartContainer = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
   padding: 1rem 0.8rem;
   @media screen and (max-width: 360px) {
-    padding: 0;
+    padding-top: 1.5rem;
   }
 `;
 
 export const ProductContainer = styled.div`
-  border-bottom: 3px solid purple;
+  border: 2px solid purple;
   margin: 0.5rem 1rem;
-  max-width: 80vw;
   display: flex;
+  width: 100%;
+  max-width: 80%;
+  position: relative;
+  border-radius: 20px;
+
+  user-select: none;
 
   :last-child {
-    border: none;
+    margin-bottom: 3rem;
   }
 
   @media screen and (max-width: 1000px) {
@@ -80,10 +89,6 @@ export const BuyProduct = styled.div`
   gap: 1rem;
   padding: 1rem 2rem;
 
-
-  @media screen and (max-width: 780px) {
-    padding: 1rem 0;
-  }
   @media screen and (max-width: 700px) {
     padding: 1rem 0;
     width: 100%;
@@ -101,7 +106,7 @@ export const Subtotal = styled.h3`
 `;
 
 export const BuyButton = styled.button`
-  width: 10rem;
+  width: 9rem;
   padding: 5px 0;
   border-radius: 10px;
 
@@ -115,4 +120,15 @@ export const BuyButton = styled.button`
   @media screen and (max-width: 550px) {
     font-size: 1rem;
   }
+`;
+
+export const DeleteButtom = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  height: 40px;
+  border-radius: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 `;

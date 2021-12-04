@@ -5,7 +5,7 @@ import {
   PlusAndMinus,
   QuantityInput,
   ButtonSaveNewQuantity,
-  ItemController
+  ItemController,
 } from "./styles";
 
 interface Item {
@@ -21,14 +21,18 @@ interface ItemProps {
 const Quantity = ({ item }: ItemProps) => {
   const [quantity, setQuantity] = useState<number>(item.quantity);
 
+  function formatQuantity(value: string) {
+    value = value.replace(/\D/gim, "");
+    Number(value) < 0 && setQuantity(1);
+    Number(value) >= 0 && value.length <= 3 && setQuantity(Number(value));
+  }
   function addProduct() {
     setQuantity(quantity + 1);
   }
 
   function removeProduct() {
-      const newQauntity = quantity - 1;
-      if(newQauntity > 0)
-        setQuantity(newQauntity);
+    const newQauntity = quantity - 1;
+    if (newQauntity > 0) setQuantity(newQauntity);
   }
 
   return (
@@ -40,11 +44,10 @@ const Quantity = ({ item }: ItemProps) => {
           </PlusAndMinus>
 
           <QuantityInput
-            onChange={(e) =>
-              Number(e.target.value) > 0 && setQuantity(Number(e.target.value))
-            }
+            pattern="(?<![0-9])0+"
+            onChange={(e) => formatQuantity(e.target.value)}
             value={quantity}
-            type={"number"}
+            type={"text"}
           />
 
           <PlusAndMinus onClick={addProduct}>
@@ -52,7 +55,10 @@ const Quantity = ({ item }: ItemProps) => {
           </PlusAndMinus>
         </div>
 
-        <ButtonSaveNewQuantity disabled={item.quantity===quantity} isAlterableQuantity={item.quantity !== quantity}>
+        <ButtonSaveNewQuantity
+          disabled={item.quantity === quantity}
+          isAlterableQuantity={item.quantity !== quantity}
+        >
           Salvar
         </ButtonSaveNewQuantity>
       </ItemController>

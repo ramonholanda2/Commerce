@@ -22,14 +22,15 @@ export const LoginBox = styled.div`
   padding: 20px 10px;
 
   border-radius: 20px;
-  height: 90vh;
+  height: 50rem;
   max-height: 40rem;
 
   width: 30rem;
   max-width: 30rem;
 
   background-color: #fff;
-`;
+
+  `;
 
 export const Title = styled.h1`
   font-family: "Mochiy Pop One", sans-serif;
@@ -37,75 +38,77 @@ export const Title = styled.h1`
   padding: 15px 0px;
   
   @media screen and (max-width: 400px) {
-      font-size: 1.5rem;
-    }
-    `;
+    font-size: 1.5rem;
+  }
+  `;
 
-export const FormLogin = styled.form `
-    flex: 1;
-    display: flex;
-`;
+export const FormLogin = styled.form`
+  flex: 1;
+  display: flex;
+  `;
 
 export const LoginFieldsContainer = styled.div`
   flex: 1;
   width: 100%;
-
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  `;
+`;
 
 export const InputField = styled.input`
   width: 21rem;
   max-width: 21rem;
   outline: none;
-  
+
   border: 1px solid #e4e4e4;
   border-bottom: 3px solid purple;
   border-radius: 5px;
   padding: 10px;
-  
+
   font-size: 1.1rem;
-  
+
   :focus {
-      background-color: #fffc;
-    }
-    
-    @media screen and (max-width: 400px) {
-        max-width: 14rem;
-        font-size: small;
-    }
-    `;
+    background-color: #fffc;
+  }
 
-export const LinkNewAccount = styled.a `
-    color: purple;
-    text-align: right;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
-
-    text-decoration: none;
-    font-size: 1.07rem;
-    
-    :hover {
-        text-decoration: underline;
-    } 
+  @media screen and (max-width: 400px) {
+    max-width: 14rem;
+    font-size: medium;
+  }
 `;
 
+export const LinkNewAccount = styled.a`
+  color: purple;
+  text-align: right;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+
+  text-decoration: none;
+  font-size: 1.07rem;
+
+  :hover {
+    text-decoration: underline;
+  }
+
+  @media screen and (max-height: 550px) {
+    margin-bottom: 1rem;
+  }
+`;
 
 export const LabelTitle = styled.label`
   font-family: "Poppins", sans-serif;
   font-size: 1.3rem;
   font-weight: 500;
   margin-right: 16.7rem;
-  
-  @media screen and (max-width: 400px) {
-      margin-right: 10rem;
-      font-size: large;
-    }
-    `;
 
+  @media screen and (max-width: 400px) {
+    margin-right: 10rem;
+    font-size: large;
+  }
+`;
 
 export const LoginButton = styled.button`
   position: relative;
@@ -119,12 +122,12 @@ export const LoginButton = styled.button`
   border-radius: 5px;
   border: none;
   background-color: #c2c1c14e;
-  transition: all .3s ease-in;
-  
+  transition: all 0.3s ease-in;
+
   :hover {
-      background-color: #8b8bac4e;
-      transition: all .3s ease-in;
-  } 
+    background-color: #8b8bac4e;
+    transition: all 0.3s ease-in;
+  }
 
   ::after {
     content: "";
@@ -138,8 +141,8 @@ export const LoginButton = styled.button`
   }
 
   ::after {
-      position: absolute;
-      bottom: -1.5px;
+    position: absolute;
+    bottom: -1.5px;
   }
 
   :hover::after {
@@ -149,14 +152,14 @@ export const LoginButton = styled.button`
   }
 `;
 
-export const OtherLogin = styled.div `
-    cursor: pointer;
-    :last-child {
-        margin-left: 2rem;
-    }
+export const OtherLogin = styled.div`
+  cursor: pointer;
+  :last-child {
+    margin-left: 2rem;
+  }
 `;
-export const ErrorMessage = styled.span `
-font-family: 'Poppins', sans-serif;
+export const ErrorMessage = styled.span`
+  font-family: "Poppins", sans-serif;
   border-radius: 7px;
   padding: 3px;
   text-align: center;
@@ -166,6 +169,4 @@ font-family: 'Poppins', sans-serif;
   font-size: 1rem;
 
   margin: 1px;
-
-`
-
+`;

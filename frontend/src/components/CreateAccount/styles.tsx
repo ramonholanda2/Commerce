@@ -21,7 +21,8 @@ export const CreateAccountBox = styled.div`
   align-items: center;
   padding: 20px 10px;
   border-radius: 20px;
-  height: 90vh;
+
+  height: 38rem;
 
   max-height: 40rem;
 
@@ -84,7 +85,7 @@ export const InputField = styled.input`
   @media screen and (max-width: 500px) {
     max-width: 20rem;
     width: 100%;
-    font-size: small;
+    font-size: medium;
   }
 
   @media screen and (max-width: 400px) {
@@ -202,6 +203,10 @@ font-family: 'Poppins', sans-serif;
   font-size: 1rem;
 
   margin: .5px;
+
+  :nth-child(3) {
+    margin-top: 2rem;
+  }
 
   @media screen and (max-width: 500px) {
        max-width: 20rem;

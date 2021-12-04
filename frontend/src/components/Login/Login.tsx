@@ -34,12 +34,12 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const {user, signInWithGoogle, loginWithEmailAndPassword } = useAuthContext();
+  const {user, error, signInWithGoogle, loginWithEmailAndPassword } = useAuthContext();
   const history = useHistory();
 
   useEffect(() => {
     if(localStorage.getItem("token")) {
-      history.push("/");
+      history.push("/")
     }
   }, [history, user])
 
@@ -90,6 +90,12 @@ const Login = () => {
           </LoginFieldsContainer>
         </FormLogin>
         {errors.email && <ErrorMessage>Email inválido</ErrorMessage>}
+        {error === "auth/user-not-found" && (
+          <ErrorMessage>Email inexistente!</ErrorMessage>
+        )}
+        {error === "auth/wrong-password" && (
+          <ErrorMessage>Senha Inválida!</ErrorMessage>
+        )}
         {errors.password && errors.password.type === "minLength" && (
           <ErrorMessage>Senha precisa ter pelo menos 8 letras</ErrorMessage>
         )}

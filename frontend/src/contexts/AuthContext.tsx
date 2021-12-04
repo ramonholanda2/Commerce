@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 import { auth } from "../services/firebase";
+import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 import axios from "axios";
 
@@ -22,7 +23,7 @@ interface Product {
   id: Long;
   name: string;
   price: Number;
-  item: Item
+  item: Item;
 }
 
 interface Item {
@@ -57,6 +58,7 @@ interface AuthContextProviderProps {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
+  const { push } = useHistory();
   const [user, setUser] = useState<User>();
   const [error, setError] = useState();
 
@@ -87,10 +89,14 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       await auth
         .createUserWithEmailAndPassword(email, password)
         .then((response) => {
-          axios.post(`https://milk-holanda.herokuapp.com/clients`, {
-            id: response.user?.uid,
-            name,
-          });
+          axios
+            .post(`https://milk-holanda.herokuapp.com/clients`, {
+              id: response.user?.uid,
+              name,
+            })
+            .then((resp) => {
+              push("/");
+            });
         })
         .catch((error) => {
           setError(error.code);
@@ -110,12 +116,12 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             `https://milk-holanda.herokuapp.com/clients/${response.user?.uid}`
           )
           .then((result) => {
-            console.log(result.data);
             setUser(result.data);
-          })
-          .catch((error) => {
-            setError(error.message);
           });
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.code);
       });
   }
 
@@ -136,11 +142,15 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
           .then((result) => {
             setUser(result.data);
+            !localStorage.getItem("Name") &&
+              localStorage.setItem("Name", result.data.name);
           });
 
         return () => {
           unsubscribe();
         };
+      } else {
+        localStorage.removeItem("token");
       }
     });
   }, []);

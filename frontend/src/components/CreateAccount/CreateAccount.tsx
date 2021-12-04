@@ -15,6 +15,7 @@ import {
   ErrorMessage,
 } from "./styles";
 import { IoIosArrowBack } from "react-icons/io";
+import { useEffect } from "react";
 
 type FormValues = {
   name: string;
@@ -40,10 +41,14 @@ const CreateAccount = () => {
       loginData.email,
       loginData.password,
       name
-    ).then(resp => {
-        push("/login")
-    });    
+    );
   }
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      push("/");
+    }
+  }, [push]);
 
   return (
     <CreateAccountContainer>

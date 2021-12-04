@@ -49,7 +49,7 @@ export const ButtonSaveNewQuantity = styled.button`
   filter: ${({ isAlterableQuantity }: IsAlterQuantity) =>
     isAlterableQuantity ? "opacity(1)" : "opacity(0)"};
   width: 10rem;
-  max-width: 7rem;
+  max-width: 5rem;
   padding: 3px 0px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -62,7 +62,6 @@ export const ButtonSaveNewQuantity = styled.button`
     isAlterableQuantity ? "pointer" : "default"};
 
 @media screen and (max-width: 550px) {
-    width: 5rem;
     font-size: medium;
   }
 `;
