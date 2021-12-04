@@ -26,7 +26,6 @@ export const NavBarContainer = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   padding: 1rem 0.5rem;
   background-color: #500050e1;
 `;
@@ -57,14 +56,16 @@ export const UserName = styled.h5`
 `;
 
 export const MenuContainer = styled.ul`
-  margin-top: 5rem;
+  margin-top: 1rem;
   list-style: none;
   display: flex;
   padding: 2px;
-  gap: 1.5rem;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+  padding-bottom: 2rem;
 `;
 
 export const MenuOptions = styled.a`
@@ -74,4 +75,17 @@ export const MenuOptions = styled.a`
   color: #fff;
   text-decoration: none;
   cursor: pointer;
+`;
+
+export const LoggoutButton = styled.button `
+
+  color: red;
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 8rem;
+  border-radius: 10px;
+  border: none;
+  margin-top: 1rem;
+  padding: .2rem 0rem;
+  background-color: #fff;
 `;
