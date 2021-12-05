@@ -8,6 +8,13 @@ interface CommerceContextType {
     idProduct: Product
   ) => Promise<void>;
 
+  updateItem: (
+    idClient: string | undefined,
+    idItem: Long,
+    quantity: number,
+    idProduct: Long
+  ) => Promise<void>;
+
   removeProductForClient: (
     idClient: string | undefined,
     idProduct: Long
@@ -43,9 +50,9 @@ export function CommerceContextProvider({
 }: CommerceContextProviderProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
-  
+
   const { push } = useHistory();
-  
+
   async function getProducts(idClient: string | undefined) {
     await axios
       .get(
@@ -59,7 +66,20 @@ export function CommerceContextProvider({
         throw new Error(error.message);
       });
   }
-  
+
+  async function updateItem(idClient: string | undefined, idItem: Long, quantity: number, idProduct: Long) {
+    
+    if(quantity === 0) return removeProductForClient(idClient, idProduct);
+
+    await axios
+      .post(`https://milk-holanda.herokuapp.com/item/update/${idItem}`, {
+        quantity,
+      })
+      .then((resp) => {
+        getProducts(idClient);
+      });
+  }
+
   async function addProductForClient(
     idClient: string | undefined,
     product: Product
@@ -72,8 +92,9 @@ export function CommerceContextProvider({
             idClient,
             idProduct: product.id,
           }
-        ).then(resp => {
-          push("/meus-produtos")
+        )
+        .then((resp) => {
+          push("/meus-produtos");
         })
         .catch((error) => {
           console.log(JSON.stringify(error));
@@ -88,10 +109,10 @@ export function CommerceContextProvider({
     idProduct: Long
   ) {
     await axios
-    .delete(
-      "https://milk-holanda.herokuapp.com/client-product/remove-product-by-client",
-      {
-        data: { idClient, idProduct },
+      .delete(
+        "https://milk-holanda.herokuapp.com/client-product/remove-product-by-client",
+        {
+          data: { idClient, idProduct },
         }
       )
       .then((response) => {
@@ -104,7 +125,14 @@ export function CommerceContextProvider({
 
   return (
     <CommerceContext.Provider
-      value={{ loadingProducts, products, getProducts, addProductForClient, removeProductForClient }}
+      value={{
+        loadingProducts,
+        products,
+        updateItem,
+        getProducts,
+        addProductForClient,
+        removeProductForClient,
+      }}
     >
       {children}
     </CommerceContext.Provider>

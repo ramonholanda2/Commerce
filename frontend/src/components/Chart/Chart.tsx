@@ -51,7 +51,7 @@ const Chart = () => {
                 $
               </ProductPrice>
             </ProductDetailsContainer>
-            <Quantity item={product.item}></Quantity>
+            <Quantity item={product.item} idProduct={product.id}></Quantity>
           </div>
           <BuyProduct>
             <Subtotal>

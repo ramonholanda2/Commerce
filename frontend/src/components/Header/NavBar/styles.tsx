@@ -6,7 +6,7 @@ export const NavBarModal = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: flex-end;

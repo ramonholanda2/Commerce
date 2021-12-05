@@ -1,6 +1,7 @@
 import { FaUserCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import { auth } from "../../../services/firebase";
 import {
   NavBarModal,
   NavBarContainer,
@@ -37,7 +38,7 @@ const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
           <MenuOptions href="">Minha Conta</MenuOptions>
         </MenuContainer>
 
-        <LoggoutButton>Sair</LoggoutButton>
+        <LoggoutButton onClick={() => auth.signOut()}>Sair</LoggoutButton>
       </NavBarContainer>
     </NavBarModal>
   );

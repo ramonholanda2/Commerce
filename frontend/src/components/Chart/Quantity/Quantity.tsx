@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
+import { useAuthContext } from "../../../contexts/AuthContext";
+import { useCommerceContext } from "../../../contexts/ComerceContext";
 import {
   ItemContainer,
   PlusAndMinus,
@@ -16,9 +18,12 @@ interface Item {
 
 interface ItemProps {
   item: Item;
+  idProduct: Long;
 }
 
-const Quantity = ({ item }: ItemProps) => {
+const Quantity = ({ item, idProduct }: ItemProps) => {
+  const { user } = useAuthContext();
+  const { updateItem } = useCommerceContext();
   const [quantity, setQuantity] = useState<number>(item.quantity);
 
   function formatQuantity(value: string) {
@@ -58,6 +63,7 @@ const Quantity = ({ item }: ItemProps) => {
         <ButtonSaveNewQuantity
           disabled={item.quantity === quantity}
           isAlterableQuantity={item.quantity !== quantity}
+          onClick={() => updateItem(user?.id, item.id, quantity, idProduct)}
         >
           Salvar
         </ButtonSaveNewQuantity>
