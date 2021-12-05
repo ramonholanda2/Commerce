@@ -97,4 +97,9 @@ public class DefaultProductService implements ProductService {
             throw new DataIntegrityException("Falha ao excluir cliente!");
         }
     }
+
+    @Override
+    public List<RequestProduct> findProductsByClient(String idClient) {
+        return productRepository.findProductsByClientId(idClient);
+    }
 }

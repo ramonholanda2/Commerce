@@ -14,4 +14,5 @@ public interface ProductService {
 
     void deleteProductById(Long id);
 
+    List<RequestProduct> findProductsByClient(String idClient);
 }

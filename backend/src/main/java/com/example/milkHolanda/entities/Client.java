@@ -16,6 +16,8 @@ public class Client implements Serializable {
 
     private String name;
 
+    private String surname;
+
     @OneToOne(mappedBy = "client")
     private AddressClient address;
 
@@ -30,7 +32,7 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public Client(String id, String name, AddressClient address, List<RequestProduct> products) {
+    public Client(String id, String name, String surname, AddressClient address, List<RequestProduct> products) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -51,6 +53,14 @@ public class Client implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public AddressClient getAddress() {

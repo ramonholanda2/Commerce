@@ -122,7 +122,7 @@ public class DefaultClientFacade implements ClientFacade {
         }
 
         ClientDTO clientDTO =
-                new ClientDTO(client.getId(), client.getName(), productsDTO, addressClient);
+                new ClientDTO(client.getId(), client.getName(), client.getSurname(), productsDTO, addressClient);
 
         return clientDTO;
 

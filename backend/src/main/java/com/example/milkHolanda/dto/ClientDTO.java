@@ -10,6 +10,9 @@ public class ClientDTO {
     @NotBlank(message = "nome obrigatório!")
     private String name;
 
+    @NotBlank(message = "sobrenome obrigatório!")
+    private String surname;
+    
     private AddressClientDTO address;
 
     private List<RequestProductDTO> products = new ArrayList<>();
@@ -21,8 +24,9 @@ public class ClientDTO {
         this.id = id;
     }
 
-    public ClientDTO(String id, String name, List<RequestProductDTO> products, AddressClientDTO address) {
+    public ClientDTO(String id, String name, String surname, List<RequestProductDTO> products, AddressClientDTO address) {
         this.id = id;
+        this.surname = surname;
         this.name = name;
         this.products = products;
         this.address = address;
@@ -44,6 +48,14 @@ public class ClientDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public AddressClientDTO getAddress() {

@@ -1,6 +1,8 @@
 package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.ProductDTO;
+import com.example.milkHolanda.dto.ProductItemDTO;
+import com.example.milkHolanda.dto.RequestProductDTO;
 import com.example.milkHolanda.facade.ProductFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +57,12 @@ public class ProductController {
         productFacade.deleteProductById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(path = "/get-products-by-client/{idClient}")
+    public ResponseEntity getProductsByClient(@PathVariable String idClient) {
+        List<RequestProductDTO> products = productFacade.findProductsByClient(idClient);
+        return ResponseEntity.ok().body(products);
     }
 
 }

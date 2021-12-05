@@ -1,11 +1,9 @@
 package com.example.milkHolanda.facade.impl;
 import com.example.milkHolanda.dto.ProductDTO;
+import com.example.milkHolanda.dto.ProductItemDTO;
+import com.example.milkHolanda.dto.RequestProductDTO;
 import com.example.milkHolanda.entities.RequestProduct;
 import com.example.milkHolanda.facade.ProductFacade;
-import com.example.milkHolanda.populator.ProductPopulator;
-import com.example.milkHolanda.repository.ClientRepository;
-import com.example.milkHolanda.repository.ItemRepository;
-import com.example.milkHolanda.repository.ProductRepository;
 import com.example.milkHolanda.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +50,23 @@ public class DefaultProductFacade implements ProductFacade {
         productService.deleteProductById(id);
     }
 
+    @Override
+    public List<RequestProductDTO> findProductsByClient(String idClient) {
+
+        List<RequestProduct> products = productService.findProductsByClient(idClient);
+
+        List<RequestProductDTO> productDTOS = new ArrayList<>();
+
+        for (RequestProduct product : products) {
+
+            RequestProductDTO requestProductDTO = new RequestProductDTO(product, product.getItem());
+
+            productDTOS.add(requestProductDTO);
+
+        }
+
+        return productDTOS;
+    }
 
 
 }

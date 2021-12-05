@@ -1,6 +1,15 @@
 import { FaUserCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
-import { NavBarModal, NavBarContainer, ButtonClose, UserLogo, UserName, MenuContainer, MenuOptions, LoggoutButton } from "./styles";
+import {
+  NavBarModal,
+  NavBarContainer,
+  ButtonClose,
+  UserLogo,
+  UserName,
+  MenuContainer,
+  MenuOptions,
+  LoggoutButton,
+} from "./styles";
 
 interface NavBarProps {
   toggleMenuFunction: () => void;
@@ -15,25 +24,18 @@ const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
         </ButtonClose>
 
         <UserLogo>
-          <FaUserCircle
-            color="white"
-            size="2.5rem"
-            cursor="pointer"
-          />
+          <FaUserCircle color="white" size="2.5rem" cursor="pointer" />
           <UserName>{localStorage.getItem("Name")}</UserName>
         </UserLogo>
-        
+
         <MenuContainer>
-            <MenuOptions href="/" >Produtos</MenuOptions>
-            <MenuOptions href="/meus-produtos">Meus Produtos</MenuOptions>
-            <MenuOptions href="">Compras</MenuOptions>
-            <MenuOptions href="">Minha Conta</MenuOptions>
+          <MenuOptions href="/">Produtos</MenuOptions>
+          <MenuOptions href="/meus-produtos">Meus Produtos</MenuOptions>
+          <MenuOptions href="">Compras</MenuOptions>
+          <MenuOptions href="">Minha Conta</MenuOptions>
         </MenuContainer>
 
-        <LoggoutButton>
-            Sair
-        </LoggoutButton>
-
+        <LoggoutButton>Sair</LoggoutButton>
       </NavBarContainer>
     </NavBarModal>
   );
