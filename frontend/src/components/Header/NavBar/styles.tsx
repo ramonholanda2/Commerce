@@ -12,7 +12,7 @@ export const NavBarModal = styled.div`
   justify-content: flex-end;
   z-index: 1;
   background-color: #000000ca;
-  
+
   @media screen and (min-width: 750px) {
     display: none;
   }
@@ -27,7 +27,7 @@ export const NavBarContainer = styled.nav`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0.5rem;
+  padding: 3rem 0.5rem;
   background-color: #500050e1;
 `;
 
