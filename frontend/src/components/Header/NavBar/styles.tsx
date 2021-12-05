@@ -1,17 +1,18 @@
 import styled from "styled-components";
 
 export const NavBarModal = styled.div`
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  position: fixed;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background-color: #000000ca;
   z-index: 1;
-
+  background-color: #000000ca;
+  
   @media screen and (min-width: 750px) {
     display: none;
   }
@@ -85,8 +86,7 @@ export const LoggoutButton = styled.button `
   width: 8rem;
   border-radius: 10px;
   border: none;
-  margin-top: 1rem;
-  margin-bottom: 2.5rem;
+  margin: 2.5rem 0;
   padding: .2rem 0rem;
   background-color: #fff;
 `;
