@@ -66,7 +66,7 @@ export const UserLogo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 1.5rem;
+  margin-right: 2rem;
   max-width: 5rem;
   
   @media screen and (max-width: 750px) {

@@ -36,11 +36,11 @@ const CreateAccount = () => {
   const { createAccountWithEmailAndPassword, error } = useAuthContext();
 
   async function onSubmit(loginData: FormValues) {
-    const name = loginData.name + " " + loginData.surname;
     await createAccountWithEmailAndPassword(
       loginData.email,
       loginData.password,
-      name
+      loginData.name,
+      loginData.surname
     );
   }
 

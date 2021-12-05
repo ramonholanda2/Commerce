@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { auth } from "../services/firebase";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase";
 import axios from "axios";
 
@@ -35,6 +35,7 @@ interface Item {
 interface User {
   id: string;
   name?: string;
+  surname?: string;
   address?: Address;
   products?: Product[];
 }
@@ -46,7 +47,8 @@ interface AuthContextType {
   createAccountWithEmailAndPassword: (
     email: string,
     password: string,
-    name: string
+    name: string,
+    surname: string
   ) => Promise<void>;
   loginWithEmailAndPassword: (email: string, password: string) => Promise<void>;
 }
@@ -59,6 +61,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const { push } = useHistory();
+  const { pathname } = useLocation();
   const [user, setUser] = useState<User>();
   const [error, setError] = useState();
 
@@ -83,7 +86,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   async function createAccountWithEmailAndPassword(
     email: string,
     password: string,
-    name: string
+    name: string,
+    surname: string
   ) {
     try {
       await auth
@@ -93,6 +97,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             .post(`https://milk-holanda.herokuapp.com/clients`, {
               id: response.user?.uid,
               name,
+              surname
             })
             .then((resp) => {
               push("/");
@@ -142,8 +147,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
           .then((result) => {
             setUser(result.data);
-            !localStorage.getItem("Name") &&
-              localStorage.setItem("Name", result.data.name);
+            if(!sessionStorage.getItem("Name") !== result.data.name) {
+              sessionStorage.setItem("Name", result.data.name);
+            } 
           });
 
         return () => {
@@ -153,7 +159,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         localStorage.removeItem("token");
       }
     });
-  }, []);
+  }, [push]);
+
+  useEffect(() => {
+    if(!localStorage.getItem("token") && pathname !== "/criar-conta")
+        push("/login");
+
+  }, [push, pathname])
 
   return (
     <AuthContext.Provider

@@ -21,7 +21,7 @@ const Header = () => {
   function toggleMenu() {
     setToggleNavBar(!toggleNavBar);
   }
-
+ 
   return (
     <HeaderContainer>
       <LogoSvg src={LogoMilk} />
@@ -39,7 +39,7 @@ const Header = () => {
           size="2.5rem"
           cursor="pointer"
         />
-        <UserName>{localStorage.getItem("Name")?.split(" ")[0]}</UserName>
+        <UserName>{sessionStorage.getItem("Name")}</UserName>
         {toggleLoggout && <Loggout />}
       </UserLogo>
 

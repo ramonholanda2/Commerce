@@ -1,5 +1,5 @@
 import { useAuthContext } from "../../contexts/AuthContext";
-import {RiDeleteBin6Fill} from "react-icons/ri";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 import Quantity from "./Quantity/Quantity";
 
 import {
@@ -12,20 +12,31 @@ import {
   BuyProduct,
   Subtotal,
   BuyButton,
-  DeleteButtom
+  DeleteButtom,
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
+import { useEffect } from "react";
 
 const Chart = () => {
-
   const { user } = useAuthContext();
-  const { removeProductForClient } = useCommerceContext();
+  const { products, loadingProducts, getProducts, removeProductForClient } = useCommerceContext();
 
-  return user?.products?.length === 0 ? (
-    <h1 style={{margin: "2rem 1rem"}}>Sem produtos adicione <a href="/">aqui</a></h1>
+  useEffect(() => {
+    if(user?.id !== undefined) {
+      getProducts(user.id);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
+
+  return loadingProducts ? (
+    <h1>Carregando...</h1>
+  ) : products.length === 0 && !loadingProducts ? (
+    <h1 style={{ margin: "2rem 1rem" }}>
+      Sem produtos adicione <a href="/">aqui</a>
+    </h1>
   ) : (
     <ChartContainer>
-      {user?.products?.map((product) => (
+      {products.map((product) => (
         <ProductContainer key={Number(product.id)}>
           <div style={{ display: "flex", width: "100%" }}>
             <ProductDetailsContainer>
@@ -52,12 +63,13 @@ const Chart = () => {
             </Subtotal>
             <BuyButton>Comprar</BuyButton>
           </BuyProduct>
-          <DeleteButtom onClick={() => removeProductForClient(user.id, product.id)}>
-            <RiDeleteBin6Fill size="2rem" color="#dd1a1a"/>
+          <DeleteButtom
+            onClick={() => removeProductForClient(user?.id, product.id)}
+          >
+            <RiDeleteBin6Fill size="2rem" color="#dd1a1a" />
           </DeleteButtom>
         </ProductContainer>
       ))}
-
     </ChartContainer>
   );
 };

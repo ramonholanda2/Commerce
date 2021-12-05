@@ -1,5 +1,6 @@
 import { FaUserCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import {
   NavBarModal,
   NavBarContainer,
@@ -16,6 +17,7 @@ interface NavBarProps {
 }
 
 const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
+  const {user} = useAuthContext();
   return (
     <NavBarModal>
       <NavBarContainer>
@@ -25,7 +27,7 @@ const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
 
         <UserLogo>
           <FaUserCircle color="white" size="2.5rem" cursor="pointer" />
-          <UserName>{localStorage.getItem("Name")}</UserName>
+          <UserName>{user?.name + " " + user?.surname}</UserName>
         </UserLogo>
 
         <MenuContainer>
