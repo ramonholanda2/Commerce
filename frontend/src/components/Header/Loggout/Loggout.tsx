@@ -1,17 +1,11 @@
-import { useHistory } from "react-router-dom";
-import { auth } from "../../../services/firebase";
+import { useAuthContext } from "../../../contexts/AuthContext";
 import { LoggoutContainer, LoggoutLink } from "./styles";
 
 const Loggout = () => {
-    const { push } = useHistory();
-    function signout() {
-        auth.signOut().then(resp => {
-            push("/login");
-        })
-    }
+    const { logout } = useAuthContext();
     return (
         <LoggoutContainer>
-            <LoggoutLink onClick={signout}>
+            <LoggoutLink onClick={logout}>
                 sair
             </LoggoutLink>
         </LoggoutContainer>

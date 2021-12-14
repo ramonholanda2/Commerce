@@ -1,8 +1,6 @@
 import { FaUserCircle } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
-import { useHistory } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext";
-import { auth } from "../../../services/firebase";
 import {
   NavBarModal,
   NavBarContainer,
@@ -19,8 +17,8 @@ interface NavBarProps {
 }
 
 const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
-  const {push} = useHistory();
-  const {user} = useAuthContext();
+  const { user, logout } = useAuthContext();
+
   return (
     <NavBarModal>
       <NavBarContainer>
@@ -30,7 +28,11 @@ const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
 
         <UserLogo>
           <FaUserCircle color="white" size="2.5rem" cursor="pointer" />
-          <UserName>{user?.name + " " + user?.surname}</UserName>
+          <UserName>
+            {!user?.name || !user?.surname
+              ? ""
+              : user?.name + " " + user?.surname}
+          </UserName>
         </UserLogo>
 
         <MenuContainer>
@@ -40,7 +42,7 @@ const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
           <MenuOptions href="">Minha Conta</MenuOptions>
         </MenuContainer>
 
-        <LoggoutButton onClick={() => auth.signOut().then(resp => push("/login"))}>Sair</LoggoutButton>
+        <LoggoutButton onClick={logout}>Sair</LoggoutButton>
       </NavBarContainer>
     </NavBarModal>
   );

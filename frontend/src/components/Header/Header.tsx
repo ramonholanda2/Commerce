@@ -13,8 +13,10 @@ import LogoMilk from "../../assets/milk.png";
 import { useState } from "react";
 import NavBar from "./NavBar/NavBar";
 import Loggout from "./Loggout/Loggout";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const Header = () => {
+  const { user } = useAuthContext();
   const [toggleNavBar, setToggleNavBar] = useState<boolean>(false);
   const [toggleLoggout, setToggleLoggout] = useState<boolean>(false);
 
@@ -39,7 +41,7 @@ const Header = () => {
           size="2.5rem"
           cursor="pointer"
         />
-        <UserName>{sessionStorage.getItem("Name")}</UserName>
+        <UserName>{sessionStorage.getItem("Name") || user?.name}</UserName>
         {toggleLoggout && <Loggout />}
       </UserLogo>
 

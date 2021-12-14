@@ -51,6 +51,8 @@ interface AuthContextType {
     surname: string
   ) => Promise<void>;
   loginWithEmailAndPassword: (email: string, password: string) => Promise<void>;
+
+  logout: () => Promise<void>;
 }
 
 interface AuthContextProviderProps {
@@ -122,12 +124,25 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           )
           .then((result) => {
             setUser(result.data);
+            push("/");
           });
       })
       .catch((error) => {
         console.log(error);
         setError(error.code);
       });
+  }
+
+
+  async function logout() {
+    await auth.signOut().then(resp => {
+      push("/login");
+
+      if(sessionStorage.getItem("Name")) {
+        sessionStorage.removeItem("Name");
+      }
+
+    });
   }
 
   useEffect(() => {
@@ -139,14 +154,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           throw new Error("Missing Collect information");
         }
 
-        if (!localStorage.getItem("token")) {
-          localStorage.setItem("token", "logged");
-        }
-
         axios
           .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
           .then((result) => {
             setUser(result.data);
+            if (!localStorage.getItem("token")) {
+              localStorage.setItem("token", "logged");
+            }
             if(!sessionStorage.getItem("Name") !== result.data.name) {
               sessionStorage.setItem("Name", result.data.name);
             } 
@@ -172,6 +186,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       value={{
         user,
         error,
+        logout,
         signInWithGoogle,
         createAccountWithEmailAndPassword,
         loginWithEmailAndPassword,

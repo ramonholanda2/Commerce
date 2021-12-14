@@ -6,6 +6,7 @@ import Header from "./components/Header/Header";
 import Products from "./components/Products/Products";
 import { CommerceContextProvider } from "./contexts/ComerceContext";
 import Chart from "./components/Chart/Chart";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
