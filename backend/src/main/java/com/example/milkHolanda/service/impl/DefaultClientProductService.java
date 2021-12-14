@@ -28,7 +28,6 @@ public class DefaultClientProductService implements ClientProductService {
     @Autowired
     private ItemRepository itemRepository;
 
-
     @Override
     public void addProductForClient(ClientProductDTO clientProductDTO) {
 

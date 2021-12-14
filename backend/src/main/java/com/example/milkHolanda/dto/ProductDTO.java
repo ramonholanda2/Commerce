@@ -20,7 +20,6 @@ public class ProductDTO implements Serializable {
     @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
 
-
     public ProductDTO() {
     }
 

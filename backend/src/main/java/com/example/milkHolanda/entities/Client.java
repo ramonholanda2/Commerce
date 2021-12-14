@@ -21,9 +21,6 @@ public class Client implements Serializable {
     @OneToOne(mappedBy = "client")
     private AddressClient address;
 
-    @ManyToMany(mappedBy = "client")
-    private List<RequestProduct> products = new ArrayList<>();
-
     public Client() {
     }
 
@@ -32,11 +29,11 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public Client(String id, String name, String surname, AddressClient address, List<RequestProduct> products) {
+    public Client(String id, String name, String surname, AddressClient address) {
         this.id = id;
         this.name = name;
+        this.surname = surname;
         this.address = address;
-        this.products = products;
     }
 
     public String getId() {
@@ -69,24 +66,6 @@ public class Client implements Serializable {
 
     public void setAddress(AddressClient address) {
         this.address = address;
-    }
-
-    public List<RequestProduct> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<RequestProduct> products) {
-        this.products = products;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", address=" + address +
-                ", products=" + products +
-                '}';
     }
 
     @Override

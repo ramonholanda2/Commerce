@@ -1,6 +1,7 @@
 package com.example.milkHolanda.entities;
 import com.example.milkHolanda.dto.ProductItemDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,13 +30,18 @@ public class ProductItem implements Serializable {
     public ProductItem() {
     }
 
-
     public ProductItem(Long id, Integer quantity, Double subtotal, RequestProduct product, Client client) {
         this.id = id;
         this.quantity = quantity;
         this.subtotal = subtotal;
         this.product = product;
         this.client = client;
+    }
+
+    public ProductItem(Long id, Integer quantity, Double subtotal) {
+        this.id = id;
+        this.quantity = quantity;
+        this.subtotal = subtotal;
     }
 
     public Long getId() {

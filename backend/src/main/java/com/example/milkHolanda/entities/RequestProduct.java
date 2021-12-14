@@ -21,9 +21,6 @@ public class RequestProduct implements Serializable {
 
     private Double price;
 
-    @OneToOne(mappedBy = "product")
-    private ProductItem item;
-
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "tb_client_product",
@@ -31,6 +28,12 @@ public class RequestProduct implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "client_id")
     )
     private Collection<Client> client;
+
+    public RequestProduct(Long id, String name, Double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
 
     public Collection<Client> getClient() {
         return client;
@@ -43,10 +46,6 @@ public class RequestProduct implements Serializable {
     public RequestProduct() {
     }
 
-    public RequestProduct(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Long getId() {
         return id;
@@ -70,14 +69,6 @@ public class RequestProduct implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public ProductItem getItem() {
-        return item;
-    }
-
-    public void setItem(ProductItem item) {
-        this.item = item;
     }
 
     @Override

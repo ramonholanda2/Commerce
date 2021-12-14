@@ -1,9 +1,11 @@
 package com.example.milkHolanda.facade.impl;
 import com.example.milkHolanda.dto.ProductDTO;
-import com.example.milkHolanda.dto.ProductItemDTO;
 import com.example.milkHolanda.dto.RequestProductDTO;
+import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 import com.example.milkHolanda.facade.ProductFacade;
+import com.example.milkHolanda.repository.ItemRepository;
+import com.example.milkHolanda.repository.ProductRepository;
 import com.example.milkHolanda.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class DefaultProductFacade implements ProductFacade {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Override
     public List<ProductDTO> findAll() {
@@ -59,7 +64,11 @@ public class DefaultProductFacade implements ProductFacade {
 
         for (RequestProduct product : products) {
 
-            RequestProductDTO requestProductDTO = new RequestProductDTO(product, product.getItem());
+            String id = product.getClient().stream().findFirst().get().getId();
+
+            ProductItem item = itemRepository.findItemWithThisProductAndClient(product.getId(), id);
+
+            RequestProductDTO requestProductDTO = new RequestProductDTO(product, item);
 
             productDTOS.add(requestProductDTO);
 

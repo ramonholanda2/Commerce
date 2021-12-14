@@ -20,10 +20,6 @@ public class ClientDTO {
     public ClientDTO() {
     }
 
-    public ClientDTO(String id) {
-        this.id = id;
-    }
-
     public ClientDTO(String id, String name, String surname, List<RequestProductDTO> products, AddressClientDTO address) {
         this.id = id;
         this.surname = surname;
@@ -32,6 +28,11 @@ public class ClientDTO {
         this.address = address;
 
     }
+
+    public ClientDTO(String id) {
+        this.id = id;
+    }
+
 
 
     public String getId() {
