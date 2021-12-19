@@ -6,7 +6,7 @@ import Header from "./components/Header/Header";
 import Products from "./components/Products/Products";
 import { CommerceContextProvider } from "./contexts/ComerceContext";
 import Chart from "./components/Chart/Chart";
-import Footer from "./components/Footer/Footer";
+import NewProduct from "./components/NewProduct/NewProduct";
 
 function App() {
   return (
@@ -19,12 +19,18 @@ function App() {
           </Switch>
           <Switch>
             <Route path="/" exact>
-                <Header />
-                <Products />
+              <Header />
+              <Products />
             </Route>
             <Route path={"/meus-produtos"}>
-                <Header />
-                <Chart />
+              <Header />
+              <Chart />
+            </Route>
+          </Switch>
+          <Switch>
+            <Route path={"/upload"} exact>
+              <Header />
+              <NewProduct />
             </Route>
           </Switch>
         </CommerceContextProvider>

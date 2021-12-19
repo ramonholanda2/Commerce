@@ -19,7 +19,7 @@ interface CommerceContextType {
     idClient: string | undefined,
     idProduct: Long
   ) => Promise<void>;
-
+  
   getProducts: (idClient: string | undefined) => Promise<void>;
 
   products: Product[];
@@ -67,9 +67,13 @@ export function CommerceContextProvider({
       });
   }
 
-  async function updateItem(idClient: string | undefined, idItem: Long, quantity: number, idProduct: Long) {
-    
-    if(quantity === 0) return removeProductForClient(idClient, idProduct);
+  async function updateItem(
+    idClient: string | undefined,
+    idItem: Long,
+    quantity: number,
+    idProduct: Long
+  ) {
+    if (quantity === 0) return removeProductForClient(idClient, idProduct);
 
     await axios
       .post(`https://milk-holanda.herokuapp.com/item/update/${idItem}`, {
@@ -122,6 +126,7 @@ export function CommerceContextProvider({
         console.log(error);
       });
   }
+
 
   return (
     <CommerceContext.Provider

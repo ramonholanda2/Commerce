@@ -32,6 +32,7 @@ export const ProductImage = styled.img`
   border: 3px solid purple;
   margin: 10px;
   border-radius: 10%;
+  object-fit: cover;
 
   width: 15rem;
   height: 15rem;
