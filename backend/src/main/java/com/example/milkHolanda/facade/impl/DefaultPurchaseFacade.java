@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 @Service("purchaseFacade")
 public class DefaultPurchaseFacade implements PurchaseFacade {
@@ -33,12 +31,12 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
         for (Purchase purchase : purchases) {
 
             ProductItem item = new ProductItem(purchase.getIdItem(), purchase.getQuantity(), purchase.getSubtotal());
-            RequestProduct product = new RequestProduct(purchase.getIdProduct(), purchase.getName(), purchase.getPrice());
+            RequestProduct product = new RequestProduct(purchase.getIdProduct(), purchase.getName(), purchase.getPrice(), purchase.getUrlImage(), item);
 
             AddressClient addressClient = new AddressClient(purchase.getIdAddress(), purchase.getStreet(), purchase.getNumber(), purchase.getComplement(), purchase.getCep(), purchase.getCity());
             Client client = new Client(purchase.getIdClient(), purchase.getClientName(), purchase.getClientSurname(), addressClient);
 
-            PurchaseDTO purchaseDTO = new PurchaseDTO(purchase.getId(), product, client);
+            PurchaseDTO purchaseDTO = new PurchaseDTO(purchase.getId(), purchase.getStatus(), product, client);
 
             purchaseDTOS.add(purchaseDTO);
         }

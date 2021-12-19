@@ -21,6 +21,11 @@ public class RequestProduct implements Serializable {
 
     private Double price;
 
+    private String urlImage;
+
+    @OneToOne(mappedBy = "product")
+    private ProductItem item;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "tb_client_product",
@@ -29,10 +34,15 @@ public class RequestProduct implements Serializable {
     )
     private Collection<Client> client;
 
-    public RequestProduct(Long id, String name, Double price) {
+    public RequestProduct() {
+    }
+
+    public RequestProduct(Long id, String name, Double price, String urlImage, ProductItem item) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.urlImage = urlImage;
+        this.item = item;
     }
 
     public Collection<Client> getClient() {
@@ -41,9 +51,6 @@ public class RequestProduct implements Serializable {
 
     public void setClient(Collection<Client> client) {
         this.client = client;
-    }
-
-    public RequestProduct() {
     }
 
 
@@ -69,6 +76,22 @@ public class RequestProduct implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public ProductItem getItem() {
+        return item;
+    }
+
+    public void setItem(ProductItem item) {
+        this.item = item;
     }
 
     @Override

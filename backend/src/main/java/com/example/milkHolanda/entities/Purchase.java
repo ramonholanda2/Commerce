@@ -1,5 +1,7 @@
 package com.example.milkHolanda.entities;
 
+import com.example.milkHolanda.entities.enums.PaymentStatus;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,10 +13,12 @@ public class Purchase implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Integer status;
 
     private Long idProduct;
     private String name;
     private Double price;
+    private String urlImage;
 
     private Long idItem;
     private Integer quantity;
@@ -34,11 +38,13 @@ public class Purchase implements Serializable {
     public Purchase() {
     }
 
-    public Purchase(Long id, RequestProduct product, ProductItem item, Client client, AddressClient addressClient) {
+    public Purchase(Long id, PaymentStatus status,  RequestProduct product, ProductItem item, Client client, AddressClient addressClient) {
         this.id = id;
+        this.status = (status == null) ? null : status.getCode();
         this.idProduct = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
+        this.urlImage = product.getUrlImage();
         this.idItem = item.getId();
         this.quantity = item.getQuantity();
         this.subtotal = item.getSubtotal();
@@ -59,6 +65,18 @@ public class Purchase implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public PaymentStatus getStatus() {
+        return PaymentStatus.toEnum(status);
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 
     public Long getIdProduct() {
@@ -83,6 +101,10 @@ public class Purchase implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setStatus(PaymentStatus status) {
+        this.status = status.getCode();
     }
 
     public Long getIdItem() {

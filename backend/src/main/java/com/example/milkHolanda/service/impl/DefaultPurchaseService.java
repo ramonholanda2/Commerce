@@ -2,11 +2,9 @@ package com.example.milkHolanda.service.impl;
 
 import com.example.milkHolanda.dto.pks.PurchaseProductDTO;
 import com.example.milkHolanda.entities.*;
+import com.example.milkHolanda.entities.enums.PaymentStatus;
 import com.example.milkHolanda.exceptions.ObjectNotFoundException;
-import com.example.milkHolanda.repository.AddressRepository;
-import com.example.milkHolanda.repository.ClientRepository;
-import com.example.milkHolanda.repository.ProductRepository;
-import com.example.milkHolanda.repository.PurchaseRepository;
+import com.example.milkHolanda.repository.*;
 import com.example.milkHolanda.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,9 @@ public class DefaultPurchaseService implements PurchaseService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     @Autowired
     private ClientRepository clientRepository;
@@ -55,9 +56,9 @@ public class DefaultPurchaseService implements PurchaseService {
         RequestProduct product = productRepository.findById(idProduct).get();
         Client client = clientRepository.findClientById(idClient);
         AddressClient addressClient = addressRepository.findById(idAddress).get();
-        ProductItem item = new ProductItem();
+        ProductItem item = itemRepository.findItemWithThisProductAndClient(idProduct, idClient);
 
-        Purchase purchase = new Purchase(null, product, item, client, addressClient);
+        Purchase purchase = new Purchase(null, PaymentStatus.PENDENTE, product, item, client, addressClient);
 
         purchaseRepository.save(purchase);
     }
