@@ -7,6 +7,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class ProductDTO implements Serializable {
 
@@ -20,6 +21,9 @@ public class ProductDTO implements Serializable {
     @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
 
+    @NotEmpty(message = "Este campo não pode ser vazio!")
+    private String urlImage;
+
     public ProductDTO() {
     }
 
@@ -27,6 +31,7 @@ public class ProductDTO implements Serializable {
         this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
+        this.urlImage = product.getUrlImage();
     }
     public Long getId() {
         return id;
@@ -52,14 +57,34 @@ public class ProductDTO implements Serializable {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "RequestProductDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", items=" + price +
-                '}';
+    public String getUrlImage() {
+        return urlImage;
     }
 
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDTO that = (ProductDTO) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", urlImage='" + urlImage + '\'' +
+                '}';
+    }
 }
