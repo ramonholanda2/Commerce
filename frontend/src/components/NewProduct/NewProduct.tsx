@@ -13,8 +13,10 @@ import {
   LabelTitle,
   ButtonSend,
 } from "./styles";
+import { useCommerceContext } from "../../contexts/ComerceContext";
 
 const NewProduct = () => {
+  const { uploadProduct } = useCommerceContext();
   const [imagePreview, setImagePreview] = useState<
     string | undefined | ArrayBuffer | null
   >();
@@ -26,11 +28,11 @@ const NewProduct = () => {
     useState<SetStateAction<string | undefined>>();
 
   async function uploadProductImage(e: any) {
+    e.preventDefault();
+
     if (!selectedImage) {
       return alert("Selecione uma imagem!");
     }
-
-    e.preventDefault();
 
     const upload = firebase
       .storage()
@@ -48,7 +50,12 @@ const NewProduct = () => {
       },
       () => {
         upload.snapshot.ref.getDownloadURL().then((url) => {
-          uploadProduct(url);
+          const data = { 
+            name: productName,
+            price: productPrice,
+            urlImage: url
+           }
+          uploadProduct(data);
         });
       }
     );
@@ -65,10 +72,6 @@ const NewProduct = () => {
 
     setSelectedImage(e.target!.files[0]!);
     reader.readAsDataURL(e.target!.files[0]!);
-  }
-
-  async function uploadProduct(urlImage: string) {
-
   }
 
   return (

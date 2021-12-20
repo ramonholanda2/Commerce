@@ -1,6 +1,12 @@
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { createContext, useContext, ReactNode, useState } from "react";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  SetStateAction,
+} from "react";
 
 interface CommerceContextType {
   addProductForClient: (
@@ -19,17 +25,26 @@ interface CommerceContextType {
     idClient: string | undefined,
     idProduct: Long
   ) => Promise<void>;
-  
+
+  uploadProduct: (productData: SendProduct) => Promise<void>;
+
   getProducts: (idClient: string | undefined) => Promise<void>;
 
   products: Product[];
   loadingProducts: boolean;
 }
 
+interface SendProduct { 
+  name: SetStateAction<string | undefined>;
+  price: SetStateAction<string | undefined>;
+  urlImage: any;
+}
+
 interface Product {
   id: Long;
   name: string;
   price: Number;
+  urlImage: string;
   item: Item;
 }
 
@@ -127,6 +142,25 @@ export function CommerceContextProvider({
       });
   }
 
+  async function uploadProduct(productData: SendProduct) {
+
+    await axios
+        .post(
+          "https://milk-holanda.herokuapp.com/products",
+          {
+            name: productData.name,
+            price: productData.price,
+            urlImage: productData.urlImage
+          }
+        )
+        .then((resp) => {
+          document.location.reload();
+        })
+        .catch((error) => {
+          alert("Produto não cadastrado!")
+        });
+
+  }
 
   return (
     <CommerceContext.Provider
@@ -137,6 +171,7 @@ export function CommerceContextProvider({
         getProducts,
         addProductForClient,
         removeProductForClient,
+        uploadProduct,
       }}
     >
       {children}
