@@ -19,16 +19,15 @@ interface Address {
 
 interface DeliveryAddressProps {
   selectDeliveryAddress: (
-    addressOption: "address 1" | "address 2" | "address 3" | "",
+    addressOption: string,
     address: Address
   ) => void;
-  deliveryAddressOption: "address 1" | "address 2" | "address 3" | "";
+  deliveryAddressOption: string;
   deliveryAddress: Address | undefined;
 }
 
 const DeliveryAddress = ({
   selectDeliveryAddress,
-  deliveryAddress,
   deliveryAddressOption,
 }: DeliveryAddressProps) => {
   const { user } = useAuthContext();
@@ -36,24 +35,26 @@ const DeliveryAddress = ({
   return (
     <DeliveryAddressContainer>
       <DeliveryAddressTitle>Escolha o endereço</DeliveryAddressTitle>
-      <AddressContainer
-        onClick={() => selectDeliveryAddress("address 1", user?.address!)}
-      >
-        <OptionAddress
-          type={"radio"}
-          checked={deliveryAddressOption === "address 1"}
-          value="address 1"
-          name="address"
-        />
-        <InfoAddressContainer>
-          <OptionAddressLabel>
-            {user?.address?.street}, {user?.address?.number}
-          </OptionAddressLabel>
-          <OptionAddressLabel>
-            {user?.address?.complement} - {user?.address?.city}
-          </OptionAddressLabel>
-        </InfoAddressContainer>
-      </AddressContainer>
+      {user?.address?.map((deliveryAddress, index) =>  (
+        <AddressContainer
+          onClick={() => selectDeliveryAddress(`address ${index}`, deliveryAddress)}
+        >
+          <OptionAddress
+            type={"radio"}
+            checked={deliveryAddressOption === `address ${index}`}
+            value={`address ${index}`}
+            name="address"
+          />
+          <InfoAddressContainer>
+            <OptionAddressLabel>
+              {deliveryAddress.street}, {deliveryAddress.number}
+            </OptionAddressLabel>
+            <OptionAddressLabel>
+              {deliveryAddress.complement} - {deliveryAddress.city}
+            </OptionAddressLabel>
+          </InfoAddressContainer>
+        </AddressContainer>
+      ))}
     </DeliveryAddressContainer>
   );
 };

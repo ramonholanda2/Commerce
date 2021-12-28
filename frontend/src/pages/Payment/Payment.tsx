@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useCommerceContext } from "../../contexts/ComerceContext";
 import { generateQrCode } from "../../utils/generateQrCode";
 import DeliveryAddress from "./DeliveryAddress/DeliveryAddress";
 import MethodPayment from "./MethodPayment/MethodPayment";
@@ -23,20 +26,21 @@ const Payment = () => {
   const [methodPaymentSelected, setMethodPaymentSelected] = useState<
     "pix" | "boleto" | "cartao" | ""
   >("");
-  const [deliveryAddressOption, setDeliveryAddressOption] = useState<
-    "address 1" | "address 2" | "address 3" | ""
-  >("");
+  const [deliveryAddressOption, setDeliveryAddressOption] =
+    useState<string>("");
   const [deliveryAddress, setDeliveryAddress] = useState<Address>();
   const [stepByStepPayment, setStepByStepPayment] = useState<number>(2);
+
+  const { buyProduct, purchaseProduct } = useCommerceContext();
+  const { user } = useAuthContext();
+  const { push } = useHistory();
+
 
   function selectMethodPayment(method: "pix" | "boleto" | "cartao" | "") {
     setMethodPaymentSelected(method);
   }
 
-  function selectDeliveryAddress(
-    addressOption: "address 1" | "address 2" | "address 3" | "",
-    address: Address
-  ) {
+  function selectDeliveryAddress(addressOption: string, address: Address) {
     setDeliveryAddressOption(addressOption);
     setDeliveryAddress(address);
   }
@@ -48,9 +52,9 @@ const Payment = () => {
     if (stepByStepPayment === 3 && deliveryAddressOption === "")
       return alert("Selecione um endereço!");
 
-    if(stepByStepPayment === 3) {
+    if (stepByStepPayment === 3) {
       var qrCode = await generateQrCode();
-      alert(qrCode);
+      await purchaseProduct(qrCode, Number(buyProduct?.id), user?.id!, Number(deliveryAddress?.id));
     }
 
     if (stepByStepPayment <= 2) setStepByStepPayment(stepByStepPayment + 1);
@@ -61,6 +65,13 @@ const Payment = () => {
       setStepByStepPayment(stepByStepPayment - 1);
     }
   }
+
+  useEffect(() => {
+    alert(JSON.stringify(buyProduct));
+    if(!buyProduct) 
+        push("/");
+
+  }, [buyProduct, push]);
 
   return (
     <PaymentContainer>

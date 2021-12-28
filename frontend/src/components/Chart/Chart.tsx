@@ -16,12 +16,33 @@ import {
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+interface Product {
+  id: Long;
+  name: string;
+  price: Number;
+  urlImage: string;
+  item: Item;
+}
+
+interface Item {
+  id: Long;
+  quantity: number;
+  subtotal: number;
+}
 
 const Chart = () => {
   const { user } = useAuthContext();
-  const { products, loadingProducts, getProducts, removeProductForClient } =
+  const { products, loadingProducts, setProductForPurchase, getProducts, removeProductForClient } =
     useCommerceContext();
 
+    const { push } = useHistory();
+
+  function buy (product: Product) {
+    setProductForPurchase(product);
+    push("/pagamento");
+  }
   useEffect(() => {
     if (user?.id !== undefined) {
       getProducts(user.id);
@@ -62,7 +83,7 @@ const Chart = () => {
               })}{" "}
               $
             </Subtotal>
-            <BuyButton>Comprar</BuyButton>
+            <BuyButton onClick={() => buy(product)}>Comprar</BuyButton>
           </BuyProduct>
           <DeleteButtom
             onClick={() => removeProductForClient(user?.id, product.id)}

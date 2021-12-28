@@ -36,7 +36,7 @@ interface User {
   id: string;
   name?: string;
   surname?: string;
-  address?: Address;
+  address?: Address[];
   products?: Product[];
 }
 

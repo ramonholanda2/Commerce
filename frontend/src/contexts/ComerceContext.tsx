@@ -26,7 +26,17 @@ interface CommerceContextType {
     idProduct: Long
   ) => Promise<void>;
 
+  setProductForPurchase: (purchase: Product) => void;
+  buyProduct: Product | undefined;
+
   uploadProduct: (productData: SendProduct) => Promise<void>;
+
+  purchaseProduct: (
+    qrCode: string,
+    idProduct: number,
+    idClient: string,
+    idAddress: number
+  ) => Promise<void>;
 
   getProducts: (idClient: string | undefined) => Promise<void>;
 
@@ -34,7 +44,7 @@ interface CommerceContextType {
   loadingProducts: boolean;
 }
 
-interface SendProduct { 
+interface SendProduct {
   name: SetStateAction<string | undefined>;
   price: SetStateAction<string | undefined>;
   urlImage: any;
@@ -65,6 +75,7 @@ export function CommerceContextProvider({
 }: CommerceContextProviderProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
+  const [buyProduct, setBuyProduct] = useState<Product>();
 
   const { push } = useHistory();
 
@@ -143,23 +154,40 @@ export function CommerceContextProvider({
   }
 
   async function uploadProduct(productData: SendProduct) {
-
     await axios
-        .post(
-          "https://milk-holanda.herokuapp.com/products",
-          {
-            name: productData.name,
-            price: productData.price,
-            urlImage: productData.urlImage
-          }
-        )
-        .then((resp) => {
-          document.location.reload();
-        })
-        .catch((error) => {
-          alert("Produto não cadastrado!")
-        });
+      .post("https://milk-holanda.herokuapp.com/products", {
+        name: productData.name,
+        price: productData.price,
+        urlImage: productData.urlImage,
+      })
+      .then((resp) => {
+        document.location.reload();
+      })
+      .catch((error) => {
+        alert("Produto não cadastrado!");
+      });
+  }
 
+  async function purchaseProduct(
+    qrCodeUrl: string,
+    idProduct: number,
+    idClient: string,
+    idAddress: number
+  ) {
+    axios
+      .post("https://milk-holanda.herokuapp.com/purchases", {
+        qrCodeUrl,
+        idProduct,
+        idClient,
+        idAddress,
+      })
+      .then((resp) => {
+        push("/compras")
+      });
+  }
+
+  function setProductForPurchase(product: Product) {
+    setBuyProduct(product);
   }
 
   return (
@@ -167,11 +195,14 @@ export function CommerceContextProvider({
       value={{
         loadingProducts,
         products,
+        buyProduct,
         updateItem,
         getProducts,
         addProductForClient,
         removeProductForClient,
         uploadProduct,
+        setProductForPurchase,
+        purchaseProduct,
       }}
     >
       {children}

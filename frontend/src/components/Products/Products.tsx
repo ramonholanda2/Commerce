@@ -7,9 +7,11 @@ import {
   ProductName,
   ProductPrice,
   AddButton,
+  BuyButton,
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 interface Product {
   id: Long;
@@ -35,6 +37,14 @@ const Products = () => {
   const [products, setProducts] = useState<AllProducts>();
   const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
   const [tryGetProducts, setTryGetProducts] = useState<number>(0);
+
+  const { setProductForPurchase } = useCommerceContext();
+  const { push } = useHistory(); 
+
+  function buy(product: Product) {
+    setProductForPurchase(product);
+    push("/pagamento")
+  }
 
   useEffect(() => {
     axios
@@ -76,7 +86,7 @@ const Products = () => {
           <AddButton onClick={() => addProductForClient(user?.id, product)}>
             Adicionar
           </AddButton>
-          {/* <BuyButton>Comprar agora</BuyButton> */}
+          <BuyButton onClick={() => buy(product)}>Comprar agora</BuyButton> 
         </ProductContainer>
       ))}
       
