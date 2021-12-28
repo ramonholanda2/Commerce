@@ -36,8 +36,8 @@ public class DefaultAddressService implements AddressService {
 
         if(existsClient != 1) {
             throw new ObjectNotFoundException("Cliente não encontrado!");
-        } else if(existsAddressWithThisClient != 0) {
-            throw new DataIntegrityException("Endereço já existe!");
+        } else if(existsAddressWithThisClient >= 3) {
+            throw new DataIntegrityException("Só é possível adicionar 3 endereços!");
         }
 
         Client client = clientRepository.findClientById(idClient);

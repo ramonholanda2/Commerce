@@ -19,6 +19,7 @@ public class AddressClient implements Serializable {
     private String complement;
     private String cep;
     private String city;
+    private String district;
 
     @OneToOne
     @JsonIgnore
@@ -27,13 +28,14 @@ public class AddressClient implements Serializable {
     public AddressClient() {
     }
 
-    public AddressClient(Long id, String street, Integer number, String complement, String cep, String city) {
+    public AddressClient(Long id, String street, Integer number, String complement, String cep, String city, String district) {
         this.id = id;
         this.street = street;
         this.number = number;
         this.complement = complement;
         this.cep = cep;
         this.city = city;
+        this.district = district;
     }
 
     public Long getId() {
@@ -82,6 +84,14 @@ public class AddressClient implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     public Client getClient() {

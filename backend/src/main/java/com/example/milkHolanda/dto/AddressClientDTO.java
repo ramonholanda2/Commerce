@@ -24,6 +24,9 @@ public class AddressClientDTO {
     @NotEmpty(message = "Campo Cidade é obrigatório!")
     private String city;
 
+    @NotEmpty(message = "Campo Bairro é obrigatório!")
+    private String district;
+
     public AddressClientDTO() {
     }
 
@@ -34,6 +37,7 @@ public class AddressClientDTO {
         this.complement = address.getComplement();
         this.cep = address.getCep();
         this.city = address.getCity();
+        this.district = address.getDistrict();
     }
 
     public Long getId() {
@@ -82,6 +86,14 @@ public class AddressClientDTO {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     @Override

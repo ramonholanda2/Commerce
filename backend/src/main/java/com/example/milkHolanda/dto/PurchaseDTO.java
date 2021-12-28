@@ -12,6 +12,8 @@ public class PurchaseDTO implements Serializable {
 
     private String status;
 
+    private String qrCodeUrl;
+
     private RequestProduct product;
 
     private Client client;
@@ -19,9 +21,10 @@ public class PurchaseDTO implements Serializable {
     public PurchaseDTO() {
     }
 
-    public PurchaseDTO(Long id, PaymentStatus status, RequestProduct product, Client client) {
+    public PurchaseDTO(Long id, PaymentStatus status, String qrCodeUrl, RequestProduct product, Client client) {
         this.id = id;
         this.status = (status == null) ? null : status.getDescription();
+        this.qrCodeUrl = qrCodeUrl;
         this.product = product;
         this.client = client;
     }
@@ -40,6 +43,14 @@ public class PurchaseDTO implements Serializable {
 
     public void setStatus(PaymentStatus status) {
         this.status = status.getDescription();
+    }
+
+    public String getQrCodeUrl() {
+        return qrCodeUrl;
+    }
+
+    public void setQrCodeUrl(String qrCodeUrl) {
+        this.qrCodeUrl = qrCodeUrl;
     }
 
     public RequestProduct getProduct() {

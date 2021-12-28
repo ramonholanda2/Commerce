@@ -1,22 +1,31 @@
 package com.example.milkHolanda.dto.pks;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 public class PurchaseProductDTO implements Serializable {
 
+    @NotEmpty(message = "idClient não pode ser vazio!")
     private String idClient;
 
+    @NotEmpty(message = "qrCodeUrl não pode ser vazio!")
+    private String qrCodeUrl;
+
+    @NotNull(message = "idProduct não pode ser nulo!")
     private Long idProduct;
 
+    @NotNull(message = "idAddress não pode ser nulo!")
     private Long idAddress;
 
     public PurchaseProductDTO() {
     }
 
-    public PurchaseProductDTO(String idClient, Long idProduct, Long idAddress) {
+    public PurchaseProductDTO(String idClient, String qrCodeUrl, Long idProduct, Long idAddress) {
         this.idClient = idClient;
         this.idProduct = idProduct;
         this.idAddress = idAddress;
+        this.qrCodeUrl = qrCodeUrl;
     }
 
     public String getIdClient() {
@@ -25,6 +34,14 @@ public class PurchaseProductDTO implements Serializable {
 
     public void setIdClient(String idClient) {
         this.idClient = idClient;
+    }
+
+    public String getQrCodeUrl() {
+        return qrCodeUrl;
+    }
+
+    public void setQrCodeUrl(String qrCodeUrl) {
+        this.qrCodeUrl = qrCodeUrl;
     }
 
     public Long getIdProduct() {

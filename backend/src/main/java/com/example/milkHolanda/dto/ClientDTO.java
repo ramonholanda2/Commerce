@@ -13,14 +13,14 @@ public class ClientDTO {
     @NotBlank(message = "sobrenome obrigatório!")
     private String surname;
     
-    private AddressClientDTO address;
+    private List<AddressClientDTO> address = new ArrayList<>();
 
     private List<RequestProductDTO> products = new ArrayList<>();
 
     public ClientDTO() {
     }
 
-    public ClientDTO(String id, String name, String surname, List<RequestProductDTO> products, AddressClientDTO address) {
+    public ClientDTO(String id, String name, String surname, List<RequestProductDTO> products, List<AddressClientDTO> address) {
         this.id = id;
         this.surname = surname;
         this.name = name;
@@ -59,11 +59,11 @@ public class ClientDTO {
         this.surname = surname;
     }
 
-    public AddressClientDTO getAddress() {
+    public List<AddressClientDTO> getAddress() {
         return address;
     }
 
-    public void setAddress(AddressClientDTO address) {
+    public void setAddress(List<AddressClientDTO> address) {
         this.address = address;
     }
 

@@ -14,6 +14,7 @@ public class Purchase implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer status;
+    private String qrCodeUrl;
 
     private Long idProduct;
     private String name;
@@ -34,13 +35,15 @@ public class Purchase implements Serializable {
     private String complement;
     private String cep;
     private String city;
+    private String district;
 
     public Purchase() {
     }
 
-    public Purchase(Long id, PaymentStatus status,  RequestProduct product, ProductItem item, Client client, AddressClient addressClient) {
+    public Purchase(Long id, PaymentStatus status, String qrCodeUrl,  RequestProduct product, ProductItem item, Client client, AddressClient addressClient) {
         this.id = id;
         this.status = (status == null) ? null : status.getCode();
+        this.qrCodeUrl = qrCodeUrl;
         this.idProduct = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
@@ -57,6 +60,7 @@ public class Purchase implements Serializable {
         this.complement = addressClient.getComplement();
         this.cep = addressClient.getCep();
         this.city = addressClient.getCity();
+        this.district = addressClient.getDistrict();
     }
 
     public Long getId() {
@@ -69,6 +73,14 @@ public class Purchase implements Serializable {
 
     public PaymentStatus getStatus() {
         return PaymentStatus.toEnum(status);
+    }
+
+    public String getQrCodeUrl() {
+        return qrCodeUrl;
+    }
+
+    public void setQrCodeUrl(String qrCodeUrl) {
+        this.qrCodeUrl = qrCodeUrl;
     }
 
     public String getUrlImage() {
@@ -201,6 +213,14 @@ public class Purchase implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
     }
 
     @Override

@@ -88,14 +88,17 @@ public class DefaultClientFacade implements ClientFacade {
     public ClientDTO convert(Client client)
     {
 
-        AddressClient address = addressRepository.findAddressForClient(client.getId());
-        AddressClientDTO addressClient;
+        List<AddressClient> address = addressRepository.findAddressForClient(client.getId());
 
-        if(address != null) {
-            addressClient = new AddressClientDTO(address);
-        } else {
-            addressClient = new AddressClientDTO();
+        List<AddressClientDTO> addressClient = new ArrayList<>();
+
+        for(AddressClient ad : address) {
+            if(ad != null) {
+                AddressClientDTO newAddress = new AddressClientDTO(ad);
+                addressClient.add(newAddress);
+            }
         }
+
 
         List<RequestProduct> products = productRepository.findProductsByClientId(client.getId());
         List<RequestProductDTO> productsDTO = new ArrayList<>();

@@ -41,11 +41,11 @@ public class DefaultPurchaseService implements PurchaseService {
         Long idProduct = purchaseProductDTO.getIdProduct();
         long idAddress = purchaseProductDTO.getIdAddress();
 
-        Boolean existsProduct = productRepository.existsById(idProduct);
+        long existsProduct = productRepository.existsProductWithClient(idClient, idProduct);
         long existsClient = clientRepository.existsByIdClient(idClient);
         boolean existsAddress = addressRepository.existsById(idAddress);
 
-        if(!existsProduct) {
+        if(existsProduct != 1) {
             throw new ObjectNotFoundException("Produto não encontrado!");
         } else if (existsClient != 1) {
             throw new ObjectNotFoundException("Cliente não encontrado!");
@@ -58,7 +58,7 @@ public class DefaultPurchaseService implements PurchaseService {
         AddressClient addressClient = addressRepository.findById(idAddress).get();
         ProductItem item = itemRepository.findItemWithThisProductAndClient(idProduct, idClient);
 
-        Purchase purchase = new Purchase(null, PaymentStatus.PENDENTE, product, item, client, addressClient);
+        Purchase purchase = new Purchase(null, PaymentStatus.PENDENTE, purchaseProductDTO.getQrCodeUrl(), product, item, client, addressClient);
 
         purchaseRepository.save(purchase);
     }

@@ -4,6 +4,7 @@ import com.example.milkHolanda.entities.ProductItem;
 import com.example.milkHolanda.entities.RequestProduct;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -18,6 +19,10 @@ public class RequestProductDTO {
     @Positive(message = "O preço deve ser maior que zero!")
     private Double price;
 
+    @NotEmpty(message = "Este campo não pode ser vazio!")
+    private String urlImage;
+
+
     private ProductItem item;
 
     public RequestProductDTO() {
@@ -28,12 +33,14 @@ public class RequestProductDTO {
         this.name = product.getName();
         this.item = item;
         this.price = product.getPrice();
+        this.urlImage = product.getUrlImage();
     }
 
     public RequestProductDTO(RequestProduct product) {
         this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
+        this.urlImage = product.getUrlImage();
     }
 
     public Long getId() {
@@ -58,6 +65,14 @@ public class RequestProductDTO {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
     }
 
     public ProductItem getItem() {

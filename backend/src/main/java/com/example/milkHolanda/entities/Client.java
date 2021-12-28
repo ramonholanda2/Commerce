@@ -18,8 +18,8 @@ public class Client implements Serializable {
 
     private String surname;
 
-    @OneToOne(mappedBy = "client")
-    private AddressClient address;
+    @OneToMany(mappedBy = "client")
+    private List<AddressClient> address;
 
     public Client() {
     }
@@ -29,10 +29,19 @@ public class Client implements Serializable {
         this.name = name;
     }
 
-    public Client(String id, String name, String surname, AddressClient address) {
+    public Client(String id, String name, String surname, List<AddressClient> address) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.address = address;
+    }
+
+    public Client(String idClient, String clientName, String clientSurname, AddressClient addressClient) {
+        this.id = idClient;
+        this.name = clientName;
+        this.surname = clientSurname;
+        List<AddressClient> address = new ArrayList<>();
+        address.add(addressClient);
         this.address = address;
     }
 
@@ -60,11 +69,11 @@ public class Client implements Serializable {
         this.surname = surname;
     }
 
-    public AddressClient getAddress() {
+    public List<AddressClient> getAddress() {
         return address;
     }
 
-    public void setAddress(AddressClient address) {
+    public void setAddress(List<AddressClient> address) {
         this.address = address;
     }
 

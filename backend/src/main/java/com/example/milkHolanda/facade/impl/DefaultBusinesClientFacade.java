@@ -43,7 +43,7 @@ public class DefaultBusinesClientFacade implements BusinesClientFacade {
 
             if (client.getId() != businessClient.getId()) {
 
-                AddressClient addressModel = addressRepository.findAddressForClient(client.getId());
+               List<AddressClient> addressModel = addressRepository.findAddressForClient(client.getId());
                 List<RequestProduct> products = productRepository.findProductsByClientId(client.getId());
 
                 ClientDTO clientDTO = convert(
@@ -64,18 +64,22 @@ public class DefaultBusinesClientFacade implements BusinesClientFacade {
 
     }
 
-    public ClientDTO convert(Client client, List<RequestProduct> products, AddressClient address) {
+    public ClientDTO convert(Client client, List<RequestProduct> products, List<AddressClient> address) {
 
-        AddressClientDTO addressClient = new AddressClientDTO();
+        List<AddressClientDTO> addressClient = new ArrayList<>();
 
-        if(address != null) {
-            addressClient.setId(address.getId());
-            addressClient.setComplement(address.getComplement());
-            addressClient.setNumber(address.getNumber());
-            addressClient.setCity(address.getCity());
-            addressClient.setCep(address.getCep());
-            addressClient.setStreet(address.getStreet());
+        for(AddressClient ad : address) {
+            if(ad != null) {
+                AddressClientDTO newAddress = new AddressClientDTO();
+                newAddress.setId(ad.getId());
+                newAddress.setComplement(ad.getComplement());
+                newAddress.setNumber(ad.getNumber());
+                newAddress.setCity(ad.getCity());
+                newAddress.setCep(ad.getCep());
+                newAddress.setStreet(ad.getStreet());
+            }
         }
+
 
         List<RequestProductDTO> productDTOList = new ArrayList<>();
 
