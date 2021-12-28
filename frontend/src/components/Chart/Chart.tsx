@@ -19,13 +19,14 @@ import { useEffect } from "react";
 
 const Chart = () => {
   const { user } = useAuthContext();
-  const { products, loadingProducts, getProducts, removeProductForClient } = useCommerceContext();
+  const { products, loadingProducts, getProducts, removeProductForClient } =
+    useCommerceContext();
 
   useEffect(() => {
-    if(user?.id !== undefined) {
+    if (user?.id !== undefined) {
       getProducts(user.id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
   return loadingProducts ? (
@@ -41,7 +42,7 @@ const Chart = () => {
           <div style={{ display: "flex", width: "100%" }}>
             <ProductDetailsContainer>
               <ProductTitle>{product.name}</ProductTitle>
-              <ProductImage src="http://localhost:3000/static/media/milk.2e4981d1.png" />
+              <ProductImage src={product.urlImage} alt={product.name} />
               <ProductPrice>
                 Preço -{" "}
                 {product.price.toLocaleString("pt-br", {

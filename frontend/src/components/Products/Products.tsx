@@ -6,7 +6,6 @@ import {
   ProductImage,
   ProductName,
   ProductPrice,
-  BuyButton,
   AddButton,
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
@@ -77,7 +76,7 @@ const Products = () => {
           <AddButton onClick={() => addProductForClient(user?.id, product)}>
             Adicionar
           </AddButton>
-          <BuyButton>Comprar agora</BuyButton>
+          {/* <BuyButton>Comprar agora</BuyButton> */}
         </ProductContainer>
       ))}
       
