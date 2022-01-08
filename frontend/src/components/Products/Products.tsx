@@ -36,14 +36,6 @@ const Products = () => {
   const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
   const [tryGetProducts, setTryGetProducts] = useState<number>(0);
 
-  /* const { setProductForPurchase } = useCommerceContext();
-  const { push } = useHistory();
-
-  async function buy(product: Product) {
-    await setProductForPurchase(user?.id!, product);
-    push("/pagamento");
-  } */
-
   useEffect(() => {
     axios
       .get("https://milk-holanda.herokuapp.com/products")

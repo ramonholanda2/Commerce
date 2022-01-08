@@ -1,4 +1,5 @@
 import QRCode from "qrcode";
+import { CgDetailsMore } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import {
   PurchaseContainer,
@@ -11,6 +12,7 @@ import {
   AddressTitle,
   FirstInfoAddress,
   AditionalInfoAddress,
+  AddressIcon,
   ProductTitle,
   PriceContainer,
   ProductSubtotal,
@@ -113,6 +115,9 @@ const Purchase = ({ purchase }: PurchaseProps) => {
             {purchase.client.address[0].city} - {purchase.client.address[0].cep}
           </AditionalInfoAddress>
       </AddressContainer>
+      <AddressIcon>
+        <CgDetailsMore onClick={() => alert(JSON.stringify(purchase.client.address[0]))} size={"2rem"} />
+      </AddressIcon>
       <PaymentContainer>
         <PaymentTitle>Pagamento</PaymentTitle>
         <PurchaseQrCode src={qrCode} alt="" />

@@ -29,10 +29,10 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
   function formatQuantity(value: string) {
     value = value.replace(/\D/gim, "");
     Number(value) < 0 && setQuantity(1);
-    Number(value) >= 0 && value.length <= 3 && setQuantity(Number(value));
+    (Number(value) >= 0 && value.length <= 3) && setQuantity(Number(value));
   }
   function addProduct() {
-    setQuantity(quantity + 1);
+    (String(quantity).length <= 3 && quantity < 999) &&  setQuantity(quantity + 1);
   }
 
   function removeProduct() {

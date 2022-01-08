@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const PurchaseContainer = styled.div`
   display: flex;
+  position: relative;
   justify-content: space-around;
   width: 100vw;
   max-width: 1100px;
@@ -9,6 +10,13 @@ export const PurchaseContainer = styled.div`
   border: 3px solid purple;
   border-radius: 8px;
   padding: 1rem 0;
+  
+  @media screen and (max-width: 400px) {
+    flex-direction: column;
+  }
+  @media screen and (max-width: 750px) {
+    justify-content: center;
+  }
 `;
 
 export const ProductContainer = styled.div`
@@ -57,6 +65,10 @@ export const AddressContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  @media screen and (max-width: 750px) {
+    display: none;
+  }
 `; 
 
 export const AddressTitle = styled.h5`
@@ -78,6 +90,17 @@ export const AditionalInfoAddress = styled.span `
     font-weight: 500;
     font-family: 'Mochiy Pop One', sans-serif;
     `;
+
+export const AddressIcon = styled.i `
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  
+  @media screen and (min-width: 750px) {
+    display: none;
+  }
+
+`;
 
 export const PurchaseQrCode = styled.img`
   width: 10rem;
