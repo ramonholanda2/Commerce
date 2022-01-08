@@ -17,6 +17,7 @@ interface Address {
   complement: string;
   cep: string;
   city: string;
+  district: string;
 }
 
 interface Product {
@@ -76,10 +77,16 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       const { uid, displayName } = result.user;
 
       if (uid && displayName) {
-        setUser({ id: uid, name: displayName });
+        var nameAndSurname = displayName.split(" ");
+        const nameClient = nameAndSurname[0];
+        const surnameClient =
+          nameAndSurname.length > 1 ? nameAndSurname[1] : "";
+
+        setUser({ id: uid, name: nameClient, surname: surnameClient });
         await axios.post("https://milk-holanda.herokuapp.com/clients", {
           id: uid,
-          name: displayName,
+          name: nameClient,
+          surname: surnameClient,
         });
       }
     }
@@ -99,7 +106,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
             .post(`https://milk-holanda.herokuapp.com/clients`, {
               id: response.user?.uid,
               name,
-              surname
+              surname,
             })
             .then((resp) => {
               push("/");
@@ -133,42 +140,42 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       });
   }
 
-
   async function logout() {
-    await auth.signOut().then(resp => {
+    await auth.signOut().then((resp) => {
       push("/login");
 
-      if(sessionStorage.getItem("Name")) {
+      if (sessionStorage.getItem("Name")) {
         sessionStorage.removeItem("Name");
       }
-
     });
   }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        const { uid } = user;
+        setTimeout(() => {
+          const { uid } = user;
 
-        if (!uid) {
-          throw new Error("Missing Collect information");
-        }
+          if (!uid) {
+            throw new Error("Missing Collect information");
+          }
 
-        axios
-          .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
-          .then((result) => {
-            setUser(result.data);
-            if (!localStorage.getItem("token")) {
-              localStorage.setItem("token", "logged");
-            }
-            if(!sessionStorage.getItem("Name") !== result.data.name) {
-              sessionStorage.setItem("Name", result.data.name);
-            } 
-          });
+          axios
+            .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
+            .then((result) => {
+              setUser(result.data);
+              if (!localStorage.getItem("token")) {
+                localStorage.setItem("token", "logged");
+              }
+              if (!sessionStorage.getItem("Name") !== result.data.name) {
+                sessionStorage.setItem("Name", result.data.name);
+              }
+            });
 
-        return () => {
-          unsubscribe();
-        };
+          return () => {
+            unsubscribe();
+          };
+        }, 1000);
       } else {
         localStorage.removeItem("token");
       }
@@ -176,10 +183,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   }, [push]);
 
   useEffect(() => {
-    if(!localStorage.getItem("token") && pathname !== "/criar-conta")
-        push("/login");
-
-  }, [push, pathname])
+    if (!localStorage.getItem("token") && pathname !== "/criar-conta")
+      push("/login");
+  }, [push, pathname]);
 
   return (
     <AuthContext.Provider

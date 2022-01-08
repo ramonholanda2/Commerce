@@ -11,6 +11,7 @@ export const MethodPaymentContainer = styled.div`
 
 export const MethodPaymentTitle = styled.h2`
   font-size: 1.8rem;
+  text-align: center;
 `;
 
 export const MethodPaymentDiv = styled.div`

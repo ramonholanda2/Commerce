@@ -7,11 +7,9 @@ import {
   ProductName,
   ProductPrice,
   AddButton,
-  BuyButton,
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 
 interface Product {
   id: Long;
@@ -38,13 +36,13 @@ const Products = () => {
   const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
   const [tryGetProducts, setTryGetProducts] = useState<number>(0);
 
-  const { setProductForPurchase } = useCommerceContext();
-  const { push } = useHistory(); 
+  /* const { setProductForPurchase } = useCommerceContext();
+  const { push } = useHistory();
 
-  function buy(product: Product) {
-    setProductForPurchase(product);
-    push("/pagamento")
-  }
+  async function buy(product: Product) {
+    await setProductForPurchase(user?.id!, product);
+    push("/pagamento");
+  } */
 
   useEffect(() => {
     axios
@@ -66,31 +64,26 @@ const Products = () => {
     <h1>Sem produtos</h1>
   ) : (
     <div style={{ marginTop: "2rem" }}>
-
-    <ProductsContainer>
-      {products?.data.map((product) => (
-        <ProductContainer key={Number(product.id)}>
-          <ProductName>{product.name}</ProductName>
-          <ProductImage
-            src={product.urlImage}
-            alt={product.name}
-          />
-          <ProductPrice>
-            Preço -{" "}
-            {product.price.toLocaleString("pt-br", {
-              maximumFractionDigits: 2,
-              minimumFractionDigits: 2,
-            })}{" "}
-            $
-          </ProductPrice>
-          <AddButton onClick={() => addProductForClient(user?.id, product)}>
-            Adicionar
-          </AddButton>
-          <BuyButton onClick={() => buy(product)}>Comprar agora</BuyButton> 
-        </ProductContainer>
-      ))}
-      
-    </ProductsContainer>
+      <ProductsContainer>
+        {products?.data.map((product) => (
+          <ProductContainer key={Number(product.id)}>
+            <ProductName>{product.name}</ProductName>
+            <ProductImage src={product.urlImage} alt={product.name} />
+            <ProductPrice>
+              Preço -{" "}
+              {product.price.toLocaleString("pt-br", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}{" "}
+              $
+            </ProductPrice>
+            <AddButton onClick={() => addProductForClient(user?.id, product)}>
+              Adicionar
+            </AddButton>
+            {/* <BuyButton onClick={() => buy(product)}>Comprar agora</BuyButton> */}
+          </ProductContainer>
+        ))}
+      </ProductsContainer>
     </div>
   );
 };

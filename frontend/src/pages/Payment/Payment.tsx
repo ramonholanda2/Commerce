@@ -53,7 +53,7 @@ const Payment = () => {
       return alert("Selecione um endereço!");
 
     if (stepByStepPayment === 3) {
-      var qrCode = await generateQrCode();
+      var qrCode = await generateQrCode(`${buyProduct?.item.quantity || 1} ${buyProduct?.name} para ${user?.name} na ${deliveryAddress?.street}`);
       await purchaseProduct(qrCode, Number(buyProduct?.id), user?.id!, Number(deliveryAddress?.id));
     }
 
@@ -67,7 +67,6 @@ const Payment = () => {
   }
 
   useEffect(() => {
-    alert(JSON.stringify(buyProduct));
     if(!buyProduct) 
         push("/");
 
@@ -76,7 +75,7 @@ const Payment = () => {
   return (
     <PaymentContainer>
       {stepByStepPayment === 1 && <Review />}
-      {stepByStepPayment === 2 && (
+      {stepByStepPayment === 2 && ( 
         <MethodPayment
           selectMethodPayment={selectMethodPayment}
           methodPaymentSelected={methodPaymentSelected}

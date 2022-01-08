@@ -30,7 +30,7 @@ const Header = () => {
       <MenuContainer>
         <MenuOptions href="/">Produtos</MenuOptions>
         <MenuOptions href="/meus-produtos">Meus Produtos</MenuOptions>
-        <MenuOptions>Compras</MenuOptions>
+        <MenuOptions href="/compras">Compras</MenuOptions>
         <MenuOptions>Minha conta</MenuOptions>
       </MenuContainer>
 

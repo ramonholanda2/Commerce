@@ -41,8 +41,6 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
   }
 
   function keyPressInputQuantity(event: any) {
-    
-  
     if (event.key === "Enter" && item.quantity !== quantity) {
       updateItem(user?.id, item.id, quantity, idProduct);
     }
@@ -52,7 +50,7 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
     } else if (event.key === "ArrowUp") {
       addProduct();
       event.preventDefault();
-    } 
+    }
   }
 
   return (
@@ -66,7 +64,7 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
           <QuantityInput
             pattern="(?<![0-9])0+"
             // eslint-disable-next-line no-restricted-globals
-            onKeyDown={(e) => keyPressInputQuantity(event)}
+            onKeyDown={(event) => keyPressInputQuantity(event)}
             onChange={(e) => formatQuantity(e.target.value)}
             value={quantity}
             type={"text"}

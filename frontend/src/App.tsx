@@ -8,6 +8,7 @@ import { CommerceContextProvider } from "./contexts/ComerceContext";
 import Chart from "./components/Chart/Chart";
 import NewProduct from "./components/NewProduct/NewProduct";
 import Payment from "./pages/Payment/Payment";
+import Purchases from "./pages/Purchases/Purchases";
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
             <Route path={"/pagamento"} >
               <Header/>
               <Payment/>
+            </Route>
+            <Route path={"/compras"}>
+              <Header/>
+              <Purchases />
             </Route>
           </Switch>
         </CommerceContextProvider> 

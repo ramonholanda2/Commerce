@@ -14,6 +14,7 @@
     "axios": "^0.21.4",
     "firebase": "^8.6.8",
     "gpix": "^1.1.6",
+    "qrcode": "^1.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.15.3",
@@ -49,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@types/qrcode": "^1.4.2",
     "@types/styled-components": "^5.1.15",
     "env-cmd": "^10.1.0"
   }

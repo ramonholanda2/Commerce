@@ -5,13 +5,17 @@ export const DeliveryAddressContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  border: 3px solid red;
   max-width: 40rem;
-  gap: 1.5rem;
+  gap: 1.5rem; 
 `;
 
 export const DeliveryAddressTitle = styled.h2`
   font-size: 1.8rem;
+  text-align: center;
+  
+  @media screen and (max-width: 450px) {
+    font-size: 1.7rem;
+  }
 `;
 
 export const AddressContainer = styled.div`
@@ -20,6 +24,7 @@ export const AddressContainer = styled.div`
   display: flex;
   align-items: center;
   border-radius: 8px;
+  width: 100%;
 `;
 
 export const OptionAddress = styled.input`
@@ -32,6 +37,11 @@ export const OptionAddressLabel = styled.label`
   font-size: 1.3rem;
   cursor: pointer;
   font-family: "Mochiy Pop One", sans-serif;
+  
+  @media screen and (max-width: 450px) {
+    font-size: 1.2rem;
+  } 
+  
   `;
 
 export const InfoAddressContainer = styled.div`
@@ -40,5 +50,5 @@ export const InfoAddressContainer = styled.div`
   padding: 6px;
   cursor: pointer;
   margin-left: 0.5rem;
-  width: 37rem;
+  width: 100%;
 `;

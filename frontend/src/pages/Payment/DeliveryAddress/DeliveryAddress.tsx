@@ -37,20 +37,22 @@ const DeliveryAddress = ({
       <DeliveryAddressTitle>Escolha o endereço</DeliveryAddressTitle>
       {user?.address?.map((deliveryAddress, index) =>  (
         <AddressContainer
+          key={Number(deliveryAddress.id)}
           onClick={() => selectDeliveryAddress(`address ${index}`, deliveryAddress)}
         >
           <OptionAddress
             type={"radio"}
             checked={deliveryAddressOption === `address ${index}`}
+            onChange={()=>{}}
             value={`address ${index}`}
             name="address"
           />
           <InfoAddressContainer>
             <OptionAddressLabel>
-              {deliveryAddress.street}, {deliveryAddress.number}
+              {deliveryAddress.street}, {deliveryAddress.number} 
             </OptionAddressLabel>
             <OptionAddressLabel>
-              {deliveryAddress.complement} - {deliveryAddress.city}
+              {deliveryAddress.district} - {deliveryAddress.city} - {deliveryAddress.cep}
             </OptionAddressLabel>
           </InfoAddressContainer>
         </AddressContainer>

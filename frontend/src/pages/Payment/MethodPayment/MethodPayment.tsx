@@ -23,6 +23,7 @@ const MethodPayment = ({
       <MethodPaymentDiv onClick={() => selectMethodPayment("pix")}>
         <OptionPayment
           checked={methodPaymentSelected === "pix"}
+          onChange={() => {}}
           type={"radio"}
           value="pix"
           name="methodPayment"

@@ -17,6 +17,7 @@ import { useCommerceContext } from "../../contexts/ComerceContext";
 
 const NewProduct = () => {
   const { uploadProduct } = useCommerceContext();
+  /*   const { user } = useAuthContext(); */
   const [imagePreview, setImagePreview] = useState<
     string | undefined | ArrayBuffer | null
   >();
@@ -50,11 +51,11 @@ const NewProduct = () => {
       },
       () => {
         upload.snapshot.ref.getDownloadURL().then((url) => {
-          const data = { 
+          const data = {
             name: productName,
             price: productPrice,
-            urlImage: url
-           }
+            urlImage: url,
+          };
           uploadProduct(data);
         });
       }
@@ -74,10 +75,18 @@ const NewProduct = () => {
     reader.readAsDataURL(e.target!.files[0]!);
   }
 
+  /*   useEffect(() => {
+    if(!user?.isAdmin!) {
+      push("/");
+    }
+  }, []) */
+
   return (
     <AddProductGrid>
       <PreviewImage>
-        <NameProduct>{productName?.length! > 0 ? productName : "Nome do produto"}</NameProduct>
+        <NameProduct>
+          {productName?.length! > 0 ? productName : "Nome do produto"}
+        </NameProduct>
         <SelectFile
           style={{ display: "none" }}
           id="input-file-image"
@@ -86,7 +95,9 @@ const NewProduct = () => {
           accept="image/png,image/jpeg"
         />
         <ImageProduct src={imagePreview as string | undefined} alt="" />
-        <PriceProduct>Preço - {productPrice?.length! > 0 ? productPrice : ""} $</PriceProduct>
+        <PriceProduct>
+          Preço - {productPrice?.length! > 0 ? productPrice : ""} $
+        </PriceProduct>
       </PreviewImage>
       <div
         style={{

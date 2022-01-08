@@ -1,18 +1,17 @@
-const { PIX } = require('gpix/dist');
+const { PIX } = require("gpix/dist");
 
-async function generateQrCode() {
-    let pix = await PIX.static()
-        .setReceiverName('Francisco Ramon')
-        .setReceiverCity('Lagoa Grande.')
-        .setReceiverZipCode('64600000') // optional
-        .setKey('06881967306')
-        .setDescription('Donation with defined amount ') // optional
-        .isUniqueTransaction(true) // optional
-        .setAmount(0.01) // optional
-    
-    return await pix.getBRCode();
+async function generateQrCode(description: string) {
+  let pix = PIX.static()
+    .setReceiverName("Hiago Silva Souza")
+    .setReceiverCity("Rio Preto")
+    .setReceiverZipCode("15082131") // optional
+    .setKey("06881967306")
+    .setIdentificator("123") // optional
+    .setDescription("Donation with defined amount - GPIX") // optional
+    .isUniqueTransaction(true) // optional
+    .setAmount(0.01); // optional
+
+  return await pix.getBRCode();
 }
 
-export {
-    generateQrCode
-}
+export { generateQrCode };

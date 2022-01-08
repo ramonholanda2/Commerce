@@ -34,13 +34,18 @@ interface Item {
 
 const Chart = () => {
   const { user } = useAuthContext();
-  const { products, loadingProducts, setProductForPurchase, getProducts, removeProductForClient } =
-    useCommerceContext();
+  const {
+    products,
+    loadingProducts,
+    setProductForPurchase,
+    getProducts,
+    removeProductForClient,
+  } = useCommerceContext();
 
-    const { push } = useHistory();
+  const { push } = useHistory();
 
-  function buy (product: Product) {
-    setProductForPurchase(product);
+  async function buy(product: Product) {
+    await setProductForPurchase(user?.id!, product);
     push("/pagamento");
   }
   useEffect(() => {

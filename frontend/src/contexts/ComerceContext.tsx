@@ -26,7 +26,7 @@ interface CommerceContextType {
     idProduct: Long
   ) => Promise<void>;
 
-  setProductForPurchase: (purchase: Product) => void;
+  setProductForPurchase: (idClient: string, purchase: Product) => Promise<void>;
   buyProduct: Product | undefined;
 
   uploadProduct: (productData: SendProduct) => Promise<void>;
@@ -127,9 +127,8 @@ export function CommerceContextProvider({
           push("/meus-produtos");
         })
         .catch((error) => {
+          push("/meus-produtos");
           console.log(JSON.stringify(error));
-          if (error.message.indexOf("400") !== -1)
-            alert(`${product.name} já adicionado!`);
         });
     }
   }
@@ -182,11 +181,13 @@ export function CommerceContextProvider({
         idAddress,
       })
       .then((resp) => {
-        push("/compras")
+        setBuyProduct(undefined);
+        push("/compras");
       });
   }
 
-  function setProductForPurchase(product: Product) {
+  async function setProductForPurchase(idClient: string, product: Product) {
+    await addProductForClient(idClient, product);
     setBuyProduct(product);
   }
 
