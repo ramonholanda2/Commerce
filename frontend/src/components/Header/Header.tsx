@@ -31,7 +31,7 @@ const Header = () => {
         <MenuOptions href="/">Produtos</MenuOptions>
         <MenuOptions href="/meus-produtos">Meus Produtos</MenuOptions>
         <MenuOptions href="/compras">Compras</MenuOptions>
-        <MenuOptions>Minha conta</MenuOptions>
+        <MenuOptions href="/enderecos">Endereços</MenuOptions>
       </MenuContainer>
 
       <UserLogo>
