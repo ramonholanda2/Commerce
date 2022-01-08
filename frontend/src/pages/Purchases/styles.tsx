@@ -16,5 +16,6 @@ export const PurchasesTitle = styled.h2`
 export const PurchasesDiv = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
+    margin-top: 3rem;
 `;

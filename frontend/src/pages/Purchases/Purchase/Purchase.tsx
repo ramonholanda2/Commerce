@@ -9,13 +9,14 @@ import {
   ProductQuantity,
   PurchaseQrCode,
   AddressTitle,
-  ProductPrice,
+  FirstInfoAddress,
+  AditionalInfoAddress,
   ProductTitle,
   PriceContainer,
   ProductSubtotal,
   CopyQrCodeBtn,
   PaymentTitle,
-  PaymentContainer
+  PaymentContainer,
 } from "./styles";
 
 interface Address {
@@ -64,12 +65,11 @@ interface PurchaseProps {
 const Purchase = ({ purchase }: PurchaseProps) => {
   const [qrCode, setQrCode] = useState<string>();
 
-  function copyQRCode(qrCode:string) {
-    navigator.clipboard.writeText(qrCode).then(resp => {
+  function copyQRCode(qrCode: string) {
+    navigator.clipboard.writeText(qrCode).then((resp) => {
       alert("QRCode copiado!");
     });
   }
-
 
   useEffect(() => {
     QRCode.toDataURL(purchase.qrCodeUrl)
@@ -80,7 +80,7 @@ const Purchase = ({ purchase }: PurchaseProps) => {
         console.error(err);
       });
 
-      return () => {}
+    return () => {};
   }, [purchase.qrCodeUrl]);
 
   return (
@@ -88,21 +88,38 @@ const Purchase = ({ purchase }: PurchaseProps) => {
       <ProductContainer>
         <ProductTitle>Produto</ProductTitle>
         <ProductName>{purchase.product.name}</ProductName>
-        <ProductImage src={purchase.product.urlImage} alt={purchase.product.name} />
+        <ProductImage
+          src={purchase.product.urlImage}
+          alt={purchase.product.name}
+        />
         <PriceContainer>
-          <ProductQuantity>{purchase.product.price}$ com {purchase.product.item.quantity} Unidades</ProductQuantity>
-          <ProductSubtotal>Total: {purchase.product.item.subtotal}</ProductSubtotal>
+          <ProductQuantity>
+            {purchase.product.price}$ com {purchase.product.item.quantity}{" "}
+            Unidades
+          </ProductQuantity>
+          <ProductSubtotal>
+            Total: {purchase.product.item.subtotal}
+          </ProductSubtotal>
         </PriceContainer>
       </ProductContainer>
       <AddressContainer>
         <AddressTitle>Endereço de entrega</AddressTitle>
+          <FirstInfoAddress>
+            {purchase.client.address[0].street},{" "}
+            {purchase.client.address[0].number} -{" "}
+            {purchase.client.address[0].district}
+          </FirstInfoAddress>
+          <AditionalInfoAddress>
+            {purchase.client.address[0].city} - {purchase.client.address[0].cep}
+          </AditionalInfoAddress>
       </AddressContainer>
       <PaymentContainer>
         <PaymentTitle>Pagamento</PaymentTitle>
         <PurchaseQrCode src={qrCode} alt="" />
-        <CopyQrCodeBtn onClick={() => copyQRCode(purchase.qrCodeUrl)}>Copiar QRCode</CopyQrCodeBtn>
+        <CopyQrCodeBtn onClick={() => copyQRCode(purchase.qrCodeUrl)}>
+          Copiar PIX
+        </CopyQrCodeBtn>
       </PaymentContainer>
-
     </PurchaseContainer>
   );
 };

@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 export const PurchaseContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   justify-content: space-around;
   width: 100vw;
   max-width: 1100px;
   gap: 1.1rem;
+  border: 3px solid purple;
+  border-radius: 8px;
+  padding: 1rem 0;
 `;
 
 export const ProductContainer = styled.div`
@@ -37,7 +39,6 @@ export const ProductQuantity = styled.span`
   font-weight: 500;
 `;
 
-export const ProductPrice = styled.span``;
 export const ProductSubtotal = styled.span`
   font-weight: 550;
   font-size: 1.18rem;
@@ -56,11 +57,27 @@ export const AddressContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`; 
 
 export const AddressTitle = styled.h5`
   font-size: 1.1rem;
-`;
+  text-align: center;
+  margin-bottom: 5rem;
+  `;
+
+export const FirstInfoAddress = styled.span `
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Mochiy Pop One', sans-serif;
+    `;
+
+export const AditionalInfoAddress = styled.span `
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: 500;
+    font-family: 'Mochiy Pop One', sans-serif;
+    `;
 
 export const PurchaseQrCode = styled.img`
   width: 10rem;
@@ -75,14 +92,16 @@ export const PaymentContainer = styled.div`
   font-size: 1.3rem;
 `;
 
-export const PaymentTitle = styled.h5``;
+export const PaymentTitle = styled.h5`
+    font-size: 1.1rem;
+`;
 
 export const CopyQrCodeBtn = styled.button`
   border: 3px solid purple;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  padding: 2px 2px;
+  padding: 2px 30px;
   font-weight: 550;
   max-width: 8rem;
 `;
