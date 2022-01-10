@@ -173,6 +173,7 @@ export function CommerceContextProvider({
     idClient: string,
     idAddress: number
   ) {
+    alert(JSON.stringify(qrCodeUrl + idAddress + idClient + idProduct))
     axios
       .post("https://milk-holanda.herokuapp.com/purchases", {
         qrCodeUrl,
@@ -181,8 +182,8 @@ export function CommerceContextProvider({
         idAddress,
       })
       .then((resp) => {
-        setBuyProduct(undefined);
         push("/compras");
+        setBuyProduct(undefined);
       });
   }
 

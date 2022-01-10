@@ -39,7 +39,7 @@ const NavBar = ({ toggleMenuFunction }: NavBarProps) => {
           <MenuOptions href="/">Produtos</MenuOptions>
           <MenuOptions href="/meus-produtos">Meus Produtos</MenuOptions>
           <MenuOptions href="/compras">Compras</MenuOptions>
-          <MenuOptions href="/enderecos">Minha Conta</MenuOptions>
+          <MenuOptions href="/enderecos">Endereços</MenuOptions>
         </MenuContainer>
 
         <LoggoutButton onClick={logout}>Sair</LoggoutButton>

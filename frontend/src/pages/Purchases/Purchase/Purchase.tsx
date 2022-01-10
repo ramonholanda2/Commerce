@@ -53,7 +53,7 @@ interface Item {
 }
 
 interface PurchaseType {
-  id: Long;
+  id: number;
   status: string;
   qrCodeUrl: string;
   product: Product;

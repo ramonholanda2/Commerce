@@ -9,8 +9,11 @@ import Chart from "./components/Chart/Chart";
 import NewProduct from "./components/NewProduct/NewProduct";
 import Payment from "./pages/Payment/Payment";
 import Purchases from "./pages/Purchases/Purchases";
+import Footer from "./components/Footer/Footer";
+import "./global-styles.css";
 
 function App() {
+
   return (
     <Router>
       <AuthContextProvider>
@@ -23,16 +26,19 @@ function App() {
             <Route path="/" exact> 
               <Header />
               <Products />
+              <Footer />
             </Route>
             <Route path={"/meus-produtos"}>
               <Header />
               <Chart />
+              <Footer />
             </Route>
           </Switch>
           <Switch>
             <Route path={"/upload"} exact>
               <Header />
               <NewProduct /> 
+              <Footer />
             </Route>
           </Switch>
           <Switch>
@@ -43,6 +49,7 @@ function App() {
             <Route path={"/compras"}>
               <Header/>
               <Purchases />
+              <Footer />
             </Route>
           </Switch>
         </CommerceContextProvider> 

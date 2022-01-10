@@ -5,6 +5,8 @@ export const ProductsContainer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  min-height: calc(100vh - 8rem);
+  padding-bottom: 3rem;
 `;
 
 export const ProductContainer = styled.div`

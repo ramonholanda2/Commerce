@@ -7,6 +7,7 @@ export const PurchaseContainer = styled.div`
     justify-content: center;
     padding-top: 1rem;
     border: 3px solid red;
+    padding-bottom: 5rem;
 `;
 
 export const PurchasesTitle = styled.h2`

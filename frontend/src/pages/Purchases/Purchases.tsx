@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../../contexts/AuthContext";
 import Purchase from "./Purchase/Purchase";
 import { PurchaseContainer, PurchasesTitle, PurchasesDiv } from "./styles";
 
@@ -35,7 +36,7 @@ interface Item {
 }
 
 interface PurchasesProps {
-  id: Long;
+  id: number;
   status: string;
   qrCodeUrl: string;
   product: Product;
@@ -45,15 +46,18 @@ interface PurchasesProps {
 const Purchases = () => {
   const [purchases, setPurchases] = useState<AxiosResponse<PurchasesProps[]>>();
   const [loadingPurchases, setLoadingPurchases] = useState<boolean>(true);
+  const { user } = useAuthContext();
 
   useEffect(() => {
-    axios
-      .get("https://milk-holanda.herokuapp.com/purchases")
-      .then((response) => {
-        setPurchases(response);
-        setLoadingPurchases(false);
-      });
-  }, []);
+    if(user?.id !== undefined) {
+      axios
+        .get(`https://milk-holanda.herokuapp.com/purchases/${user?.id}`)
+        .then((response) => {
+          setPurchases(response);
+          setLoadingPurchases(false);
+        })
+    }
+  }, [user?.id]);
 
   return (
     <PurchaseContainer>
@@ -61,12 +65,10 @@ const Purchases = () => {
       <PurchasesDiv>
         {loadingPurchases ? (
           <h1>Carregando...</h1>
+        ) : purchases?.data.length === 0 ? (
+          <h1>Sem Compras</h1>
         ) : (
-            purchases?.data.length === 0 ? (
-                <h1>Sem Compras</h1>
-            ) : (
-                purchases?.data.map((purchase) => <Purchase purchase={purchase} />)
-            )
+          purchases?.data.map((purchase) => <Purchase key={purchase.id} purchase={purchase} />)
         )}
       </PurchasesDiv>
     </PurchaseContainer>

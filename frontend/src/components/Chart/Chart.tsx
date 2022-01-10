@@ -57,7 +57,7 @@ const Chart = () => {
 
   return loadingProducts ? (
     <h1>Carregando...</h1>
-  ) : products.length === 0 && !loadingProducts ? (
+  ) : products.length === 0 ? (
     <h1 style={{ margin: "2rem 1rem" }}>
       Sem produtos adicione <a href="/">aqui</a>
     </h1>

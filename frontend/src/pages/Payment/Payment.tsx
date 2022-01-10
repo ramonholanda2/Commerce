@@ -54,6 +54,7 @@ const Payment = () => {
 
     if (stepByStepPayment === 3) {
       var qrCode = await generateQrCode(`${buyProduct?.item.quantity || 1} ${buyProduct?.name} para ${user?.name} na ${deliveryAddress?.street}`);
+      alert(qrCode)
       await purchaseProduct(qrCode, Number(buyProduct?.id), user?.id!, Number(deliveryAddress?.id));
     }
 

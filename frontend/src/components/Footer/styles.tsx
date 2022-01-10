@@ -6,10 +6,10 @@ export const FooterContainer = styled.footer `
     align-items: center; 
     justify-content: center;
     background-color: #1d1d1d; 
-    margin-top: 1rem;
-    position:fixed;
-    bottom:0%;
+    position: absolute;
+    bottom: 0;
     width:100%;
+    height: 3rem;
 `;
 
 export const CreatedBy = styled.h5 `
