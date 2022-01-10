@@ -9,4 +9,6 @@ public interface PurchaseFacade {
     List<PurchaseDTO> findAll();
 
     void addPurchaseByClient(PurchaseProductDTO purchaseProductDTO);
+
+    List<PurchaseDTO> findPurchasesByClient(String idClient);
 }

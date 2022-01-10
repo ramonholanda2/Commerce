@@ -63,4 +63,9 @@ public class DefaultPurchaseService implements PurchaseService {
         purchaseRepository.save(purchase);
     }
 
+    @Override
+    public List<Purchase> findAllPurchasesByClient(String idClient) {
+        return purchaseRepository.findPurchasesByClient(idClient);
+    }
+
 }

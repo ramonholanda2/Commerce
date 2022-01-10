@@ -2,6 +2,7 @@ package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.PurchaseDTO;
 import com.example.milkHolanda.dto.pks.PurchaseProductDTO;
+import com.example.milkHolanda.entities.Purchase;
 import com.example.milkHolanda.facade.PurchaseFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,16 @@ public class PurchaseController {
     private PurchaseFacade purchaseFacade;
 
     @GetMapping
-    public ResponseEntity<List<PurchaseDTO>> findPurchasesByClient() {
+    public ResponseEntity<List<PurchaseDTO>> findPurchases() {
 
         List<PurchaseDTO> purchases = purchaseFacade.findAll();
+
+        return ResponseEntity.ok().body(purchases);
+    }
+
+    @GetMapping(path = "/{idClient}")
+    public ResponseEntity<List<PurchaseDTO>> findPurchasesByIdClient(@PathVariable String idClient) {
+        List<PurchaseDTO> purchases = purchaseFacade.findPurchasesByClient(idClient);
 
         return ResponseEntity.ok().body(purchases);
     }

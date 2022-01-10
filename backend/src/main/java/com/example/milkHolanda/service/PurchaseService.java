@@ -10,4 +10,5 @@ public interface PurchaseService {
 
     void addPurchaseByClient(PurchaseProductDTO purchaseProductDTO);
 
+    List<Purchase> findAllPurchasesByClient(String idClient);
 }

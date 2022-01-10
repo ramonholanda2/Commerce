@@ -49,4 +49,26 @@ public class DefaultPurchaseFacade implements PurchaseFacade {
         purchaseService.addPurchaseByClient(purchaseProductDTO);
     }
 
+    @Override
+    public List<PurchaseDTO> findPurchasesByClient(String idClient) {
+        List<Purchase> purchases = purchaseService.findAllPurchasesByClient(idClient);
+
+        List<PurchaseDTO> purchaseDTOS = new ArrayList<>();
+
+        for (Purchase purchase : purchases) {
+
+            ProductItem item = new ProductItem(purchase.getIdItem(), purchase.getQuantity(), purchase.getSubtotal());
+            RequestProduct product = new RequestProduct(purchase.getIdProduct(), purchase.getName(), purchase.getPrice(), purchase.getUrlImage(), item);
+
+            AddressClient addressClient = new AddressClient(purchase.getIdAddress(), purchase.getStreet(), purchase.getNumber(), purchase.getComplement(), purchase.getCep(), purchase.getCity(), purchase.getDistrict());
+            Client client = new Client(purchase.getIdClient(), purchase.getClientName(), purchase.getClientSurname(), addressClient);
+
+            PurchaseDTO purchaseDTO = new PurchaseDTO(purchase.getId(), purchase.getStatus(), purchase.getQrCodeUrl(), product, client);
+
+            purchaseDTOS.add(purchaseDTO);
+        }
+
+        return purchaseDTOS;
+    }
+
 }
