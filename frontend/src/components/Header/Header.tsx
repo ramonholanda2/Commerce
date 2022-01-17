@@ -29,9 +29,9 @@ const Header = () => {
       <LogoSvg src={LogoMilk} />
       <MenuContainer>
         <MenuOptions href="/">Produtos</MenuOptions>
+        <MenuOptions href="/enderecos">Endereços</MenuOptions>
         <MenuOptions href="/meus-produtos">Meus Produtos</MenuOptions>
         <MenuOptions href="/compras">Compras</MenuOptions>
-        <MenuOptions href="/enderecos">Endereços</MenuOptions>
       </MenuContainer>
 
       <UserLogo>

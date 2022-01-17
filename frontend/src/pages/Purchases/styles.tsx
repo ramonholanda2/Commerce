@@ -6,7 +6,6 @@ export const PurchaseContainer = styled.div`
     align-items: center;
     justify-content: center;
     padding-top: 1rem;
-    border: 3px solid red;
     padding-bottom: 5rem;
 `;
 

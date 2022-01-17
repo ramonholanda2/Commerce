@@ -32,7 +32,7 @@ const Footer = () => {
     "scroll",
     debounce(() => {
       scroll();
-    }, 200)
+    }, 100)
   );
 
   return viewFooter ? (

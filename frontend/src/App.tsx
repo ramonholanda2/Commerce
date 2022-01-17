@@ -11,6 +11,7 @@ import Payment from "./pages/Payment/Payment";
 import Purchases from "./pages/Purchases/Purchases";
 import Footer from "./components/Footer/Footer";
 import "./global-styles.css";
+import Address from "./pages/Address/Address";
 
 function App() {
 
@@ -50,6 +51,10 @@ function App() {
               <Header/>
               <Purchases />
               <Footer />
+            </Route>
+            <Route path={"/enderecos"}>
+              <Header/>
+              <Address />
             </Route>
           </Switch>
         </CommerceContextProvider> 
