@@ -1,9 +1,11 @@
 package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.ClientDTO;
+import com.example.milkHolanda.dto.ClientNewDTO;
 import com.example.milkHolanda.exceptions.ObjectNotFoundException;
 import com.example.milkHolanda.facade.ClientFacade;
 import com.example.milkHolanda.service.ClientService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,7 @@ public class ClientController {
     }
 
     @GetMapping(path = "/{id}")
+    @ApiOperation(value="Busca Cliente por id")
     public ResponseEntity<Object> getClientByCode(@PathVariable String id) {
 
         ClientDTO clientDTO = clientFacade.findClientById(id);
@@ -49,7 +52,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<URI> addClient(@Valid @RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<URI> addClient(@Valid @RequestBody ClientNewDTO clientDTO) {
 
         if(clientDTO.getId() == null) {
             throw new ObjectNotFoundException("Id não encontrado!");

@@ -70,7 +70,7 @@ public class DefaultClientFacade implements ClientFacade {
     }
 
     @Override
-    public void addClient(ClientDTO clientDTO) {
+    public void addClient(ClientNewDTO clientDTO) {
 
         clientService.addClient(clientDTO);
     }

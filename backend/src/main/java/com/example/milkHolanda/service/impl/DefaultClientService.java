@@ -2,6 +2,7 @@ package com.example.milkHolanda.service.impl;
 
 import com.example.milkHolanda.dto.BusinessClientDTO;
 import com.example.milkHolanda.dto.ClientDTO;
+import com.example.milkHolanda.dto.ClientNewDTO;
 import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.exceptions.DataIntegrityException;
 import com.example.milkHolanda.exceptions.ObjectNotFoundException;
@@ -56,7 +57,7 @@ public class DefaultClientService implements ClientService {
     }
 
     @Override
-    public void addClient(ClientDTO clientDTO) {
+    public void addClient(ClientNewDTO clientDTO) {
         String idClient = clientDTO.getId().replace(" ", "");
 
         long existsClientWithThisId = clientRepository.existsByIdClient(idClient);

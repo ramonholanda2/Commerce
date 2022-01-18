@@ -1,5 +1,6 @@
 package com.example.milkHolanda.populator.impl;
 import com.example.milkHolanda.dto.ClientDTO;
+import com.example.milkHolanda.dto.ClientNewDTO;
 import com.example.milkHolanda.entities.Client;
 import com.example.milkHolanda.populator.ClientPopulator;
 import com.example.milkHolanda.service.ModelMapperService;
@@ -11,6 +12,11 @@ public class DefaultClientPopulator implements ClientPopulator {
 
     @Autowired
     private ModelMapperService modelMapperService;
+
+    @Override
+    public Client addClient(ClientNewDTO clientDTO) {
+        return modelMapperService.modelMapper().map(clientDTO, Client.class);
+    }
 
     @Override
     public Client addClient(ClientDTO clientDTO) {
