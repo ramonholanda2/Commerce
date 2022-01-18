@@ -2,6 +2,7 @@ package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.pks.ClientProductDTO;
 import com.example.milkHolanda.facade.ClientProductFacade;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ public class ClientProductController {
     private ClientProductFacade clientProductFacade;
 
     @RequestMapping(method = RequestMethod.POST, path = "/add-product-by-client")
+    @ApiOperation(value="Adiciona um produto ao cliente")
     public ResponseEntity<URI> addProductForClient(@Valid @RequestBody ClientProductDTO clientProductDTO) {
 
         clientProductFacade.addProductForClient(clientProductDTO);
@@ -33,6 +35,7 @@ public class ClientProductController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/remove-product-by-client")
+    @ApiOperation(value="Remove um produto do cliente")
     public ResponseEntity removeProductForClient(@Valid @RequestBody ClientProductDTO clientProductDTO) {
         clientProductFacade.removeProductForClient(clientProductDTO);
 

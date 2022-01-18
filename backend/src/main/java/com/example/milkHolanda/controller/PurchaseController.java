@@ -4,6 +4,7 @@ import com.example.milkHolanda.dto.PurchaseDTO;
 import com.example.milkHolanda.dto.pks.PurchaseProductDTO;
 import com.example.milkHolanda.entities.Purchase;
 import com.example.milkHolanda.facade.PurchaseFacade;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class PurchaseController {
     private PurchaseFacade purchaseFacade;
 
     @GetMapping
+    @ApiOperation(value="Busca todas as compras")
     public ResponseEntity<List<PurchaseDTO>> findPurchases() {
 
         List<PurchaseDTO> purchases = purchaseFacade.findAll();
@@ -29,6 +31,7 @@ public class PurchaseController {
     }
 
     @GetMapping(path = "/{idClient}")
+    @ApiOperation(value="Busca as compras de um cliente")
     public ResponseEntity<List<PurchaseDTO>> findPurchasesByIdClient(@PathVariable String idClient) {
         List<PurchaseDTO> purchases = purchaseFacade.findPurchasesByClient(idClient);
 
@@ -36,6 +39,7 @@ public class PurchaseController {
     }
 
     @PostMapping
+    @ApiOperation(value="Adiciona um nova compra")
     public ResponseEntity<URI> addPurchasesByClient(@Valid @RequestBody PurchaseProductDTO purchaseProductDTO) {
 
         purchaseFacade.addPurchaseByClient(purchaseProductDTO);

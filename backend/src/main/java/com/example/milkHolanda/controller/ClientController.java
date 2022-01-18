@@ -26,6 +26,7 @@ public class ClientController {
     private ClientFacade clientFacade;
 
     @GetMapping
+    @ApiOperation(value="Busca todos os clientes")
     public ResponseEntity<List<ClientDTO>> getAllClients() {
         List<ClientDTO> clientDTOS = clientService.getAllClients();
 
@@ -42,6 +43,7 @@ public class ClientController {
     }
 
     @PutMapping(path = "/update/{id}")
+    @ApiOperation(value="Atualiza Cliente por id")
     public ResponseEntity<String> updateClientByCode(
             @PathVariable String id,
             @Valid @RequestBody ClientDTO clientDTO) {
@@ -52,6 +54,7 @@ public class ClientController {
     }
 
     @PostMapping
+    @ApiOperation(value="Adiciona um novo Cliente")
     public ResponseEntity<URI> addClient(@Valid @RequestBody ClientNewDTO clientDTO) {
 
         if(clientDTO.getId() == null) {
@@ -69,6 +72,7 @@ public class ClientController {
     }
 
     @DeleteMapping(path = "/delete/{id}")
+    @ApiOperation(value="Deleta um Cliente por id")
     public ResponseEntity<String> removeClient(@PathVariable String id) {
 
         clientFacade.deleteClient(id);

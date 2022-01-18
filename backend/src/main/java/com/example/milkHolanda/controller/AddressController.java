@@ -2,6 +2,7 @@ package com.example.milkHolanda.controller;
 
 import com.example.milkHolanda.dto.AddressClientDTO;
 import com.example.milkHolanda.facade.AddressFacade;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ public class AddressController {
     private AddressFacade addressFacade;
 
     @PostMapping(path = "/save/{idClient}")
+    @ApiOperation(value="Adiciona um endereço para um cliente")
     public ResponseEntity<URI> addAddressForClient(@PathVariable String idClient, @Valid @RequestBody AddressClientDTO address) {
 
         addressFacade.addAddressClient(address, idClient);
@@ -30,6 +32,7 @@ public class AddressController {
     }
 
     @PutMapping(path = "/update/{id}")
+    @ApiOperation(value="Atualiza um endereço por id")
     public ResponseEntity<String> updateAddressForClient(
             @PathVariable Long id,
             @Valid@RequestBody AddressClientDTO addressClient) {
@@ -41,6 +44,7 @@ public class AddressController {
 
 
     @DeleteMapping(path = "/delete/{id}")
+    @ApiOperation(value="Deleta um endereço por id")
     public ResponseEntity<String> deleteAddress(@PathVariable Long id) {
 
         addressFacade.deleteAddressById(id);
