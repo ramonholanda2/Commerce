@@ -28,10 +28,10 @@ const Header = () => {
     <HeaderContainer>
       <LogoSvg src={LogoMilk} />
       <MenuContainer>
-        <MenuOptions href="/">Produtos</MenuOptions>
-        <MenuOptions href="/enderecos">Endereços</MenuOptions>
-        <MenuOptions href="/meus-produtos">Meus Produtos</MenuOptions>
-        <MenuOptions href="/compras">Compras</MenuOptions>
+        <MenuOptions to="/">Produtos</MenuOptions>
+        <MenuOptions to="/enderecos">Endereços</MenuOptions>
+        <MenuOptions to="/meus-produtos">Meus Produtos</MenuOptions>
+        <MenuOptions to="/compras">Compras</MenuOptions>
       </MenuContainer>
 
       <UserLogo>

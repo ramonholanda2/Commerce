@@ -109,7 +109,7 @@ const CreateAccount = () => {
             <Div
               style={{ display: "flex", width: "100%", padding: "0rem 1rem" }}
             >
-              <Link href="/login" style={{ backgroundColor: "#8c258d" }}>
+              <Link to="/login" style={{ backgroundColor: "#8c258d" }}>
                 <IoIosArrowBack />
                 Voltar
               </Link>

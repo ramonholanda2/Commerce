@@ -76,7 +76,7 @@ const Login = () => {
               {...register("password", { required: true, minLength: 8 })}
             />
 
-              <LinkNewAccount href="/criar-conta">Criar uma conta</LinkNewAccount>
+              <LinkNewAccount to="/criar-conta">Criar uma conta</LinkNewAccount>
 
             <LoginButton type="submit">Entrar</LoginButton>
             <div style={{display: "flex", marginTop: "1.5rem"}}>

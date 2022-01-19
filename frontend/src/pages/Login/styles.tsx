@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import bgImage from "../../assets/bg-login.jpg";
+import { Link } from "react-router-dom";
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ export const InputField = styled.input`
   }
 `;
 
-export const LinkNewAccount = styled.a`
+export const LinkNewAccount: any = styled(Link)`
   color: purple;
   text-align: right;
   margin-top: 1rem;

@@ -37,7 +37,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const [address, setAddress] = useState<Address>();
 
   function getCep(cep: string) {
-    setCep(cep);
+    setCep(cep.trim());
     if (cep.trim().length === 8 || cep.trim().length === 9) {
       getAddress(cep);
     }
@@ -61,7 +61,10 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       <Div>
         <DivAux>
           <LabelTitle>Cep</LabelTitle>
-          <InputFieldAddress onChange={(e) => getCep(e.target.value)} value={cep} />
+          <InputFieldAddress
+            onChange={(e) => getCep(e.target.value)}
+            value={cep}
+          />
         </DivAux>
         <DivAux>
           <LabelTitle>Rua</LabelTitle>
@@ -84,11 +87,17 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       <Div>
         <DivAux>
           <LabelTitle>Bairro</LabelTitle>
-          <InputFieldAddress onChange={e => setBairro(e.target.value)} value={bairro} />
+          <InputFieldAddress
+            onChange={(e) => setBairro(e.target.value)}
+            value={bairro}
+          />
         </DivAux>
         <DivAux>
           <LabelTitle>Cidade</LabelTitle>
-          <InputFieldAddress onChange={e => setLocalidade(e.target.value)} value={localidade} />
+          <InputFieldAddress
+            onChange={(e) => setLocalidade(e.target.value)}
+            value={localidade}
+          />
         </DivAux>
       </Div>
       <Div>

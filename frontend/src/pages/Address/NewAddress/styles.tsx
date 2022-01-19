@@ -26,10 +26,17 @@ export const InputFieldAddress = styled.input`
     background-color: #fffc;
   }
 
-  @media screen and (max-width: 400px) {
-    max-width: 14rem;
-    font-size: medium;
+  @media screen and (max-width: 850px) {
+    max-width: 17rem;
   }
+  @media screen and (max-width: 650px) {
+    max-width: 20rem;
+  }
+  @media screen and (max-width: 400px) {
+    max-width: 16rem;
+  }
+
+  
 `;
 
 export const LabelTitle = styled.label`
@@ -38,7 +45,6 @@ export const LabelTitle = styled.label`
   font-weight: 500;
 
   @media screen and (max-width: 400px) {
-    margin-right: 10rem;
     font-size: large;
   }
 `;
@@ -48,6 +54,11 @@ export const Div = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+  }
+
 `;
 
 export const DivAux = styled.div`
@@ -74,6 +85,18 @@ export const ButtonBack: any = styled(Link)`
     filter: brightness(85%);
   }
 
+  @media screen and (max-width: 850px) {
+    max-width: 17rem;
+  }
+
+  @media screen and (max-width: 650px) {
+    max-width: 20rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    max-width: 16rem;
+  }
+
 `;
 export const ButtonSave = styled.button`
   padding: 0.5rem 0rem;
@@ -90,6 +113,18 @@ export const ButtonSave = styled.button`
 
   :hover {
     filter: brightness(85%);
+  }
+
+  @media screen and (max-width: 850px) {
+    max-width: 17rem;
+  }
+
+  @media screen and (max-width: 650px) {
+    max-width: 20rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    max-width: 16rem;
   }
 
 `;

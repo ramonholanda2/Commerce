@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NavBarModal = styled.div`
   position: fixed;
@@ -69,7 +70,7 @@ export const MenuContainer = styled.ul`
   padding-bottom: 2rem;
 `;
 
-export const MenuOptions = styled.a`
+export const MenuOptions: any = styled(Link)`
   text-align: center;
   font-size: 1.3rem;
   font-weight: 600;

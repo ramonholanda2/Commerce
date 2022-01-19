@@ -1,5 +1,7 @@
+import { Link as LK } from "react-router-dom";
 import styled from "styled-components";
 import bgImage from "../../assets/bg-login.jpg";
+
 
 export const CreateAccountContainer = styled.div`
   display: flex;
@@ -104,7 +106,7 @@ export const LabelTitle = styled.label`
 `;
 
 export const Div = styled.div``;
-export const Link = styled.a`
+export const Link: any = styled(LK)`
     text-decoration: none;
     padding: 8px;
     width: 100%;

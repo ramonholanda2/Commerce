@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const HeaderContainer = styled.header`
   width: 100%;
@@ -30,7 +31,7 @@ export const MenuContainer = styled.ul`
   }
 `;
 
-export const MenuOptions = styled.a`
+export const MenuOptions: any = styled(Link)`
   font-size: 1.3rem;
   font-weight: 600;
   color: #fff;
