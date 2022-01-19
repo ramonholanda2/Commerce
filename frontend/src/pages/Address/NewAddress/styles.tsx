@@ -5,52 +5,88 @@ export const NewAddressContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  border: 3px solid red;
   gap: 3rem;
-  margin-top: 2.5rem;
-  `;
+  margin-top: 3.5rem;
+`;
 
 export const InputFieldAddress = styled.input`
   width: 21rem;
   max-width: 21rem;
   outline: none;
-  
+
   border: 1px solid #e4e4e4;
   border-bottom: 3px solid purple;
   border-radius: 5px;
   padding: 10px;
-  
+
   font-size: 1.1rem;
-  
+
   :focus {
-      background-color: #fffc;
-    }
-    
-    @media screen and (max-width: 400px) {
-        max-width: 14rem;
-        font-size: medium;
-    }
-    `;
+    background-color: #fffc;
+  }
+
+  @media screen and (max-width: 400px) {
+    max-width: 14rem;
+    font-size: medium;
+  }
+`;
 
 export const LabelTitle = styled.label`
   font-family: "Poppins", sans-serif;
   font-size: 1.3rem;
   font-weight: 500;
-  
+
   @media screen and (max-width: 400px) {
-      margin-right: 10rem;
-      font-size: large;
-    }
-    `;
+    margin-right: 10rem;
+    font-size: large;
+  }
+`;
 
 export const Div = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  `;
+`;
 
 export const DivAux = styled.div`
   display: flex;
   flex-direction: column;
-  `;
+`;
+
+export const ButtonBack = styled.button`
+  padding: 0.5rem 0rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  background-color: #371736;
+  color: white;
+  font-weight: 550;
+  width: 21rem;
+  max-width: 21rem;
+  cursor: pointer;
+  border-radius: 7px;
+  border: none;
+
+  :hover {
+    filter: brightness(85%);
+  }
+
+`;
+export const ButtonSave = styled.button`
+  padding: 0.5rem 0rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  background-color: #800080;
+  color: white;
+  font-weight: 550;
+  width: 21rem;
+  max-width: 21rem;
+  cursor: pointer;
+  border-radius: 7px;
+  border: none;
+
+  :hover {
+    filter: brightness(85%);
+  }
+
+`;

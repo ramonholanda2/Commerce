@@ -4,8 +4,15 @@ import {
   LabelTitle,
   DivAux,
   Div,
+  ButtonBack,
+  ButtonSave
 } from "./styles";
-const NewAddress = () => {
+
+interface NewAddressProps {
+  toggleNewAddress: () => void;
+}
+
+const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   return (
     <NewAddressContainer>
       <Div>
@@ -37,6 +44,10 @@ const NewAddress = () => {
           <LabelTitle>Cidade</LabelTitle>
           <InputFieldAddress></InputFieldAddress>
         </DivAux>
+      </Div>
+      <Div>
+          <ButtonBack onClick={toggleNewAddress}>Voltar</ButtonBack>
+          <ButtonSave>Salvar</ButtonSave>
       </Div>
     </NewAddressContainer>
   );

@@ -1,12 +1,12 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const AddressContainer = styled.div`
-  border: 3px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.6rem 0;
+  padding: 2rem 0;
 `;
 
 export const AddressTitle = styled.h5`
@@ -21,7 +21,9 @@ export const Buttons = styled.div`
   margin-top: 1.5rem;
 `;
 
-export const AddAddress = styled.button`
+export const AddAddress: any = styled(Link)`
+  text-align: center;
+  text-decoration: none;
   padding: 0.3rem;
   font-size: 1.1rem;
   text-transform: uppercase;
