@@ -11,7 +11,7 @@ export const AddressContainer = styled.div`
 
 export const AddressTitle = styled.h5`
   font-size: 1.8rem;
-`;
+`; 
 
 export const AddressDiv = styled.div``;
 
