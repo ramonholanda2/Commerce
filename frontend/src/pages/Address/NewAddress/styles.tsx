@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NewAddressContainer = styled.div`
   display: flex;
@@ -54,7 +55,9 @@ export const DivAux = styled.div`
   flex-direction: column;
 `;
 
-export const ButtonBack = styled.button`
+export const ButtonBack: any = styled(Link)`
+  text-align: center;
+  text-decoration: none;
   padding: 0.5rem 0rem;
   font-size: 1.1rem;
   text-transform: uppercase;

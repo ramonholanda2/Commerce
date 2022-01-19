@@ -46,7 +46,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
         </DivAux>
       </Div>
       <Div>
-          <ButtonBack onClick={toggleNewAddress}>Voltar</ButtonBack>
+          <ButtonBack to="/enderecos?adicionar=false" onClick={toggleNewAddress}>Voltar</ButtonBack>
           <ButtonSave>Salvar</ButtonSave>
       </Div>
     </NewAddressContainer>

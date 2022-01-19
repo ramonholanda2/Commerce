@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NewAddress from "./NewAddress/NewAddress";
 
 import {
@@ -16,6 +16,15 @@ const Address = () => {
   function toggleNewAddress() {
     setAddNewAddress(!addNewAddress)
   }
+
+  useEffect(() => {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var data = url.searchParams.get("adicionar"); //pega o value
+    data !== null &&
+      (data === "true" || data === "false") &&
+      setAddNewAddress(data === "true");
+  }, []);
 
   return (
     <AddressContainer>
