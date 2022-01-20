@@ -16,4 +16,6 @@ public interface AddressRepository extends JpaRepository<AddressClient, Long> {
     @Query(nativeQuery = true, value = "SELECT COUNT(*) FROM TB_ADDRESS AS AD WHERE AD.CLIENT_ID = ?")
     long existsAddressWithThisClient(String id);
 
+    @Query(nativeQuery = true, value = "SELECT * FROM TB_ADDRESS AS AD WHERE AD.CLIENT_ID = ? AND AD.id = ?")
+    AddressClient findAddressByClient(String idClient, Long idAddress);
 }

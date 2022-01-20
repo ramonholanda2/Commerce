@@ -12,5 +12,7 @@ public interface AddressFacade {
 
     void deleteAddressById(Long id);
 
-    ResponseEntity<List<AddressClientDTO>> getAddressByClient(String idClient);
+    ResponseEntity<List<AddressClientDTO>> getAddressesByClient(String idClient);
+
+    ResponseEntity<AddressClientDTO> getAddressByClient(String idClient, Long idAddress);
 }

@@ -21,9 +21,16 @@ public class AddressController {
 
     @GetMapping(value = "/{idClient}")
     @ApiOperation(value="Busca endereços de um cliente")
-    private ResponseEntity<List<AddressClientDTO>> getAddressByClient(@PathVariable String idClient) {
-        return addressFacade.getAddressByClient(idClient);
+    private ResponseEntity<List<AddressClientDTO>> getAddressesByClient(@PathVariable String idClient) {
+        return addressFacade.getAddressesByClient(idClient);
     }
+
+    @GetMapping
+    @ApiOperation(value="Busca um endereço de um cliente")
+    private ResponseEntity<AddressClientDTO> getAddressByClient(@RequestParam(value = "idClient") String idClient, @RequestParam(value = "idAddress") Long idAddress) {
+        return addressFacade.getAddressByClient(idClient, idAddress);
+    }
+
 
     @PostMapping(path = "/save/{idClient}")
     @ApiOperation(value="Adiciona um endereço para um cliente")

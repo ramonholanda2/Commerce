@@ -3,11 +3,14 @@ package com.example.milkHolanda.facade.impl;
 import com.example.milkHolanda.dto.AddressClientDTO;
 import com.example.milkHolanda.entities.AddressClient;
 import com.example.milkHolanda.entities.Client;
+import com.example.milkHolanda.exceptions.MethodArgumentNotValidException;
+import com.example.milkHolanda.exceptions.ObjectNotFoundException;
 import com.example.milkHolanda.facade.AddressFacade;
 import com.example.milkHolanda.populator.AddressPopulator;
 import com.example.milkHolanda.repository.AddressRepository;
 import com.example.milkHolanda.repository.ClientRepository;
 import com.example.milkHolanda.service.AddressService;
+import org.hibernate.ObjectDeletedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -48,8 +51,8 @@ public class DefaultAddressFacade implements AddressFacade {
     }
 
     @Override
-    public ResponseEntity<List<AddressClientDTO>> getAddressByClient(String idClient) {
-         List<AddressClient> address = addressService.getAddressByClient(idClient);
+    public ResponseEntity<List<AddressClientDTO>> getAddressesByClient(String idClient) {
+         List<AddressClient> address = addressService.getAddressesByClient(idClient);
 
          List<AddressClientDTO> clientDTOS = new ArrayList<>();
 
@@ -59,5 +62,17 @@ public class DefaultAddressFacade implements AddressFacade {
 
          return ResponseEntity.ok().body(clientDTOS);
 
+    }
+
+    @Override
+    public ResponseEntity<AddressClientDTO> getAddressByClient(String idClient, Long idAddress) {
+
+        AddressClient addressClient = addressService.getAddressByClient(idClient, idAddress);
+
+        if(addressClient == null) {
+            throw new ObjectNotFoundException("Endereco não encontrado");
+        }
+
+        return ResponseEntity.ok().body(new AddressClientDTO(addressClient));
     }
 }

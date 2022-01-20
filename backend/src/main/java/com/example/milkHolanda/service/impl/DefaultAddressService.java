@@ -77,7 +77,12 @@ public class DefaultAddressService implements AddressService {
     }
 
     @Override
-    public List<AddressClient> getAddressByClient(String idClient) {
+    public List<AddressClient> getAddressesByClient(String idClient) {
         return addressRepository.findAddressForClient(idClient);
+    }
+
+    @Override
+    public AddressClient getAddressByClient(String idClient, Long idAddress) {
+        return addressRepository.findAddressByClient(idClient, idAddress);
     }
 }

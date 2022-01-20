@@ -12,5 +12,7 @@ public interface AddressService {
 
     void deleteAddressById(Long id);
 
-    List<AddressClient> getAddressByClient(String idClient);
+    List<AddressClient> getAddressesByClient(String idClient);
+
+    AddressClient getAddressByClient(String idClient, Long idAddress);
 }
