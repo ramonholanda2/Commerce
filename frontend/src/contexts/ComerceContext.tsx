@@ -26,6 +26,8 @@ interface CommerceContextType {
     idProduct: Long
   ) => Promise<void>;
 
+  addAddressForClient: (idClient: string, address: Address) => Promise<void>;
+
   setProductForPurchase: (idClient: string, purchase: Product) => Promise<void>;
   buyProduct: Product | undefined;
 
@@ -62,6 +64,16 @@ interface Item {
   id: Long;
   quantity: number;
   subtotal: number;
+}
+
+interface Address {
+  id: number;
+  cep: string;
+  street: string;
+  city: string;
+  district: string;
+  number: number;
+  complement: string;
 }
 
 interface CommerceContextProviderProps {
@@ -173,7 +185,7 @@ export function CommerceContextProvider({
     idClient: string,
     idAddress: number
   ) {
-    alert(JSON.stringify(qrCodeUrl + idAddress + idClient + idProduct))
+    alert(JSON.stringify(qrCodeUrl + idAddress + idClient + idProduct));
     axios
       .post("https://milk-holanda.herokuapp.com/purchases", {
         qrCodeUrl,
@@ -192,6 +204,19 @@ export function CommerceContextProvider({
     setBuyProduct(product);
   }
 
+  async function addAddressForClient(idClient: string, address: Address) {
+    await axios
+      .post(`https://milk-holanda.herokuapp.com/address/save/${idClient}`, {
+        address,
+      })
+      .then((resp) => {
+        document.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <CommerceContext.Provider
       value={{
@@ -199,6 +224,7 @@ export function CommerceContextProvider({
         products,
         buyProduct,
         updateItem,
+        addAddressForClient,
         getProducts,
         addProductForClient,
         removeProductForClient,

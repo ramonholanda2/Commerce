@@ -8,16 +8,17 @@ export const AddressContainer = styled.div`
   justify-content: center;
   padding: 2rem 0;
   overflow-y: hidden;
-`;
+  `;
 
 export const AddressTitle = styled.h5`
   font-size: 1.8rem;
-`;
+  `;
 
 export const AddressDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 2.5rem;
 `;
 
 export const Buttons = styled.div`
@@ -70,13 +71,11 @@ export const Adresses = styled.div`
   gap: .5rem;
   padding: 5px 30px;
   border-radius: 5px;
-  cursor: pointer;
 
 `;
 
 export const AddressInfo = styled.h4`
   font-size: 1.5rem;
-  cursor: pointer;
   font-family: "Mochiy Pop One", sans-serif;
   font-weight: 500;
 
@@ -88,3 +87,6 @@ export const AddressInfo = styled.h4`
 export const Div = styled.nav`
   display: flex;
 `;
+
+
+export const EditAddressBtn: any = styled(Link) ``;

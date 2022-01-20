@@ -55,6 +55,7 @@ function App() {
             <Route path={"/enderecos"}>
               <Header/>
               <Address />
+              <Footer />
             </Route>
           </Switch>
         </CommerceContextProvider> 

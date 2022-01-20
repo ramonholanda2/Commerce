@@ -1,8 +1,9 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import NewAddress from "./NewAddress/NewAddress";
-
 
 import {
   AddressContainer,
@@ -14,24 +15,44 @@ import {
   AdressesContainer,
   Adresses,
   AddressInfo,
+  Div,
+  EditAddressBtn
 } from "./styles";
+
+interface AddressClient {
+  id: number;
+  cep: string;
+  street: string;
+  city: string;
+  district: string;
+  number: number;
+  complement: string;
+}
 
 const Address = () => {
   const [addNewAddress, setAddNewAddress] = useState<boolean>(false);
-  const [adresses, setAdresses] = useState();
-
+  const [editAddress, setEditAddress] = useState<boolean>(false);
+  const [addresses, setAddresses] = useState<AddressClient[]>();
   const { user } = useAuthContext();
 
   function toggleNewAddress() {
-    setAddNewAddress(!addNewAddress);
+    setAddNewAddress(!addNewAddress)
   }
 
   const { search } = useLocation();
 
   useEffect(() => {
-      const findAdicionar = search.search("adicionar=true");
-      setAddNewAddress(Boolean(findAdicionar + 1))
+    const findAdicionar = search.search("adicionar=true");
+    setAddNewAddress(Boolean(findAdicionar + 1));
   }, [search]);
+
+  useEffect(() => {
+    axios
+      .get(`https://milk-holanda.herokuapp.com/address/${user?.id}`)
+      .then((response) => {
+        setAddresses(response.data);
+      });
+  }, [user?.id]);
 
   return (
     <AddressContainer>
@@ -49,19 +70,36 @@ const Address = () => {
             >
               Adicionar
             </AddAddress>
-            <EditAddress>Editar endereço</EditAddress>
+            <EditAddress onClick={() => setEditAddress(!editAddress)}> {editAddress ? "cancelar edição" : "Editar endereço"}</EditAddress>
           </Buttons>
 
           <AdressesContainer>
-              {user?.address?.map(dress => (
-                <Adresses>
-                    <AddressInfo>{dress.district} - {dress.street}, {dress.number}</AddressInfo>
-                    <AddressInfo>{dress.city} - {dress.cep}</AddressInfo>
-                    <AddressInfo>{dress.complement}</AddressInfo>
-                </Adresses>
-              ))}
+            {addresses?.map((dress) => (
+              <Adresses>
+                {editAddress && (
+                  <Div>
+                  <EditAddressBtn to={`/enderecos?adicionar=true&enderecoId=${dress.id}`}>
+                  <AiFillEdit
+                    style={{ marginRight: "2rem", cursor: "pointer" }}
+                    size={"2rem"}
+                    />
+                    </EditAddressBtn>
+                  <AiFillDelete
+                    style={{ cursor: "pointer", color: "#c20d0d" }}
+                    size={"2rem"}
+                  />
+                </Div>
+                )}
+                <AddressInfo>
+                  {dress.district} - {dress.street}, {dress.number}
+                </AddressInfo>
+                <AddressInfo>
+                  {dress.city} - {dress.cep}
+                </AddressInfo>
+                <AddressInfo>{dress.complement}</AddressInfo>
+              </Adresses>
+            ))}
           </AdressesContainer>
-
         </AddressDiv>
       )}
     </AddressContainer>

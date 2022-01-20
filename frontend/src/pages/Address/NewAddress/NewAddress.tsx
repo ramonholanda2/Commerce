@@ -1,5 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../../contexts/AuthContext";
+import { useCommerceContext } from "../../../contexts/ComerceContext";
 import {
   NewAddressContainer,
   InputFieldAddress,
@@ -15,11 +17,12 @@ interface NewAddressProps {
 }
 
 interface Address {
+  id: number;
   cep: string;
   street: string;
   city: string;
   district: string;
-  number: string;
+  number: number;
   complement: string;
 }
 interface AddressAPI {
@@ -30,11 +33,17 @@ interface AddressAPI {
 }
 
 const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
-  const [cep, setCep] = useState<string>();
-  const [logradouro, setLogradouro] = useState<string>();
-  const [localidade, setLocalidade] = useState<string>();
-  const [bairro, setBairro] = useState<string>();
+  const [enderecoId, setEnderecoId] = useState<number>();
+  const [cep, setCep] = useState<string>("");
+  const [logradouro, setLogradouro] = useState<string>("");
+  const [localidade, setLocalidade] = useState<string>("");
+  const [bairro, setBairro] = useState<string>("");
+  const [numero, setNumero] = useState<number>();
+  const [complemento, setComplemento] = useState<string>("");
+  const [existingAddress, setExistingAddress] = useState<boolean>(false);
   const [address, setAddress] = useState<Address>();
+  const { user } = useAuthContext();
+  const { addAddressForClient } = useCommerceContext();
 
   function getCep(cep: string) {
     setCep(cep.trim());
@@ -42,7 +51,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       getAddress(cep);
     }
   }
-
+  
   function getAddress(cep: string) {
     axios
       .get(`https://viacep.com.br/ws/${cep}/json`)
@@ -55,6 +64,47 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       })
       .catch((error) => {});
   }
+
+  function getIdAddressParamURL() {
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    return url.searchParams.get("enderecoId");
+  }
+
+  async function sendAddress() {
+    const address = {
+      id: enderecoId!,
+      cep: cep!,
+      street: logradouro!,
+      city: localidade!,
+      district: bairro!,
+      number: numero!,
+      complement: complemento!
+    }
+
+    await addAddressForClient(user?.id!, address);
+  }
+
+  useEffect(() => {
+    const addressId = getIdAddressParamURL();
+    if (addressId !== null && user?.id) {
+      axios
+        .get(
+          `https://milk-holanda.herokuapp.com/address?idClient=${user?.id}&idAddress=${addressId}`
+        )
+        .then((response) => {
+          setExistingAddress(true);
+          const data: Address = response.data;
+          setEnderecoId(data.id);
+          setCep(String(data.cep));
+          setBairro(data.district);
+          setLogradouro(data.street);
+          setLocalidade(data.city);
+          setComplemento(data.complement);
+          setNumero(data.number);
+        })
+    }
+  }, [user?.id]);
 
   return (
     <NewAddressContainer>
@@ -77,11 +127,11 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       <Div>
         <DivAux>
           <LabelTitle>número</LabelTitle>
-          <InputFieldAddress />
+          <InputFieldAddress type={"number"} onChange={e => setNumero(Number(e.target.value))} value={numero} />
         </DivAux>
         <DivAux>
           <LabelTitle>complemento</LabelTitle>
-          <InputFieldAddress />
+          <InputFieldAddress onChange={e => setComplemento(e.target.value)} value={complemento} />
         </DivAux>
       </Div>
       <Div>
@@ -104,7 +154,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
         <ButtonBack to="/enderecos?adicionar=false" onClick={toggleNewAddress}>
           Voltar
         </ButtonBack>
-        <ButtonSave>Salvar</ButtonSave>
+        <ButtonSave onClick={sendAddress}>Salvar</ButtonSave>
       </Div>
     </NewAddressContainer>
   );
