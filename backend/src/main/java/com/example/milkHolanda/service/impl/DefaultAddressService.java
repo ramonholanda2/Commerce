@@ -13,6 +13,8 @@ import com.example.milkHolanda.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("addressService")
 public class DefaultAddressService implements AddressService {
 
@@ -72,5 +74,10 @@ public class DefaultAddressService implements AddressService {
         } else {
             throw new ObjectNotFoundException("Endereço não encontrado!");
         }
+    }
+
+    @Override
+    public List<AddressClient> getAddressByClient(String idClient) {
+        return addressRepository.findAddressForClient(idClient);
     }
 }

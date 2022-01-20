@@ -9,7 +9,11 @@ import com.example.milkHolanda.repository.AddressRepository;
 import com.example.milkHolanda.repository.ClientRepository;
 import com.example.milkHolanda.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("addressFacade")
 public class DefaultAddressFacade implements AddressFacade {
@@ -41,5 +45,19 @@ public class DefaultAddressFacade implements AddressFacade {
     @Override
     public void deleteAddressById(Long id) {
         addressService.deleteAddressById(id);
+    }
+
+    @Override
+    public ResponseEntity<List<AddressClientDTO>> getAddressByClient(String idClient) {
+         List<AddressClient> address = addressService.getAddressByClient(idClient);
+
+         List<AddressClientDTO> clientDTOS = new ArrayList<>();
+
+         for (AddressClient addressClient : address) {
+             clientDTOS.add(new AddressClientDTO(addressClient));
+         }
+
+         return ResponseEntity.ok().body(clientDTOS);
+
     }
 }

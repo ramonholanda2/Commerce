@@ -10,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/address")
@@ -17,6 +18,12 @@ public class AddressController {
 
     @Autowired
     private AddressFacade addressFacade;
+
+    @GetMapping(value = "/{idClient}")
+    @ApiOperation(value="Busca endereços de um cliente")
+    private ResponseEntity<List<AddressClientDTO>> getAddressByClient(@PathVariable String idClient) {
+        return addressFacade.getAddressByClient(idClient);
+    }
 
     @PostMapping(path = "/save/{idClient}")
     @ApiOperation(value="Adiciona um endereço para um cliente")
