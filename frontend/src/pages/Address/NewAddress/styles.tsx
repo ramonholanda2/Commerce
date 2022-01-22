@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const NewAddressContainer = styled.div`
   display: flex;
@@ -8,6 +8,12 @@ export const NewAddressContainer = styled.div`
   flex-direction: column;
   gap: 3rem;
   margin-top: 3.5rem;
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: 400px) {
+    margin-top: 1rem;
+  }
+
 `;
 
 export const InputFieldAddress = styled.input`

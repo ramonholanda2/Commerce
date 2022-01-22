@@ -26,7 +26,10 @@ interface CommerceContextType {
     idProduct: Long
   ) => Promise<void>;
 
+  getAllAddressesByClient: (idClient: string) => Promise<void>;
   addAddressForClient: (idClient: string, address: Address) => Promise<void>;
+  updateAddressForClient: (idClient: string, address: Address) => Promise<void>;
+  deleteAddressForClient: (id: number, idClient: string) => Promise<void>;
 
   setProductForPurchase: (idClient: string, purchase: Product) => Promise<void>;
   buyProduct: Product | undefined;
@@ -43,6 +46,7 @@ interface CommerceContextType {
   getProducts: (idClient: string | undefined) => Promise<void>;
 
   products: Product[];
+  addresses: Address[] | undefined;
   loadingProducts: boolean;
 }
 
@@ -86,6 +90,7 @@ export function CommerceContextProvider({
   children,
 }: CommerceContextProviderProps) {
   const [products, setProducts] = useState<Product[]>([]);
+  const [addresses, setAddresses] = useState<Address[]>();
   const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
   const [buyProduct, setBuyProduct] = useState<Product>();
 
@@ -204,27 +209,55 @@ export function CommerceContextProvider({
     setBuyProduct(product);
   }
 
+  async function getAllAddressesByClient(idClient: string ) {
+    await axios
+    .get(`https://milk-holanda.herokuapp.com/address/${idClient}`)
+    .then((response) => {
+      setAddresses(response.data);
+    }).catch(error => {
+      console.log(error)
+    });
+  }
+
   async function addAddressForClient(idClient: string, address: Address) {
     await axios
-      .post(`https://milk-holanda.herokuapp.com/address/save/${idClient}`, {
-        address,
-      })
+      .post(`https://milk-holanda.herokuapp.com/address/save/${idClient}`, address)
       .then((resp) => {
-        document.location.reload();
+        push("/enderecos");
+        getAllAddressesByClient(idClient);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
+  async function updateAddressForClient(idClient: string, address: Address) {
+    await axios.put(`https://milk-holanda.herokuapp.com/address/update/${idClient}`, address).then(response=> {
+      push("/enderecos");
+      getAllAddressesByClient(idClient);
+    }).catch(error => {
+      console.error(error)
+    });
+  }
+
+  async function deleteAddressForClient(id: number, idClient: string){
+    axios.delete(`https://milk-holanda.herokuapp.com/address/delete/${id}`).then(resp => {
+      getAllAddressesByClient(idClient)
+    })
+  }
+
   return (
     <CommerceContext.Provider
       value={{
         loadingProducts,
+        addresses,
         products,
         buyProduct,
         updateItem,
+        getAllAddressesByClient,
         addAddressForClient,
+        updateAddressForClient,
+        deleteAddressForClient,
         getProducts,
         addProductForClient,
         removeProductForClient,

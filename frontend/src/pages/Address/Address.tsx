@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useCommerceContext } from "../../contexts/ComerceContext";
 import NewAddress from "./NewAddress/NewAddress";
 
 import {
@@ -16,10 +16,10 @@ import {
   Adresses,
   AddressInfo,
   Div,
-  EditAddressBtn
+  EditAddressBtn,
 } from "./styles";
 
-interface AddressClient {
+/* interface AddressClient {
   id: number;
   cep: string;
   street: string;
@@ -27,16 +27,16 @@ interface AddressClient {
   district: string;
   number: number;
   complement: string;
-}
+} */
 
 const Address = () => {
   const [addNewAddress, setAddNewAddress] = useState<boolean>(false);
   const [editAddress, setEditAddress] = useState<boolean>(false);
-  const [addresses, setAddresses] = useState<AddressClient[]>();
   const { user } = useAuthContext();
+  const { getAllAddressesByClient, addresses, deleteAddressForClient } = useCommerceContext();
 
   function toggleNewAddress() {
-    setAddNewAddress(!addNewAddress)
+    setAddNewAddress(!addNewAddress);
   }
 
   const { search } = useLocation();
@@ -47,11 +47,11 @@ const Address = () => {
   }, [search]);
 
   useEffect(() => {
-    axios
-      .get(`https://milk-holanda.herokuapp.com/address/${user?.id}`)
-      .then((response) => {
-        setAddresses(response.data);
-      });
+    if (user?.id) {
+      getAllAddressesByClient(user.id);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
   return (
@@ -70,25 +70,31 @@ const Address = () => {
             >
               Adicionar
             </AddAddress>
-            <EditAddress onClick={() => setEditAddress(!editAddress)}> {editAddress ? "cancelar edição" : "Editar endereço"}</EditAddress>
+            <EditAddress onClick={() => setEditAddress(!editAddress)}>
+              {" "}
+              {editAddress ? "cancelar edição" : "Editar endereço"}
+            </EditAddress>
           </Buttons>
 
           <AdressesContainer>
             {addresses?.map((dress) => (
-              <Adresses>
+              <Adresses key={dress.id}>
                 {editAddress && (
                   <Div>
-                  <EditAddressBtn to={`/enderecos?adicionar=true&enderecoId=${dress.id}`}>
-                  <AiFillEdit
-                    style={{ marginRight: "2rem", cursor: "pointer" }}
-                    size={"2rem"}
-                    />
+                    <EditAddressBtn
+                      to={`/enderecos?adicionar=true&enderecoId=${dress.id}`}
+                    >
+                      <AiFillEdit
+                        style={{ marginRight: "2rem", cursor: "pointer" }}
+                        size={"2rem"}
+                      />
                     </EditAddressBtn>
-                  <AiFillDelete
-                    style={{ cursor: "pointer", color: "#c20d0d" }}
-                    size={"2rem"}
-                  />
-                </Div>
+                    <AiFillDelete
+                      style={{ cursor: "pointer", color: "#c20d0d" }}
+                      size={"2rem"}
+                      onClick={() => deleteAddressForClient(dress.id, user?.id!)}
+                    />
+                  </Div>
                 )}
                 <AddressInfo>
                   {dress.district} - {dress.street}, {dress.number}

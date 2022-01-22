@@ -61,7 +61,6 @@ interface AuthContextProviderProps {
 }
 
 export const AuthContext = createContext({} as AuthContextType);
-
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const { push } = useHistory();
   const { pathname } = useLocation();
@@ -70,12 +69,9 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function signInWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider();
-
     const result = await auth.signInWithPopup(provider);
-
     if (result.user) {
       const { uid, displayName } = result.user;
-
       if (uid && displayName) {
         var nameAndSurname = displayName.split(" ");
         const nameClient = nameAndSurname[0];
@@ -91,7 +87,6 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       }
     }
   }
-
   async function createAccountWithEmailAndPassword(
     email: string,
     password: string,
