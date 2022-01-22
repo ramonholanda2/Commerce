@@ -41,8 +41,8 @@ public class DefaultAddressFacade implements AddressFacade {
     }
 
     @Override
-    public void updateAddressByClient(Long id, AddressClientDTO addressClient) {
-        addressService.updateAddressForClient(id, addressClient);
+    public void updateAddressByClient(String idClient, AddressClientDTO addressClient) {
+        addressService.updateAddressForClient(idClient, addressClient);
     }
 
     @Override

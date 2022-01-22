@@ -51,17 +51,21 @@ public class DefaultAddressService implements AddressService {
     }
 
     @Override
-    public void updateAddressForClient(Long id, AddressClientDTO addressClient) {
-        final boolean existsThisAddress = addressRepository.existsById(id);
+    public void updateAddressForClient(String idClient, AddressClientDTO addressClient) {
 
-        if(existsThisAddress) {
-            AddressClient address = addressRepository.findById(id).get();
+        final long existsThisAddress = addressRepository.existsThisAddressByClient(addressClient.getId(), idClient);
+
+        if(!addressRepository.existsById(addressClient.getId())) {
+            throw new ObjectNotFoundException("endereço não existe");
+        }
+
+        if(existsThisAddress == 0) {
+            throw new ObjectNotFoundException("este endereço não pertence ao cliente");
+        } else {
+            AddressClient address = addressRepository.findById(addressClient.getId()).get();
             AddressClient newAddress = addressPopulator.addAddressForClientModel(addressClient);
-            newAddress.setId(id);
             newAddress.setClient(address.getClient());
             addressRepository.save(newAddress);
-        } else {
-            throw new ObjectNotFoundException("Endereço não encontrado!");
         }
     }
 

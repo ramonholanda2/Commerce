@@ -8,7 +8,7 @@ import java.util.List;
 public interface AddressFacade {
     void addAddressClient(AddressClientDTO address, String idClient);
 
-    void updateAddressByClient(Long id, AddressClientDTO addressClient);
+    void updateAddressByClient(String idClient, AddressClientDTO addressClient);
 
     void deleteAddressById(Long id);
 

@@ -45,13 +45,13 @@ public class AddressController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping(path = "/update/{id}")
+    @PutMapping(path = "/update/{idClient}")
     @ApiOperation(value="Atualiza um endereço por id")
     public ResponseEntity<String> updateAddressForClient(
-            @PathVariable Long id,
+            @PathVariable String idClient,
             @Valid@RequestBody AddressClientDTO addressClient) {
 
-        addressFacade.updateAddressByClient(id, addressClient);
+        addressFacade.updateAddressByClient(idClient, addressClient);
 
         return ResponseEntity.noContent().build();
     }

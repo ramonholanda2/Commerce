@@ -7,27 +7,26 @@ public class AddressClientDTO {
 
     private Long id;
 
-    @Size(max = 10)
+    @Size(max = 20, message = "Tamanho máximo 20")
     @NotEmpty(message = "Campo rua é obrigatório!")
     private String street;
 
     @Positive
-    @Size(max = 6)
     @NotNull(message = "Numero não pode ser nulo!")
     private Integer number;
 
-    @Size(max = 15)
+    @Size(max = 25, message = "Tamanho máximo 25")
     private String complement;
 
     @NotEmpty(message = "Campo cep é obrigatório!")
     @Size(min = 8, max = 9, message = "cep tem que ter 8 digitos!")
     private String cep;
 
-    @Size(max = 8)
+    @Size(max = 15, message = "Tamanho máximo 15")
     @NotEmpty(message = "Campo Cidade é obrigatório!")
     private String city;
 
-    @Size(max = 8)
+    @Size(max = 15, message = "Tamanho máximo 15")
     @NotEmpty(message = "Campo Bairro é obrigatório!")
     private String district;
 
