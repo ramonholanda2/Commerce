@@ -57,8 +57,8 @@ const Products = () => {
   ) : (
     <div style={{ marginTop: "2rem" }}>
       <ProductsContainer>
-        {products?.data.map((product) => (
-          <ProductContainer key={Number(product.id)}>
+        {products?.data.map((product, index) => (
+          <ProductContainer index={index+1} key={Number(product.id)}>
             <ProductName>{product.name}</ProductName>
             <ProductImage src={product.urlImage} alt={product.name} />
             <ProductPrice>

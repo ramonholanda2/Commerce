@@ -7,18 +7,17 @@ export const AddressContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem 0;
-  `;
+`;
 
 export const AddressTitle = styled.h5`
   font-size: 1.8rem;
-  `;
+`;
 
 export const AddressDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 2.5rem;
-
 `;
 
 export const Buttons = styled.div`
@@ -26,11 +25,10 @@ export const Buttons = styled.div`
   display: flex;
   margin-top: 1.5rem;
 
-  @media screen and (max-width: 450px ) {
+  @media screen and (max-width: 450px) {
     flex-direction: column;
     gap: 1rem;
   }
-
 `;
 
 export const AddAddress: any = styled(Link)`
@@ -68,9 +66,8 @@ export const AdressesContainer = styled.div`
   margin-top: 2rem;
 
   @media screen and (max-width: 600px) {
-    gap: .5rem;
+    gap: 0.5rem;
   }
-
 `;
 
 export const Adresses = styled.div`
@@ -80,10 +77,10 @@ export const Adresses = styled.div`
   border: 3px solid purple;
   width: 100%;
   max-width: 35rem;
-  gap: .5rem;
+  gap: 0.5rem;
   padding: 5px 10px;
   outline: 2px solid #32008f;
-  border: 2px solid #eb1beb;
+  border: 2 px solid #eb1beb;
   border-radius: 5px;
   overflow: hidden;
   text-wrap: wrap;
@@ -99,10 +96,10 @@ export const Adresses = styled.div`
   @media screen and (max-width: 450px) {
     max-width: 18rem;
   }
-
 `;
 
 export const AddressInfo = styled.h4`
+  text-align: center;
   font-size: 1.5rem;
   font-family: "Mochiy Pop One", sans-serif;
   font-weight: 500;
@@ -116,5 +113,4 @@ export const Div = styled.nav`
   display: flex;
 `;
 
-
-export const EditAddressBtn: any = styled(Link) ``;
+export const EditAddressBtn: any = styled(Link)``;

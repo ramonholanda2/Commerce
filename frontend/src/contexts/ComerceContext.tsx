@@ -209,19 +209,23 @@ export function CommerceContextProvider({
     setBuyProduct(product);
   }
 
-  async function getAllAddressesByClient(idClient: string ) {
+  async function getAllAddressesByClient(idClient: string) {
     await axios
-    .get(`https://milk-holanda.herokuapp.com/address/${idClient}`)
-    .then((response) => {
-      setAddresses(response.data);
-    }).catch(error => {
-      console.log(error)
-    });
+      .get(`https://milk-holanda.herokuapp.com/address/${idClient}`)
+      .then((response) => {
+        setAddresses(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   async function addAddressForClient(idClient: string, address: Address) {
     await axios
-      .post(`https://milk-holanda.herokuapp.com/address/save/${idClient}`, address)
+      .post(
+        `https://milk-holanda.herokuapp.com/address/save/${idClient}`,
+        address
+      )
       .then((resp) => {
         push("/enderecos");
         getAllAddressesByClient(idClient);
@@ -232,18 +236,26 @@ export function CommerceContextProvider({
   }
 
   async function updateAddressForClient(idClient: string, address: Address) {
-    await axios.put(`https://milk-holanda.herokuapp.com/address/update/${idClient}`, address).then(response=> {
-      push("/enderecos");
-      getAllAddressesByClient(idClient);
-    }).catch(error => {
-      console.error(error)
-    });
+    await axios
+      .put(
+        `https://milk-holanda.herokuapp.com/address/update/${idClient}`,
+        address
+      )
+      .then(() => {
+        push("/enderecos");
+        getAllAddressesByClient(idClient);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
-  async function deleteAddressForClient(id: number, idClient: string){
-    axios.delete(`https://milk-holanda.herokuapp.com/address/delete/${id}`).then(resp => {
-      getAllAddressesByClient(idClient)
-    })
+  async function deleteAddressForClient(id: number, idClient: string) {
+    axios
+      .delete(`https://milk-holanda.herokuapp.com/address/delete/${id}`)
+      .then((resp) => {
+        getAllAddressesByClient(idClient);
+      });
   }
 
   return (

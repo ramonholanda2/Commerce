@@ -1,4 +1,21 @@
-import styled from "styled-components";
+import styled, { IndexProps, keyframes } from "styled-components";
+
+declare module "styled-components" {
+  export interface IndexProps {
+    index: number;
+  }
+}
+
+const ViewProduct = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+`;
 
 export const ProductsContainer = styled.div`
   display: flex;
@@ -14,6 +31,10 @@ export const ProductContainer = styled.div`
   align-items: center;
   flex-direction: column;
   padding: 30px;
+
+  @media screen and (prefers-reduced-motion: no-preference) {
+    animation: ${ViewProduct} none ${({ index }: IndexProps) => (index * 0.2)+"s" } linear;
+  }
 
   @media screen and (max-width: 975px) {
     padding: 15px;

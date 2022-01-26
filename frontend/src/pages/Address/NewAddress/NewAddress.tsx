@@ -34,7 +34,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const [logradouro, setLogradouro] = useState<string>(" ");
   const [localidade, setLocalidade] = useState<string>(" ");
   const [bairro, setBairro] = useState<string>(" ");
-  const [numero, setNumero] = useState<number>(Number);
+  const [numero, setNumero] = useState<string>(" ");
   const [complemento, setComplemento] = useState<string>(" ");
   const { user } = useAuthContext();
   const { addAddressForClient, updateAddressForClient } = useCommerceContext();
@@ -72,7 +72,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       street: logradouro!,
       city: localidade!,
       district: bairro!,
-      number: numero!,
+      number: Number(numero)!,
       complement: complemento!,
     };
 
@@ -98,7 +98,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
           setLogradouro(data.street);
           setLocalidade(data.city);
           setComplemento(data.complement);
-          setNumero(data.number);
+          setNumero(String(data.number));
         });
     }
   }, [user?.id]);
@@ -125,8 +125,8 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
         <DivAux>
           <LabelTitle>número</LabelTitle>
           <InputFieldAddress
-            type={"number"}
-            onChange={(e) => setNumero(Number(e.target.value))}
+            type={"text"}
+            onChange={(e) => setNumero(e.target.value)}
             value={numero}
           />
         </DivAux>

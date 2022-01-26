@@ -10,8 +10,13 @@ export const NewAddressContainer = styled.div`
   margin-top: 3.5rem;
   margin-bottom: 2rem;
 
+  @media screen and (max-width: 650px) {
+    gap: 0rem;
+    
+  }
   @media screen and (max-width: 400px) {
     margin-top: 1rem;
+    
   }
 
 `;
@@ -62,7 +67,13 @@ export const Div = styled.div`
   gap: 2rem;
 
   @media screen and (max-width: 650px) {
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
     flex-direction: column;
+
+    :last-child {
+      gap: .5rem;
+    }
   }
 
 `;
