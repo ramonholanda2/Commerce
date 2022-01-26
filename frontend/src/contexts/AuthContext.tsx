@@ -67,7 +67,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<User>();
   const [error, setError] = useState();
 
-  async function signInWithGoogle() {
+  async function signInWithGoogle(): Promise<void> {
     const provider = new firebase.auth.GoogleAuthProvider();
     const result = await auth.signInWithPopup(provider);
     if (result.user) {
@@ -92,7 +92,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     password: string,
     name: string,
     surname: string
-  ) {
+  ): Promise<void> {
     try {
       await auth
         .createUserWithEmailAndPassword(email, password)

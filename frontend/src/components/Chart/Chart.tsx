@@ -63,8 +63,8 @@ const Chart = () => {
     </h1>
   ) : (
     <ChartContainer>
-      {products.map((product) => (
-        <ProductContainer key={Number(product.id)}>
+      {products.map((product, index) => (
+        <ProductContainer index={index+1} key={Number(product.id)}>
           <div style={{ display: "flex", width: "100%" }}>
             <ProductDetailsContainer>
               <ProductTitle>{product.name}</ProductTitle>

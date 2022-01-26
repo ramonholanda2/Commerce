@@ -1,4 +1,17 @@
-import styled from "styled-components";
+import styled, { IndexProps, keyframes } from "styled-components";
+
+const AnimateChart = keyframes`
+from {
+  opacity: 0;
+  transform: translateX(-200px) translateY(-10px) skew(5deg, -5deg);
+  filter: blur(5px);
+}
+to {
+  opacity: 1;
+  transform: translateX(0px) translateY(0px) skew(0deg, 0deg);
+  filter: blur(0px);
+}
+`;
 
 export const ChartContainer = styled.div`
 display: flex;
@@ -19,8 +32,11 @@ export const ProductContainer = styled.div`
   max-width: 80%;
   position: relative;
   border-radius: 20px;
-
   user-select: none;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${AnimateChart} none ${({ index }: IndexProps) => (index * 0.6)+"s" } linear;
+  }
 
   :last-child {
     margin-bottom: 3rem;

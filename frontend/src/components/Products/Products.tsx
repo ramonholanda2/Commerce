@@ -76,7 +76,7 @@ const Products = () => {
           </ProductContainer>
         ))}
       </ProductsContainer>
-    </div>
+    </div>  
   );
 };
 

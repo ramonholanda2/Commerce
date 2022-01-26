@@ -9,11 +9,13 @@ declare module "styled-components" {
 const ViewProduct = keyframes`
   from {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translateX(-50px) translateY(-50px);
+    filter: blur(5px);
   }
   to {
     opacity: 1;
-    transform: translateX(0px);
+    transform: translateX(0px) translateY(0px);
+    filter: blur(0px);
   }
 `;
 
@@ -32,7 +34,7 @@ export const ProductContainer = styled.div`
   flex-direction: column;
   padding: 30px;
 
-  @media screen and (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) {
     animation: ${ViewProduct} none ${({ index }: IndexProps) => (index * 0.2)+"s" } linear;
   }
 
