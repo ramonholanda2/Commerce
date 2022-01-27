@@ -62,9 +62,10 @@ interface PurchaseType {
 
 interface PurchaseProps {
   purchase: PurchaseType;
+  index: number;
 }
 
-const Purchase = ({ purchase }: PurchaseProps) => {
+const Purchase = ({ purchase, index  }: PurchaseProps) => {
   const [qrCode, setQrCode] = useState<string>();
 
   function copyQRCode(qrCode: string) {
@@ -86,7 +87,7 @@ const Purchase = ({ purchase }: PurchaseProps) => {
   }, [purchase.qrCodeUrl]);
 
   return (
-    <PurchaseContainer>
+    <PurchaseContainer index={index}>
       <ProductContainer>
         <ProductTitle>Produto</ProductTitle>
         <ProductName>{purchase.product.name}</ProductName>

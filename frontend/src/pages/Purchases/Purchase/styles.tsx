@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { IndexProps } from "styled-components";
+import { AnimatePurchase } from "./animations";
 
 export const PurchaseContainer = styled.div`
   display: flex;
@@ -10,6 +11,10 @@ export const PurchaseContainer = styled.div`
   border: 3px solid purple;
   border-radius: 8px;
   padding: 1rem 0;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${AnimatePurchase} none ${({ index }: IndexProps) => (index / 1.5)+"s" } linear;
+  }
   
   @media screen and (max-width: 400px) {
     flex-direction: column;
