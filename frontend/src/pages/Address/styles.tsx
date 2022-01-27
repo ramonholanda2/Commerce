@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { IndexProps } from "styled-components";
 import { Link } from "react-router-dom";
+import { AnimateAddress } from "./animations";
 
 export const AddressContainer = styled.div`
   display: flex;
@@ -80,10 +81,14 @@ export const Adresses = styled.div`
   gap: 0.5rem;
   padding: 5px 10px;
   outline: 2px solid #32008f;
-  border: 2 px solid #eb1beb;
+  border: 2px solid #eb1beb;
   border-radius: 5px;
   overflow: hidden;
   text-wrap: wrap;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${AnimateAddress} none ${({ index }: IndexProps) => (index / 1.5)+"s" } linear;
+  }
 
   @media screen and (max-width: 650px) {
     max-width: 30rem;

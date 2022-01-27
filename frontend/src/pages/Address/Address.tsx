@@ -33,7 +33,8 @@ const Address = () => {
   const [addNewAddress, setAddNewAddress] = useState<boolean>(false);
   const [editAddress, setEditAddress] = useState<boolean>(false);
   const { user } = useAuthContext();
-  const { getAllAddressesByClient, addresses, deleteAddressForClient } = useCommerceContext();
+  const { getAllAddressesByClient, addresses, deleteAddressForClient } =
+    useCommerceContext();
 
   function toggleNewAddress() {
     setAddNewAddress(!addNewAddress);
@@ -77,34 +78,40 @@ const Address = () => {
           </Buttons>
 
           <AdressesContainer>
-            {addresses?.map((dress) => (
-              <Adresses key={dress.id}>
-                {editAddress && (
-                  <Div>
-                    <EditAddressBtn
-                      to={`/enderecos?adicionar=true&enderecoId=${dress.id}`}
-                    >
-                      <AiFillEdit
-                        style={{ marginRight: "2rem", cursor: "pointer" }}
+            {addresses?.length === 0 ? (
+              <h1>Sem endereços adicionados</h1>
+            ) : (
+              addresses?.map((dress, index) => (
+                <Adresses index={index + 1} key={dress.id}>
+                  {editAddress && (
+                    <Div>
+                      <EditAddressBtn
+                        to={`/enderecos?adicionar=true&enderecoId=${dress.id}`}
+                      >
+                        <AiFillEdit
+                          style={{ marginRight: "2rem", cursor: "pointer" }}
+                          size={"2rem"}
+                        />
+                      </EditAddressBtn>
+                      <AiFillDelete
+                        style={{ cursor: "pointer", color: "#c20d0d" }}
                         size={"2rem"}
+                        onClick={() =>
+                          deleteAddressForClient(dress.id, user?.id!)
+                        }
                       />
-                    </EditAddressBtn>
-                    <AiFillDelete
-                      style={{ cursor: "pointer", color: "#c20d0d" }}
-                      size={"2rem"}
-                      onClick={() => deleteAddressForClient(dress.id, user?.id!)}
-                    />
-                  </Div>
-                )}
-                <AddressInfo>
-                  {dress.district} - {dress.street}, {dress.number}
-                </AddressInfo>
-                <AddressInfo>
-                  {dress.city} - {dress.cep}
-                </AddressInfo>
-                <AddressInfo>{dress.complement}</AddressInfo>
-              </Adresses>
-            ))}
+                    </Div>
+                  )}
+                  <AddressInfo>
+                    {dress.district} - {dress.street}, {dress.number}
+                  </AddressInfo>
+                  <AddressInfo>
+                    {dress.city} - {dress.cep}
+                  </AddressInfo>
+                  <AddressInfo>{dress.complement}</AddressInfo>
+                </Adresses>
+              ))
+            )}
           </AdressesContainer>
         </AddressDiv>
       )}
