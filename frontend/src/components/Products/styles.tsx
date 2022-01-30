@@ -1,23 +1,11 @@
-import styled, { IndexProps, keyframes } from "styled-components";
+import styled, { IndexProps } from "styled-components";
+import { ViewProduct } from "./animations";
 
 declare module "styled-components" {
   export interface IndexProps {
     index: number;
   }
 }
-
-const ViewProduct = keyframes`
-  from {
-    opacity: 0;
-    transform: translateX(-50px) translateY(-50px);
-    filter: blur(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0px) translateY(0px);
-    filter: blur(0px);
-  }
-`;
 
 export const ProductsContainer = styled.div`
   display: flex;

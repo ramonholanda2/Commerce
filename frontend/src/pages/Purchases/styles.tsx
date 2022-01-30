@@ -18,4 +18,5 @@ export const PurchasesDiv = styled.div`
     flex-direction: column;
     gap: 2rem;
     margin-top: 3rem;
+    
 `;

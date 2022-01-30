@@ -10,6 +10,8 @@ import {
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
 import { useAuthContext } from "../../contexts/AuthContext";
+import { useQuery } from "react-query";
+import * as api from "../../commerceAPI";
 
 interface Product {
   id: Long;
@@ -35,6 +37,10 @@ const Products = () => {
   const [products, setProducts] = useState<AllProducts>();
   const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
   const [tryGetProducts, setTryGetProducts] = useState<number>(0);
+  const { data, isLoading, isError } = useQuery(
+    "allProducts",
+    api.getProducts
+  );
 
   useEffect(() => {
     axios
@@ -50,15 +56,17 @@ const Products = () => {
       });
   }, [tryGetProducts]);
 
-  return loadingProducts ? (
+  return <>{isLoading ? (
     <h1>Carregando...</h1>
-  ) : products?.data.length === 0 ? (
+  ) : isError ? (
+    <h1>Erro ao carregar produtos</h1>
+  ) : data.length === 0 ? (
     <h1>Sem produtos</h1>
   ) : (
     <div style={{ marginTop: "2rem" }}>
       <ProductsContainer>
-        {products?.data.map((product, index) => (
-          <ProductContainer index={index+1} key={Number(product.id)}>
+        {data.map((product: Product, index: number) => (
+          <ProductContainer index={index + 1} key={Number(product.id)}>
             <ProductName>{product.name}</ProductName>
             <ProductImage src={product.urlImage} alt={product.name} />
             <ProductPrice>
@@ -76,8 +84,10 @@ const Products = () => {
           </ProductContainer>
         ))}
       </ProductsContainer>
-    </div>  
-  );
+    </div>
+  )}
+  <h1>{isError}</h1>
+  </>
 };
 
 export default Products;

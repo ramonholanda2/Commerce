@@ -68,7 +68,8 @@ const Purchases = () => {
         ) : purchases?.data.length === 0 ? (
           <h1>Sem Compras</h1>
         ) : (
-          purchases?.data.map((purchase, index) => <Purchase index={index+1} key={purchase.id} purchase={purchase} />)
+          purchases?.data.map((purchase, index) => (
+          <Purchase index={index+1} key={purchase.id} purchase={purchase} />))
         )}
       </PurchasesDiv>
     </PurchaseContainer>
