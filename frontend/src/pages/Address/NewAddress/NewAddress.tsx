@@ -66,7 +66,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   }
 
   async function sendAddress() {
-    const address = {
+    var address = {
       id: enderecoId!,
       cep: cep!,
       street: logradouro!,
@@ -76,6 +76,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       complement: complemento!,
     };
 
+    alert(JSON.stringify(address));
     if (enderecoId === undefined) {
       await addAddressForClient(user?.id!, address);
     } else {

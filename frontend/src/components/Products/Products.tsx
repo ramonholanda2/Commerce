@@ -27,39 +27,20 @@ interface Item {
   subtotal: number;
 }
 
-interface AllProducts {
-  data: Product[];
-}
-
 const Products = () => {
   const { addProductForClient } = useCommerceContext();
   const { user } = useAuthContext();
-  const [products, setProducts] = useState<AllProducts>();
-  const [loadingProducts, setLoadingProducts] = useState<boolean>(true);
-  const [tryGetProducts, setTryGetProducts] = useState<number>(0);
   const { data, isLoading, isError } = useQuery(
     "allProducts",
     api.getProducts
   );
 
-  useEffect(() => {
-    axios
-      .get("https://milk-holanda.herokuapp.com/products")
-      .then((result) => {
-        setProducts(result);
-        setLoadingProducts(false);
-      })
-      .catch((error) => {
-        if (tryGetProducts < 2)
-          setTimeout(() => setTryGetProducts(tryGetProducts + 1), 1000);
-        else throw new Error("Erro ao carregar produtos! " + error.message);
-      });
-  }, [tryGetProducts]);
+  if(isError) {
+    throw new Error("erro ao carregar produtos")
+  }
 
-  return <>{isLoading ? (
+  return isLoading ? (
     <h1>Carregando...</h1>
-  ) : isError ? (
-    <h1>Erro ao carregar produtos</h1>
   ) : data.length === 0 ? (
     <h1>Sem produtos</h1>
   ) : (
@@ -85,9 +66,7 @@ const Products = () => {
         ))}
       </ProductsContainer>
     </div>
-  )}
-  <h1>{isError}</h1>
-  </>
+  );
 };
 
 export default Products;

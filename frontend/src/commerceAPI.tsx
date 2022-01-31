@@ -5,3 +5,5 @@ const api = axios.create({
 })
 
 export const getProducts = () => api.get("/products").then((resp) => resp.data);
+
+export const getAddresses = (idClient: string) => api.get(`/address/${idClient}`).then((resp) => resp.data);
