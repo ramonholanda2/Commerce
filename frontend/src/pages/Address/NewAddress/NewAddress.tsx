@@ -2,17 +2,22 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { useCommerceContext } from "../../../contexts/ComerceContext";
+import * as api from "../../../commerceAPI";
+import { MutateOptions, MutationFunction, useMutation } from "react-query";
+import { queryClient } from "../../../index";
 import {
   ButtonBack,
   ButtonSave, Div, DivAux, InputFieldAddress,
   LabelTitle, NewAddressContainer
 } from "./styles";
+import { useHistory, useLocation } from "react-router-dom";
 
 interface NewAddressProps {
   toggleNewAddress: () => void;
 }
 
 export interface Address {
+  clientId: string,
   id: number;
   cep: string;
   street: string;
@@ -38,6 +43,17 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const [complemento, setComplemento] = useState<string>(" ");
   const { user } = useAuthContext();
   const { addAddressForClient, updateAddressForClient } = useCommerceContext();
+  const { push } = useHistory();
+
+  const { isLoading, mutate: mutateAddAddress, error } = useMutation(
+    api.addAddress as () => Promise<void>,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["addressesByClient", user?.id]);
+        push("/enderecos")
+      },
+    }
+  )
 
   function getCep(cep: string) {
     setCep(cep.trim());
@@ -67,6 +83,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
 
   async function sendAddress() {
     var address = {
+      clientId: user?.id!,
       id: enderecoId!,
       cep: cep!,
       street: logradouro!,
@@ -76,9 +93,8 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       complement: complemento!,
     };
 
-    alert(JSON.stringify(address));
     if (enderecoId === undefined) {
-      await addAddressForClient(user?.id!, address);
+      mutateAddAddress(address as any);
     } else {
       await updateAddressForClient(user?.id!, address);
     }
