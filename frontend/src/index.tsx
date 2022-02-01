@@ -6,7 +6,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import "./global-styles.css";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useCommerceContext } from "../../contexts/ComerceContext";
+import { queryClient } from "../../index";
 import NewAddress from "./NewAddress/NewAddress";
 import * as api from "../../commerceAPI";
 
@@ -34,20 +34,32 @@ interface AddressClient {
 const Address = () => {
   const [addNewAddress, setAddNewAddress] = useState<boolean>(false);
   const [editAddress, setEditAddress] = useState<boolean>(false);
+  const [keyArray, setKeyArray] = useState<number>();
   const { user } = useAuthContext();
-  const { deleteAddressForClient } =
-    useCommerceContext();
+  const { search } = useLocation();
 
   const { isLoading, isError, data } = useQuery(
     ["addressesByClient", user?.id],
     () => api.getAddresses(user?.id!)
   );
+  const { isLoading: loading, mutate } = useMutation(api.deleteAddressById, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["addressesByClient", user?.id!]);
+    },
+    onError: () => {
+      setEditAddress(true)
+    }
+  });
+
+  function deleteAddressByClient(addressId: number) {
+    mutate(addressId);
+    setKeyArray(addressId);
+    setEditAddress(false);
+  }
 
   function toggleNewAddress() {
     setAddNewAddress(!addNewAddress);
   }
-
-  const { search } = useLocation();
 
   if (isError) {
     throw new Error("erro ao carregar endereços");
@@ -81,7 +93,7 @@ const Address = () => {
           </Buttons>
 
           <AdressesContainer>
-            {isLoading ? (
+            {isLoading || !user?.id ? (
               <h1>carregando...</h1>
             ) : data?.length === 0 ? (
               <h1>Sem endereços adicionados</h1>
@@ -101,19 +113,23 @@ const Address = () => {
                       <AiFillDelete
                         style={{ cursor: "pointer", color: "#c20d0d" }}
                         size={"2rem"}
-                        onClick={() =>
-                          deleteAddressForClient(dress.id, user?.id!)
-                        }
+                        onClick={() => deleteAddressByClient(dress.id)}
                       />
                     </Div>
                   )}
-                  <AddressInfo>
-                    {dress.district} - {dress.street}, {dress.number}
-                  </AddressInfo>
-                  <AddressInfo>
-                    {dress.city} - {dress.cep}
-                  </AddressInfo>
-                  <AddressInfo>{dress.complement}</AddressInfo>
+                  {dress.id === keyArray && loading ? (
+                    <h1>deletando...</h1>
+                  ) : (
+                    <>
+                      <AddressInfo>
+                        {dress.district} - {dress.street}, {dress.number}
+                      </AddressInfo>
+                      <AddressInfo>
+                        {dress.city} - {dress.cep}
+                      </AddressInfo>
+                      <AddressInfo>{dress.complement}</AddressInfo>
+                    </>
+                  )}
                 </Adresses>
               ))
             )}

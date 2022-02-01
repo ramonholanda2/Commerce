@@ -29,7 +29,6 @@ interface CommerceContextType {
   getAllAddressesByClient: (idClient: string) => Promise<void>;
   addAddressForClient: (idClient: string, address: Address) => Promise<void>;
   updateAddressForClient: (idClient: string, address: Address) => Promise<void>;
-  deleteAddressForClient: (id: number, idClient: string) => Promise<void>;
 
   setProductForPurchase: (idClient: string, purchase: Product) => Promise<void>;
   buyProduct: Product | undefined;
@@ -250,14 +249,6 @@ export function CommerceContextProvider({
       });
   }
 
-  async function deleteAddressForClient(id: number, idClient: string) {
-    axios
-      .delete(`https://milk-holanda.herokuapp.com/address/delete/${id}`)
-      .then((resp) => {
-        getAllAddressesByClient(idClient);
-      });
-  }
-
   return (
     <CommerceContext.Provider
       value={{
@@ -269,7 +260,6 @@ export function CommerceContextProvider({
         getAllAddressesByClient,
         addAddressForClient,
         updateAddressForClient,
-        deleteAddressForClient,
         getProducts,
         addProductForClient,
         removeProductForClient,

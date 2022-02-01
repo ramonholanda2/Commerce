@@ -75,8 +75,10 @@ export const Adresses = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   border: 3px solid purple;
-  width: 100%;
+  width: 35rem;
+  min-height: 5rem;
   max-width: 35rem;
   gap: 0.5rem;
   padding: 5px 10px;

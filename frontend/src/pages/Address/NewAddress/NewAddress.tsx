@@ -12,7 +12,7 @@ interface NewAddressProps {
   toggleNewAddress: () => void;
 }
 
-interface Address {
+export interface Address {
   id: number;
   cep: string;
   street: string;

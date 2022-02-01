@@ -1,5 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCommerceContext } from "../../contexts/ComerceContext";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useQuery } from "react-query";
+import * as api from "../../commerceAPI";
 import {
   ProductsContainer,
   ProductContainer,
@@ -8,10 +10,6 @@ import {
   ProductPrice,
   AddButton,
 } from "./styles";
-import { useCommerceContext } from "../../contexts/ComerceContext";
-import { useAuthContext } from "../../contexts/AuthContext";
-import { useQuery } from "react-query";
-import * as api from "../../commerceAPI";
 
 interface Product {
   id: Long;
@@ -30,13 +28,10 @@ interface Item {
 const Products = () => {
   const { addProductForClient } = useCommerceContext();
   const { user } = useAuthContext();
-  const { data, isLoading, isError } = useQuery(
-    "allProducts",
-    api.getProducts
-  );
+  const { data, isLoading, isError } = useQuery("allProducts", api.getProducts);
 
-  if(isError) {
-    throw new Error("erro ao carregar produtos")
+  if (isError) {
+    throw new Error("erro ao carregar produtos");
   }
 
   return isLoading ? (
