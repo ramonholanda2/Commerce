@@ -8,12 +8,14 @@ const api = axios.create({
 export const getProducts = () => api.get("/products").then((resp) => resp.data);
 
 export const addAddress = (address: Address) =>
-  api.post(`/address/save/${address.clientId}`, address).then((resp) => resp.data);
-
-export const updateAddress = (idClient: string, address: Address) =>
   api
-    .post(`/address/update/${idClient}`, address)
-    .then((response) => response.data);
+    .post(`/address/save/${address.clientId}`, address)
+    .then((resp) => resp.data);
+
+export const updateAddress = (address: Address) =>
+  api
+    .put(`/address/update/${address.clientId}`, address)
+    .then((response) => response.data)
 
 export const getAddresses = (idClient: string) =>
   api.get(`/address/${idClient}`).then((resp) => resp.data);

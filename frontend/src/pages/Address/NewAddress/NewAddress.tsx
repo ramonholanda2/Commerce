@@ -46,7 +46,17 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const { push } = useHistory();
 
   const { isLoading, mutate: mutateAddAddress, error } = useMutation(
-    api.addAddress as () => Promise<void>,
+    api.addAddress,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["addressesByClient", user?.id]);
+        push("/enderecos")
+      },
+    }
+  )
+
+  const { isLoading: isLoadingUpdateAddress, mutate: mutateUpdateAddress, error: errorUpdateAddress } = useMutation(
+    api.updateAddress,
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["addressesByClient", user?.id]);
@@ -82,7 +92,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   }
 
   async function sendAddress() {
-    var address = {
+    const address = {
       clientId: user?.id!,
       id: enderecoId!,
       cep: cep!,
@@ -94,9 +104,9 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
     };
 
     if (enderecoId === undefined) {
-      mutateAddAddress(address as any);
+      mutateAddAddress(address);
     } else {
-      await updateAddressForClient(user?.id!, address);
+      mutateUpdateAddress(address);
     }
   }
 
@@ -122,6 +132,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
 
   return (
     <NewAddressContainer>
+      {isLoadingUpdateAddress && <h1>Atualizando...</h1>}
       <Div>
         <DivAux>
           <LabelTitle>Cep</LabelTitle>
