@@ -41,6 +41,7 @@ const Chart = () => {
     getProducts,
     removeProductForClient,
   } = useCommerceContext();
+  
 
   const { push } = useHistory();
 

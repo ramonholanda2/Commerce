@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { Product } from "./components/Products/Products";
 import { Address } from "./pages/Address/NewAddress/NewAddress";
 
 const api = axios.create({
@@ -6,6 +7,14 @@ const api = axios.create({
 });
 
 export const getProducts = () => api.get("/products").then((resp) => resp.data);
+
+export const addProductForClient = (product: Product) => 
+ {
+        api.post("/client-product/add-product-by-client", {
+          idClient: product.idClient,
+          idProduct: product.id,
+        }).then((resp) => resp.data);
+  }
 
 export const addAddress = (address: Address) =>
   api

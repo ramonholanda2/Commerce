@@ -42,7 +42,6 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const [numero, setNumero] = useState<string>(" ");
   const [complemento, setComplemento] = useState<string>(" ");
   const { user } = useAuthContext();
-  const { addAddressForClient, updateAddressForClient } = useCommerceContext();
   const { push } = useHistory();
 
   const { isLoading, mutate: mutateAddAddress, error } = useMutation(

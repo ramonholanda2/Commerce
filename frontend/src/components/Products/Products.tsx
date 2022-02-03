@@ -1,6 +1,6 @@
 import { useCommerceContext } from "../../contexts/ComerceContext";
 import { useAuthContext } from "../../contexts/AuthContext";
-import { useQuery } from "react-query";
+import { MutationFunction, useMutation, useQuery } from "react-query";
 import * as api from "../../commerceAPI";
 import {
   ProductsContainer,
@@ -10,8 +10,11 @@ import {
   ProductPrice,
   AddButton,
 } from "./styles";
+import { useHistory } from "react-router-dom";
+import { queryClient } from "../..";
 
-interface Product {
+export interface Product {
+  idClient: string;
   id: Long;
   name: string;
   price: Number;
@@ -29,6 +32,35 @@ const Products = () => {
   const { addProductForClient } = useCommerceContext();
   const { user } = useAuthContext();
   const { data, isLoading, isError } = useQuery("allProducts", api.getProducts);
+  const { push } = useHistory();
+  /* 
+  const {
+    isLoading: isLoadingAddProductForClient,
+    isError: isErrorAddProductForClient,
+  } = useMutation(["addProductForClient"], api.addProductForClient, {
+    onSuccess: () => {
+      push("/meus-produtos");
+    },
+  });
+ */
+  const {
+    isLoading: isLoadingAddProductForClient,
+    isError: isErrorAddProductForClient,
+    error,
+    mutate,
+  } = useMutation(
+    api.addProductForClient as MutationFunction<unknown, Product>,
+    {
+      onSuccess: () => {
+        push("/meus-produtos");
+      },
+    }
+  );
+
+  function addProductClient(product: Product) {
+    product.idClient = user?.id!;
+    mutate(product);
+  }
 
   if (isError) {
     throw new Error("erro ao carregar produtos");
@@ -53,7 +85,7 @@ const Products = () => {
               })}{" "}
               $
             </ProductPrice>
-            <AddButton onClick={() => addProductForClient(user?.id, product)}>
+            <AddButton onClick={() => addProductClient(product)}>
               Adicionar
             </AddButton>
             {/* <BuyButton onClick={() => buy(product)}>Comprar agora</BuyButton> */}
