@@ -9,10 +9,6 @@ import {
 } from "react";
 
 interface CommerceContextType {
-  addProductForClient: (
-    idClient: string | undefined,
-    idProduct: Product
-  ) => Promise<void>;
 
   updateItem: (
     idClient: string | undefined,
@@ -261,7 +257,6 @@ export function CommerceContextProvider({
         addAddressForClient,
         updateAddressForClient,
         getProducts,
-        addProductForClient,
         removeProductForClient,
         uploadProduct,
         setProductForPurchase,

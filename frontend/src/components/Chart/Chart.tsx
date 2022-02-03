@@ -1,6 +1,11 @@
 import { useAuthContext } from "../../contexts/AuthContext";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Quantity from "./Quantity/Quantity";
+import { useCommerceContext } from "../../contexts/ComerceContext";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useQuery } from "react-query";
+import * as api from "../../commerceAPI";
 
 import {
   ChartContainer,
@@ -14,9 +19,6 @@ import {
   BuyButton,
   DeleteButtom,
 } from "./styles";
-import { useCommerceContext } from "../../contexts/ComerceContext";
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
 
 interface Product {
   id: Long;
@@ -41,30 +43,33 @@ const Chart = () => {
     getProducts,
     removeProductForClient,
   } = useCommerceContext();
-  
-
   const { push } = useHistory();
+
+  const { data: productsByClient, isLoading, isError } = useQuery(
+    ["productsByClient", user?.id],
+    () => api.getProductsByClient(user?.id!)
+  );
 
   async function buy(product: Product) {
     await setProductForPurchase(user?.id!, product);
     push("/pagamento");
   }
-  useEffect(() => {
+  /* useEffect(() => {
     if (user?.id !== undefined) {
       getProducts(user.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
-
-  return loadingProducts ? (
+ */
+  return isLoading ? (
     <h1>Carregando...</h1>
-  ) : products.length === 0 ? (
+  ) : productsByClient.length === 0 ? (
     <h1 style={{ margin: "2rem 1rem" }}>
       Sem produtos adicione <a href="/">aqui</a>
     </h1>
   ) : (
     <ChartContainer>
-      {products.map((product, index) => (
+      {productsByClient.map((product: Product, index: number) => (
         <ProductContainer index={index+1} key={Number(product.id)}>
           <div style={{ display: "flex", width: "100%" }}>
             <ProductDetailsContainer>

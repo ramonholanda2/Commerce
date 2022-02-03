@@ -1,4 +1,3 @@
-import { useCommerceContext } from "../../contexts/ComerceContext";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { MutationFunction, useMutation, useQuery } from "react-query";
 import * as api from "../../commerceAPI";
@@ -11,7 +10,6 @@ import {
   AddButton,
 } from "./styles";
 import { useHistory } from "react-router-dom";
-import { queryClient } from "../..";
 
 export interface Product {
   idClient: string;
@@ -29,20 +27,10 @@ interface Item {
 }
 
 const Products = () => {
-  const { addProductForClient } = useCommerceContext();
   const { user } = useAuthContext();
   const { data, isLoading, isError } = useQuery("allProducts", api.getProducts);
   const { push } = useHistory();
-  /* 
-  const {
-    isLoading: isLoadingAddProductForClient,
-    isError: isErrorAddProductForClient,
-  } = useMutation(["addProductForClient"], api.addProductForClient, {
-    onSuccess: () => {
-      push("/meus-produtos");
-    },
-  });
- */
+
   const {
     isLoading: isLoadingAddProductForClient,
     isError: isErrorAddProductForClient,
