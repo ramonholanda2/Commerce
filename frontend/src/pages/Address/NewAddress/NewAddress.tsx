@@ -7,8 +7,12 @@ import { MutateOptions, MutationFunction, useMutation } from "react-query";
 import { queryClient } from "../../../index";
 import {
   ButtonBack,
-  ButtonSave, Div, DivAux, InputFieldAddress,
-  LabelTitle, NewAddressContainer
+  ButtonSave,
+  Div,
+  DivAux,
+  InputFieldAddress,
+  LabelTitle,
+  NewAddressContainer,
 } from "./styles";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -17,7 +21,7 @@ interface NewAddressProps {
 }
 
 export interface Address {
-  clientId: string,
+  clientId: string;
   id: number;
   cep: string;
   street: string;
@@ -44,25 +48,27 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const { user } = useAuthContext();
   const { push } = useHistory();
 
-  const { isLoading, mutate: mutateAddAddress, error } = useMutation(
-    api.addAddress,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["addressesByClient", user?.id]);
-        push("/enderecos")
-      },
-    }
-  )
+  const {
+    isLoading,
+    mutate: mutateAddAddress,
+    error,
+  } = useMutation(api.addAddress, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["addressesByClient", user?.id]);
+      push("/enderecos");
+    },
+  });
 
-  const { isLoading: isLoadingUpdateAddress, mutate: mutateUpdateAddress, error: errorUpdateAddress } = useMutation(
-    api.updateAddress,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["addressesByClient", user?.id]);
-        push("/enderecos")
-      },
-    }
-  )
+  const {
+    isLoading: isLoadingUpdateAddress,
+    mutate: mutateUpdateAddress,
+    error: errorUpdateAddress,
+  } = useMutation(api.updateAddress, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["addressesByClient", user?.id]);
+      push("/enderecos");
+    },
+  });
 
   function getCep(cep: string) {
     setCep(cep.trim());

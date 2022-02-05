@@ -2,9 +2,10 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Quantity from "./Quantity/Quantity";
 import { useCommerceContext } from "../../contexts/ComerceContext";
-import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
+import { queryClient } from "../../index";
+import spinningLoading from "../../assets/spinning-loading.gif";
 import * as api from "../../commerceAPI";
 
 import {
@@ -21,6 +22,7 @@ import {
 } from "./styles";
 
 interface Product {
+  idClient: string;
   id: Long;
   name: string;
   price: Number;
@@ -36,32 +38,42 @@ interface Item {
 
 const Chart = () => {
   const { user } = useAuthContext();
-  const { setProductForPurchase, getProducts, removeProductForClient } =
+  const { setProductForPurchase, removeProductForClient } =
     useCommerceContext();
   const { push } = useHistory();
+
+  const {
+    isLoading: isLoadingRemoveProductForClient,
+    isError: isErrorRemoveProductForClient,
+    mutate: mutateRemoveProductForClient,
+  } = useMutation(api.removeProductForClient, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["chartClient", user?.id!]);
+    },
+  });
 
   const {
     data: productsByClient,
     isLoading,
     isError,
-  } = useQuery(["chartClient", user?.id!], () =>
-    api.getProductsByClient(user?.id!),
+  } = useQuery(
+    ["chartClient", user?.id!],
+    () => api.getProductsByClient(user?.id!),
     {
-      staleTime: 60 * 60 * 1000
+      staleTime: 60 * 60 * 1000,
     }
   );
+
+  async function removeProductByClient(product: Product) {
+    product.idClient = user?.id!;
+    mutateRemoveProductForClient(product);
+  }
 
   async function buy(product: Product) {
     await setProductForPurchase(user?.id!, product);
     push("/pagamento");
   }
-  /* useEffect(() => {
-    if (user?.id !== undefined) {
-      getProducts(user.id);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
- */
+
   return isLoading || !user?.id ? (
     <h1>Carregando...</h1>
   ) : productsByClient.length === 0 ? (
@@ -97,10 +109,16 @@ const Chart = () => {
             </Subtotal>
             <BuyButton onClick={() => buy(product)}>Comprar</BuyButton>
           </BuyProduct>
-          <DeleteButtom
-            onClick={() => removeProductForClient(user?.id, product.id)}
-          >
-            <RiDeleteBin6Fill size="2rem" color="#dd1a1a" />
+          <DeleteButtom onClick={() => removeProductByClient(product)}>
+            {isLoadingRemoveProductForClient ? (
+              <img
+                style={{ borderRadius: "100%", height: "42px" }}
+                src={spinningLoading}
+                alt="deleting"
+              />
+            ) : (
+              <RiDeleteBin6Fill size="2rem" color="#dd1a1a" />
+            )}
           </DeleteButtom>
         </ProductContainer>
       ))}

@@ -21,6 +21,17 @@ export const addProductForClient = (product: Product) =>
       idProduct: product.id,
     })
     .then((resp) => resp.data);
+
+export const removeProductForClient = (product: Product) =>
+  api
+    .delete("/client-product/remove-product-by-client", {
+      data: {
+        idClient: product.idClient,
+        idProduct: product.id,
+      },
+    })
+    .then((resp) => resp.data);
+
 export const addAddress = (address: Address) =>
   api
     .post(`/address/save/${address.clientId}`, address)

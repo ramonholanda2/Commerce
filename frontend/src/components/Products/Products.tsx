@@ -1,5 +1,5 @@
 import { useAuthContext } from "../../contexts/AuthContext";
-import { MutationFunction, useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import { queryClient } from "../../index";
 import * as api from "../../commerceAPI";
