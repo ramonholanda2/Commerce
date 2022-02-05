@@ -20,6 +20,7 @@ interface Address {
   complement: string;
   cep: string;
   city: string;
+  district: string;
 }
 
 const Payment = () => {

@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../contexts/AuthContext";
-import { useCommerceContext } from "../../../contexts/ComerceContext";
 import * as api from "../../../commerceAPI";
-import { MutateOptions, MutationFunction, useMutation } from "react-query";
+import { useMutation } from "react-query";
 import { queryClient } from "../../../index";
 import {
   ButtonBack,
@@ -14,7 +13,7 @@ import {
   LabelTitle,
   NewAddressContainer,
 } from "./styles";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 interface NewAddressProps {
   toggleNewAddress: () => void;
@@ -49,9 +48,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const { push } = useHistory();
 
   const {
-    isLoading,
     mutate: mutateAddAddress,
-    error,
   } = useMutation(api.addAddress, {
     onSuccess: () => {
       queryClient.invalidateQueries(["addressesByClient", user?.id]);
@@ -62,7 +59,6 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const {
     isLoading: isLoadingUpdateAddress,
     mutate: mutateUpdateAddress,
-    error: errorUpdateAddress,
   } = useMutation(api.updateAddress, {
     onSuccess: () => {
       queryClient.invalidateQueries(["addressesByClient", user?.id]);

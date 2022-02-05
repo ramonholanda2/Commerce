@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { queryClient } from "../../index";
 import spinningLoading from "../../assets/spinning-loading.gif";
+import { useState } from "react";
 import * as api from "../../commerceAPI";
 
 import {
@@ -37,14 +38,18 @@ interface Item {
 }
 
 const Chart = () => {
+  const [indexChart, setIndexChart] = useState<number>();
   const { user } = useAuthContext();
-  const { setProductForPurchase, removeProductForClient } =
-    useCommerceContext();
+  const { setProductForPurchase } = useCommerceContext();
   const { push } = useHistory();
+
+  const { data: addresses } = useQuery(
+    ["addressesByClient", user?.id],
+    () => api.getAddresses(user?.id!)
+  );
 
   const {
     isLoading: isLoadingRemoveProductForClient,
-    isError: isErrorRemoveProductForClient,
     mutate: mutateRemoveProductForClient,
   } = useMutation(api.removeProductForClient, {
     onSuccess: () => {
@@ -52,11 +57,7 @@ const Chart = () => {
     },
   });
 
-  const {
-    data: productsByClient,
-    isLoading,
-    isError,
-  } = useQuery(
+  const { data: productsByClient, isLoading } = useQuery(
     ["chartClient", user?.id!],
     () => api.getProductsByClient(user?.id!),
     {
@@ -64,12 +65,18 @@ const Chart = () => {
     }
   );
 
-  async function removeProductByClient(product: Product) {
+  async function removeProductByClient(product: Product, index: number) {
+    setIndexChart(index);
     product.idClient = user?.id!;
     mutateRemoveProductForClient(product);
   }
 
   async function buy(product: Product) {
+    if(addresses.length === 0) {
+      alert("adicione um endereço");
+      return push("/enderecos")
+    }
+
     await setProductForPurchase(user?.id!, product);
     push("/pagamento");
   }
@@ -109,8 +116,8 @@ const Chart = () => {
             </Subtotal>
             <BuyButton onClick={() => buy(product)}>Comprar</BuyButton>
           </BuyProduct>
-          <DeleteButtom onClick={() => removeProductByClient(product)}>
-            {isLoadingRemoveProductForClient ? (
+          <DeleteButtom onClick={() => removeProductByClient(product, index)}>
+            {isLoadingRemoveProductForClient && index === indexChart ? (
               <img
                 style={{ borderRadius: "100%", height: "42px" }}
                 src={spinningLoading}

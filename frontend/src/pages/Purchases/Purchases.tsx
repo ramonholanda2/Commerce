@@ -1,8 +1,8 @@
-import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import Purchase from "./Purchase/Purchase";
+import * as api from "../../commerceAPI"; 
 import { PurchaseContainer, PurchasesTitle, PurchasesDiv } from "./styles";
+import { useQuery } from "react-query";
 
 interface Address {
   id: Long;
@@ -44,31 +44,22 @@ interface PurchasesProps {
 }
 
 const Purchases = () => {
-  const [purchases, setPurchases] = useState<AxiosResponse<PurchasesProps[]>>();
-  const [loadingPurchases, setLoadingPurchases] = useState<boolean>(true);
   const { user } = useAuthContext();
-
-  useEffect(() => {
-    if(user?.id !== undefined) {
-      axios
-        .get(`https://milk-holanda.herokuapp.com/purchases/${user?.id}`)
-        .then((response) => {
-          setPurchases(response);
-          setLoadingPurchases(false);
-        })
-    }
-  }, [user?.id]);
+  const { data: purchases, isLoading } = useQuery(
+    ["purchases", user?.id], 
+    () => api.getPurchases(user?.id!)
+  );
 
   return (
     <PurchaseContainer>
       <PurchasesTitle>Compras</PurchasesTitle>
       <PurchasesDiv>
-        {loadingPurchases ? (
+        {isLoading || !user?.id ? (
           <h1>Carregando...</h1>
-        ) : purchases?.data.length === 0 ? (
+        ) : purchases?.length === 0 ? (
           <h1>Sem Compras</h1>
         ) : (
-          purchases?.data.map((purchase, index) => (
+          purchases?.map((purchase: PurchasesProps, index: number) => (
           <Purchase index={index+1} key={purchase.id} purchase={purchase} />))
         )}
       </PurchasesDiv>

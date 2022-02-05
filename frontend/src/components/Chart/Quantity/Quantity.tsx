@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
+import { useMutation } from "react-query";
 import { useAuthContext } from "../../../contexts/AuthContext";
-import { useCommerceContext } from "../../../contexts/ComerceContext";
+import { queryClient } from "../../../index";
+import loading from "../../../assets/spinning-loading.gif";
+import * as api from "../../../commerceAPI";
 import {
   ItemContainer,
   PlusAndMinus,
@@ -21,18 +24,32 @@ interface ItemProps {
   idProduct: Long;
 }
 
+export interface UpdateItem {
+  idClient: string;
+  idItem: number;
+  idProduct: number;
+  quantity: number;
+}
+
 const Quantity = ({ item, idProduct }: ItemProps) => {
   const { user } = useAuthContext();
-  const { updateItem } = useCommerceContext();
   const [quantity, setQuantity] = useState<number>(item.quantity);
+  const {
+    isLoading,
+    mutate: mutateUpdateItem,
+  } = useMutation(api.updateItemByProduct, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["chartClient", user?.id!]);
+    },
+  });
 
   function formatQuantity(value: string) {
     value = value.replace(/\D/gim, "");
-    Number(value) < 0 && setQuantity(1);
-    (Number(value) >= 0 && value.length <= 3) && setQuantity(Number(value));
+    Number(value) < 1 && setQuantity(1);
+    Number(value) >= 1 && value.length <= 3 && setQuantity(Number(value));
   }
   function addProduct() {
-    (String(quantity).length <= 3 && quantity < 999) &&  setQuantity(quantity + 1);
+    String(quantity).length <= 3 && quantity < 999 && setQuantity(quantity + 1);
   }
 
   function removeProduct() {
@@ -42,7 +59,7 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
 
   function keyPressInputQuantity(event: any) {
     if (event.key === "Enter" && item.quantity !== quantity) {
-      updateItem(user?.id, item.id, quantity, idProduct);
+      updateItemByProduct(user?.id!, Number(item.id), quantity, Number(idProduct));
     }
 
     if (event.key === "ArrowDown") {
@@ -51,6 +68,21 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
       addProduct();
       event.preventDefault();
     }
+  }
+
+  async function updateItemByProduct(
+    idClient: string,
+    idItem: number,
+    quantity: number,
+    idProduct: number
+  ) {
+    const updateItemData: UpdateItem = {
+      idClient,
+      idItem,
+      idProduct,
+      quantity,
+    };
+    mutateUpdateItem(updateItemData);
   }
 
   return (
@@ -63,7 +95,6 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
 
           <QuantityInput
             pattern="(?<![0-9])0+"
-            // eslint-disable-next-line no-restricted-globals
             onKeyDown={(event) => keyPressInputQuantity(event)}
             onChange={(e) => formatQuantity(e.target.value)}
             value={quantity}
@@ -76,11 +107,26 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
         </div>
 
         <ButtonSaveNewQuantity
-          disabled={item.quantity === quantity}
+          disabled={(item.quantity || isLoading) === quantity}
           isAlterableQuantity={item.quantity !== quantity}
-          onClick={() => updateItem(user?.id, item.id, quantity, idProduct)}
+          onClick={() =>
+            updateItemByProduct(
+              user?.id!,
+              Number(item.id),
+              quantity,
+              Number(idProduct)
+            )
+          }
         >
-          Salvar
+          {isLoading ? (
+            <img
+              style={{ borderRadius: "100%", width: "30px", height: "25px" }}
+              src={loading}
+              alt="atualizando"
+            />
+          ) : (
+            "Salvar"
+          )}
         </ButtonSaveNewQuantity>
       </ItemController>
     </ItemContainer>

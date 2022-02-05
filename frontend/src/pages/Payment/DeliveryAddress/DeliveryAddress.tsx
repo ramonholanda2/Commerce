@@ -1,4 +1,6 @@
+import { useQuery } from "react-query";
 import { useAuthContext } from "../../../contexts/AuthContext";
+import * as api from "../../../commerceAPI";
 import {
   DeliveryAddressContainer,
   DeliveryAddressTitle,
@@ -15,6 +17,7 @@ interface Address {
   complement: string;
   cep: string;
   city: string;
+  district: string;
 }
 
 interface DeliveryAddressProps {
@@ -31,11 +34,15 @@ const DeliveryAddress = ({
   deliveryAddressOption,
 }: DeliveryAddressProps) => {
   const { user } = useAuthContext();
-
+  const { data: addresses } = useQuery(
+    ["addressesByClient", user?.id],
+    () => api.getAddresses(user?.id!)
+  );
+  
   return (
     <DeliveryAddressContainer>
       <DeliveryAddressTitle>Escolha o endereço</DeliveryAddressTitle>
-      {user?.address?.map((deliveryAddress, index) =>  (
+      {addresses?.map((deliveryAddress: Address, index: number) =>  (
         <AddressContainer
           key={Number(deliveryAddress.id)}
           onClick={() => selectDeliveryAddress(`address ${index}`, deliveryAddress)}

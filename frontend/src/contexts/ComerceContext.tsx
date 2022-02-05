@@ -9,7 +9,6 @@ import {
 } from "react";
 
 interface CommerceContextType {
-
   updateItem: (
     idClient: string | undefined,
     idItem: Long,
@@ -185,7 +184,6 @@ export function CommerceContextProvider({
     idClient: string,
     idAddress: number
   ) {
-    alert(JSON.stringify(qrCodeUrl + idAddress + idClient + idProduct));
     axios
       .post("https://milk-holanda.herokuapp.com/purchases", {
         qrCodeUrl,

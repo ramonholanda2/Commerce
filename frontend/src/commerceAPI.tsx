@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { UpdateItem } from "./components/Chart/Quantity/Quantity";
 import { Product } from "./components/Products/Products";
 import { Address } from "./pages/Address/NewAddress/NewAddress";
 
@@ -32,6 +33,11 @@ export const removeProductForClient = (product: Product) =>
     })
     .then((resp) => resp.data);
 
+export const updateItemByProduct = (product: UpdateItem) =>
+  api
+    .post(`/item/update/${product.idItem}`, { quantity: product.quantity })
+    .then((response) => response.data);
+
 export const addAddress = (address: Address) =>
   api
     .post(`/address/save/${address.clientId}`, address)
@@ -51,5 +57,7 @@ export const deleteAddressById = (id: number) =>
 export const updateAddressById = (
   idClient: string,
   address: AxiosRequestConfig
-) =>
-  api.delete(`/address/$update/${idClient}`, address).then((resp) => resp.data);
+) => api.put(`/address/update/${idClient}`, address).then((resp) => resp.data);
+
+export const getPurchases = (idClient: string) =>
+  api.get(`/purchases/${idClient}`).then((response) => response.data);

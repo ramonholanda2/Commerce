@@ -150,13 +150,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       if (user) {
         setTimeout(() => {
           const { uid } = user;
-
+          
           if (!uid) {
             throw new Error("Missing Collect information");
           }
-
+          
           axios
-            .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
+          .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
             .then((result) => {
               setUser(result.data);
               if (!localStorage.getItem("token")) {
@@ -175,6 +175,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         localStorage.removeItem("token");
       }
     });
+
   }, [push]);
 
   useEffect(() => {

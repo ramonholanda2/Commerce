@@ -31,12 +31,8 @@ const Products = () => {
   const { user } = useAuthContext();
   const { data, isLoading, isError } = useQuery("allProducts", api.getProducts);
   const { push } = useHistory();
-  
 
   const {
-    isLoading: isLoadingAddProductForClient,
-    isError: isErrorAddProductForClient,
-    error,
     mutate,
   } = useMutation(
     api.addProductForClient,
@@ -45,6 +41,9 @@ const Products = () => {
         queryClient.invalidateQueries(["chartClient", user?.id!]);
         push("/meus-produtos");
       },
+      onError: () => {
+        push("/meus-produtos");
+      }
     }
   );
 

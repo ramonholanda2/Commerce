@@ -22,6 +22,7 @@ const NewProduct = () => {
     string | undefined | ArrayBuffer | null
   >();
   const [selectedImage, setSelectedImage] = useState<File>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [urlImageProgress, setUrlImageProgress] = useState<number>();
   const [productName, setProductName] =
     useState<SetStateAction<string | undefined>>();
@@ -74,12 +75,6 @@ const NewProduct = () => {
     setSelectedImage(e.target!.files[0]!);
     reader.readAsDataURL(e.target!.files[0]!);
   }
-
-  /*   useEffect(() => {
-    if(!user?.isAdmin!) {
-      push("/");
-    }
-  }, []) */
 
   return (
     <AddProductGrid>

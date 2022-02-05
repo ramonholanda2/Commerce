@@ -19,19 +19,22 @@ export const DeliveryAddressTitle = styled.h2`
 `;
 
 export const AddressContainer = styled.div`
-  border: 3px solid red;
-  padding: 5px;
+  border: 3px solid purple;
   display: flex;
   align-items: center;
+  justify-content: center;
+  text-align: left;
+  padding: 10px;
   border-radius: 8px;
   width: 100%;
+  max-width: 35rem;
+  
 `;
 
 export const OptionAddress = styled.input`
   cursor: pointer;
   width: 15px;
   height: 20px;
-  cursor: pointer;
 `;
 export const OptionAddressLabel = styled.label`
   font-size: 1.3rem;
