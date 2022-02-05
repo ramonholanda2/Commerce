@@ -1,5 +1,7 @@
 import { useAuthContext } from "../../contexts/AuthContext";
 import { MutationFunction, useMutation, useQuery } from "react-query";
+import { useHistory } from "react-router-dom";
+import { queryClient } from "../../index";
 import * as api from "../../commerceAPI";
 import {
   ProductsContainer,
@@ -9,7 +11,6 @@ import {
   ProductPrice,
   AddButton,
 } from "./styles";
-import { useHistory } from "react-router-dom";
 
 export interface Product {
   idClient: string;
@@ -30,6 +31,7 @@ const Products = () => {
   const { user } = useAuthContext();
   const { data, isLoading, isError } = useQuery("allProducts", api.getProducts);
   const { push } = useHistory();
+  
 
   const {
     isLoading: isLoadingAddProductForClient,
@@ -37,9 +39,10 @@ const Products = () => {
     error,
     mutate,
   } = useMutation(
-    api.addProductForClient as MutationFunction<unknown, Product>,
+    api.addProductForClient,
     {
       onSuccess: () => {
+        queryClient.invalidateQueries(["chartClient", user?.id!]);
         push("/meus-produtos");
       },
     }

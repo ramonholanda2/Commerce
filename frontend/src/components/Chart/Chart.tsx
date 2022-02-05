@@ -36,18 +36,19 @@ interface Item {
 
 const Chart = () => {
   const { user } = useAuthContext();
-  const {
-    products,
-    loadingProducts,
-    setProductForPurchase,
-    getProducts,
-    removeProductForClient,
-  } = useCommerceContext();
+  const { setProductForPurchase, getProducts, removeProductForClient } =
+    useCommerceContext();
   const { push } = useHistory();
 
-  const { data: productsByClient, isLoading, isError } = useQuery(
-    ["productsByClient", user?.id],
-    () => api.getProductsByClient(user?.id!)
+  const {
+    data: productsByClient,
+    isLoading,
+    isError,
+  } = useQuery(["chartClient", user?.id!], () =>
+    api.getProductsByClient(user?.id!),
+    {
+      staleTime: 60 * 60 * 1000
+    }
   );
 
   async function buy(product: Product) {
@@ -61,7 +62,7 @@ const Chart = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
  */
-  return isLoading ? (
+  return isLoading || !user?.id ? (
     <h1>Carregando...</h1>
   ) : productsByClient.length === 0 ? (
     <h1 style={{ margin: "2rem 1rem" }}>
@@ -70,7 +71,7 @@ const Chart = () => {
   ) : (
     <ChartContainer>
       {productsByClient.map((product: Product, index: number) => (
-        <ProductContainer index={index+1} key={Number(product.id)}>
+        <ProductContainer index={index + 1} key={Number(product.id)}>
           <div style={{ display: "flex", width: "100%" }}>
             <ProductDetailsContainer>
               <ProductTitle>{product.name}</ProductTitle>
