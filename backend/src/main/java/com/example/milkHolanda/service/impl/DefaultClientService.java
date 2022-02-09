@@ -4,6 +4,7 @@ import com.example.milkHolanda.dto.BusinessClientDTO;
 import com.example.milkHolanda.dto.ClientDTO;
 import com.example.milkHolanda.dto.ClientNewDTO;
 import com.example.milkHolanda.entities.Client;
+import com.example.milkHolanda.entities.enums.Role;
 import com.example.milkHolanda.exceptions.DataIntegrityException;
 import com.example.milkHolanda.exceptions.ObjectNotFoundException;
 import com.example.milkHolanda.facade.BusinesClientFacade;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("clientService")
 public class DefaultClientService implements ClientService {
@@ -78,7 +80,7 @@ public class DefaultClientService implements ClientService {
 
             Client client = clientPopulator.addClient(clientDTO);
 
-            Client newClient = new Client(client.getId(), client.getName());
+            Client newClient = new Client(client.getId(), client.getName(), client.getSurname());
             newClient.setId(id);
 
             clientRepository.save(newClient);

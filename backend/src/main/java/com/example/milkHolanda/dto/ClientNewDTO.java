@@ -13,10 +13,13 @@ public class ClientNewDTO implements Serializable {
     @NotBlank(message = "sobrenome obrigatório!")
     private String surname;
 
-    public ClientNewDTO(String id, String name, String surname) {
+    private Boolean isAdmin = false;
+
+    public ClientNewDTO(String id, String name, String surname, Boolean idAdmin) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.isAdmin = idAdmin == null ? false : isAdmin;
     }
 
     public String getId() {
@@ -41,5 +44,13 @@ public class ClientNewDTO implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

@@ -111,7 +111,7 @@ public class DefaultBusinesClientFacade implements BusinesClientFacade {
         }
 
         ClientDTO clientDTO =
-                new ClientDTO(client.getId(), client.getName(), client.getSurname(), productDTOList, addressClient);
+                new ClientDTO(client.getId(), client.getName(), client.getSurname(), client.getAdmin(), productDTOList, addressClient);
 
         return clientDTO;
 
