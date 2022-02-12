@@ -13,7 +13,7 @@ export const PurchaseContainer = styled.div`
   padding: 1rem 0;
 
   @media (prefers-reduced-motion: no-preference) {
-    animation: ${AnimatePurchase} none ${({ index }: IndexProps) => (index / 1.5)+"s" } linear;
+    animation: ${AnimatePurchase} none ${({ index }: IndexProps) => (index / 2.5)+"s" } linear;
   }
   
   @media screen and (max-width: 400px) {

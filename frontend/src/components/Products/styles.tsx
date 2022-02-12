@@ -22,14 +22,27 @@ export const AddNewProduct: any = styled(Link)`
   position: absolute;
   left: 20px;
   top: 0px;
-  cursor: pointer;
+`;
+
+export const EditProducts = styled.div`
+    position: absolute;
+    left: 60px;
+    top: 0px;
+    color: #570257;
 `;
 
 export const ProductContainer = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   flex-direction: column;
   padding: 30px;
+  transition: all .2s ease-in-out;
+  
+  :hover {
+    transition: all .5s ease-in-out;
+    transform: translateY(-20px) scale(1.1);
+  }
 
   @media (prefers-reduced-motion: no-preference) {
     animation: ${ViewProduct} none ${({ index }: IndexProps) => (index * 0.2)+"s" } linear;

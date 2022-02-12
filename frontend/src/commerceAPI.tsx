@@ -15,6 +15,8 @@ export const getProductsByClient = (idClient: string) => {
     .then((response) => response.data);
 };
 
+export const deleteProduct = (idProduct: number) => api.delete(`/products/delete/${idProduct}`).then(response => response.data);
+
 export const addProductForClient = (product: Product) =>
   api
     .post("/client-product/add-product-by-client", {

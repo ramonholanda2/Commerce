@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import firebase from "firebase";
 import {
   SelectFile,
@@ -16,8 +16,12 @@ import {
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 const NewProduct = () => {
+  const { user } = useAuthContext();
+  const { push } = useHistory()
   const { uploadProduct } = useCommerceContext();
   /*   const { user } = useAuthContext(); */
   const [imagePreview, setImagePreview] = useState<
@@ -77,6 +81,15 @@ const NewProduct = () => {
     setSelectedImage(e.target!.files[0]!);
     reader.readAsDataURL(e.target!.files[0]!);
   }
+  useEffect(() => {
+
+    if(user?.id) {
+      if(!user.admin) {
+        push("/")
+      }
+    }
+
+  }, [push, user?.admin, user?.id])
 
   return (
     <AddProductGrid>
