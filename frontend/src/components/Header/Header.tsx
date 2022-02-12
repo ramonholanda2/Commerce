@@ -33,7 +33,7 @@ const Header = () => {
         <MenuOptions to="/meus-produtos">Meus Produtos</MenuOptions>
         <MenuOptions to="/compras">Compras</MenuOptions>
       </MenuContainer>
-
+ 
       <UserLogo>
         <FaUserCircle
           onClick={() => setToggleLoggout(!toggleLoggout)}

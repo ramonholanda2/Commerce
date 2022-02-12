@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { IndexProps } from "styled-components";
 import { ViewProduct } from "./animations";
 
@@ -13,7 +14,15 @@ export const ProductsContainer = styled.div`
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 8rem);
+  position: relative;
   padding-bottom: 3rem;
+`;
+
+export const AddNewProduct: any = styled(Link)`
+  position: absolute;
+  left: 20px;
+  top: 0px;
+  cursor: pointer;
 `;
 
 export const ProductContainer = styled.div`

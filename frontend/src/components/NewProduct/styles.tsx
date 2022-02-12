@@ -1,6 +1,13 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const AddProductGrid = styled.div``;
+export const AddProductGrid = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+`;
 
 export const PreviewImage = styled.div`
   display: flex;
@@ -110,4 +117,10 @@ export const ButtonSend = styled.button`
   border-radius: 7px;
   font-weight: 550;
 `;
+
+export const BackLink: any = styled(Link)`
+  position: absolute;
+  left: 10px;
+  top: 2rem;
+`
 

@@ -34,14 +34,14 @@ export interface UpdateItem {
 const Quantity = ({ item, idProduct }: ItemProps) => {
   const { user } = useAuthContext();
   const [quantity, setQuantity] = useState<number>(item.quantity);
-  const {
-    isLoading,
-    mutate: mutateUpdateItem,
-  } = useMutation(api.updateItemByProduct, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["chartClient", user?.id!]);
-    },
-  });
+  const { isLoading, mutate: mutateUpdateItem } = useMutation(
+    api.updateItemByProduct,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["chartClient", user?.id!]);
+      },
+    }
+  );
 
   function formatQuantity(value: string) {
     value = value.replace(/\D/gim, "");
@@ -59,7 +59,12 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
 
   function keyPressInputQuantity(event: any) {
     if (event.key === "Enter" && item.quantity !== quantity) {
-      updateItemByProduct(user?.id!, Number(item.id), quantity, Number(idProduct));
+      updateItemByProduct(
+        user?.id!,
+        Number(item.id),
+        quantity,
+        Number(idProduct)
+      );
     }
 
     if (event.key === "ArrowDown") {

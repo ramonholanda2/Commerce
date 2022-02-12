@@ -2,9 +2,11 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { useMutation, useQuery } from "react-query";
 import { useHistory } from "react-router-dom";
 import { queryClient } from "../../index";
+import { FaPlus } from "react-icons/fa";
 import * as api from "../../commerceAPI";
 import {
   ProductsContainer,
+  AddNewProduct,
   ProductContainer,
   ProductImage,
   ProductName,
@@ -32,20 +34,15 @@ const Products = () => {
   const { data, isLoading, isError } = useQuery("allProducts", api.getProducts);
   const { push } = useHistory();
 
-  const {
-    mutate,
-  } = useMutation(
-    api.addProductForClient,
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["chartClient", user?.id!]);
-        push("/meus-produtos");
-      },
-      onError: () => {
-        push("/meus-produtos");
-      }
-    }
-  );
+  const { mutate } = useMutation(api.addProductForClient, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["chartClient", user?.id!]);
+      push("/meus-produtos");
+    },
+    onError: () => {
+      push("/meus-produtos");
+    },
+  });
 
   function addProductClient(product: Product) {
     product.idClient = user?.id!;
@@ -63,6 +60,11 @@ const Products = () => {
   ) : (
     <div style={{ marginTop: "2rem" }}>
       <ProductsContainer>
+        {user?.admin && (
+          <AddNewProduct to="/upload">
+            <FaPlus size="2rem" />
+          </AddNewProduct>
+        )}
         {data.map((product: Product, index: number) => (
           <ProductContainer index={index + 1} key={Number(product.id)}>
             <ProductName>{product.name}</ProductName>

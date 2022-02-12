@@ -12,8 +12,10 @@ import {
   InputDataProduct,
   LabelTitle,
   ButtonSend,
+  BackLink
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const NewProduct = () => {
   const { uploadProduct } = useCommerceContext();
@@ -78,6 +80,9 @@ const NewProduct = () => {
 
   return (
     <AddProductGrid>
+      <BackLink to='/'>
+       <IoMdArrowRoundBack size="2.5rem"/>
+      </BackLink>
       <PreviewImage>
         <NameProduct>
           {productName?.length! > 0 ? productName : "Nome do produto"}
