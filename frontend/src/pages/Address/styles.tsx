@@ -56,6 +56,12 @@ export const EditAddress = styled.button`
   cursor: pointer;
   border-radius: 7px;
   border: none;
+  transition: filter .3s ease-in-out;
+  
+  :hover {
+    filter: brightness(80%) 
+  }
+
 `;
 
 export const AdressesContainer = styled.div`

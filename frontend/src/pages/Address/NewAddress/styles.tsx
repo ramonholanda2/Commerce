@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { AnimateBtnsAddress, AnimateInputAddress } from "./animations";
 
 export const NewAddressContainer = styled.div`
   display: flex;
@@ -34,7 +35,11 @@ export const InputFieldAddress = styled.input`
   font-size: 1.1rem;
 
   :focus {
-    background-color: #fffc;
+    background-color: #6a4b791d;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${AnimateInputAddress} none 1s linear;
   }
 
   @media screen and (max-width: 850px) {
@@ -46,14 +51,16 @@ export const InputFieldAddress = styled.input`
   @media screen and (max-width: 400px) {
     max-width: 16rem;
   }
-
-  
 `;
 
 export const LabelTitle = styled.label`
   font-family: "Poppins", sans-serif;
   font-size: 1.3rem;
   font-weight: 500;
+
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${AnimateInputAddress} none 1s linear;
+  }
 
   @media screen and (max-width: 400px) {
     font-size: large;
@@ -114,6 +121,10 @@ export const ButtonBack: any = styled(Link)`
     max-width: 16rem;
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${AnimateBtnsAddress} none 1s linear;
+  }
+
 `;
 export const ButtonSave = styled.button`
   padding: 0.5rem 0rem;
@@ -144,4 +155,7 @@ export const ButtonSave = styled.button`
     max-width: 16rem;
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    animation: ${AnimateBtnsAddress} none 1s linear;
+  }
 `;
