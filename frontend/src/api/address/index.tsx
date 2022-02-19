@@ -1,4 +1,4 @@
-import { Address } from "../../pages/Address/NewAddress/NewAddress";
+import { Address } from "../../types";
 import { api } from "../commerceAPI";
 
 export const addAddress = (address: Address) =>

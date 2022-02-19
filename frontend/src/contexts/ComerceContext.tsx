@@ -1,19 +1,11 @@
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {
-  createContext,
-  useContext,
-  ReactNode,
-  useState,
-  SetStateAction,
-} from "react";
+import { createContext, useContext, ReactNode, useState } from "react";
+import { Product } from "../components/Products/Products";
 
 interface CommerceContextType {
-
   setProductForPurchase: (idClient: string, purchase: Product) => Promise<void>;
   buyProduct: Product | undefined;
-
-  uploadProduct: (productData: SendProduct) => Promise<void>;
 
   purchaseProduct: (
     qrCode: string,
@@ -21,27 +13,6 @@ interface CommerceContextType {
     idClient: string,
     idAddress: number
   ) => Promise<void>;
-
-}
-
-interface SendProduct {
-  name: SetStateAction<string | undefined>;
-  price: SetStateAction<string | undefined>;
-  urlImage: any;
-}
-
-interface Product {
-  id: Long;
-  name: string;
-  price: Number;
-  urlImage: string;
-  item: Item;
-}
-
-interface Item {
-  id: Long;
-  quantity: number;
-  subtotal: number;
 }
 
 interface CommerceContextProviderProps {
@@ -56,44 +27,6 @@ export function CommerceContextProvider({
   const [buyProduct, setBuyProduct] = useState<Product>();
 
   const { push } = useHistory();
-
-  async function addProductForClient(
-    idClient: string | undefined,
-    product: Product
-  ) {
-    if (idClient !== undefined && product.id != null) {
-      await axios
-        .post(
-          "https://milk-holanda.herokuapp.com/client-product/add-product-by-client",
-          {
-            idClient,
-            idProduct: product.id,
-          }
-        )
-        .then((resp) => {
-          push("/meus-produtos");
-        })
-        .catch((error) => {
-          push("/meus-produtos");
-          console.log(JSON.stringify(error));
-        });
-    }
-  }
-
-  async function uploadProduct(productData: SendProduct) {
-    await axios
-      .post("https://milk-holanda.herokuapp.com/products", {
-        name: productData.name,
-        price: productData.price,
-        urlImage: productData.urlImage,
-      })
-      .then((resp) => {
-        document.location.reload();
-      })
-      .catch((error) => {
-        alert("Produto não cadastrado!");
-      });
-  }
 
   async function purchaseProduct(
     qrCodeUrl: string,
@@ -115,16 +48,14 @@ export function CommerceContextProvider({
   }
 
   async function setProductForPurchase(idClient: string, product: Product) {
-    await addProductForClient(idClient, product);
+    product.idClient = idClient;
     setBuyProduct(product);
   }
 
-
   return (
-    <CommerceContext.Provider
+    <CommerceContext.Provider 
       value={{
         buyProduct,
-        uploadProduct,
         setProductForPurchase,
         purchaseProduct,
       }}

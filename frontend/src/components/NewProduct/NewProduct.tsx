@@ -1,5 +1,11 @@
 import { SetStateAction, useEffect, useState } from "react";
+import { queryClient } from "../../index";
 import firebase from "firebase";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import { useAuthContext } from "../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+import { useMutation } from "react-query";
+import { uploadProduct } from "../../api/product";
 import {
   SelectFile,
   LabelFile,
@@ -14,15 +20,10 @@ import {
   ButtonSend,
   BackLink,
 } from "./styles";
-import { useCommerceContext } from "../../contexts/ComerceContext";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { useAuthContext } from "../../contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 
 const NewProduct = () => {
   const { user } = useAuthContext();
   const { push } = useHistory();
-  const { uploadProduct } = useCommerceContext();
   const [imagePreview, setImagePreview] = useState<
     string | undefined | ArrayBuffer | null
   >();
@@ -33,6 +34,19 @@ const NewProduct = () => {
     useState<SetStateAction<string | undefined>>();
   const [productPrice, setProductPrice] =
     useState<SetStateAction<string | undefined>>();
+
+  const {
+    mutate: mutateUploadProduct,
+  } = useMutation(uploadProduct, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("allProducts");
+      alert(`${productName} cadastrado com sucesso!`);
+      document.location.reload();
+    },
+    onError: () => {
+      alert(`${productName} não cadastrado!`)
+    },
+  });
 
   async function uploadProductImage(e: any) {
     e.preventDefault();
@@ -62,7 +76,7 @@ const NewProduct = () => {
             price: productPrice,
             urlImage: url,
           };
-          uploadProduct(data);
+          mutateUploadProduct(data);
         });
       }
     );

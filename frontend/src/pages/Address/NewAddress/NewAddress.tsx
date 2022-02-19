@@ -6,7 +6,7 @@ import { useMutation } from "react-query";
 import { queryClient } from "../../../index";
 import {
   ButtonBack,
-  ButtonSave,
+  ButtonSave, 
   Div,
   DivAux,
   InputFieldAddress,
@@ -14,21 +14,13 @@ import {
   NewAddressContainer,
 } from "./styles";
 import { useHistory } from "react-router-dom";
+import { Address } from "../../../types";
 
 interface NewAddressProps {
   toggleNewAddress: () => void;
 }
 
-export interface Address {
-  clientId: string;
-  id: number;
-  cep: string;
-  street: string;
-  city: string;
-  district: string;
-  number: number;
-  complement: string;
-}
+
 interface AddressAPI {
   cep: string;
   logradouro: string;
@@ -54,7 +46,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       queryClient.invalidateQueries(["addressesByClient", user?.id]);
       push("/enderecos");
     },
-  });
+  }); 
 
   const {
     isLoading: isLoadingUpdateAddress,
@@ -78,7 +70,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       .get(`https://viacep.com.br/ws/${cep}/json`)
       .then((response) => {
         const data: AddressAPI = response.data;
-        setCep(data.cep);
+        setCep(response.data.cep);
         setBairro(data.bairro);
         setLogradouro(data.logradouro);
         setLocalidade(data.localidade);
@@ -93,7 +85,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   }
 
   async function sendAddress() {
-    const address = {
+    const address: Address = {
       clientId: user?.id!,
       id: enderecoId!,
       cep: cep!,
@@ -102,7 +94,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
       district: bairro!,
       number: Number(numero)!,
       complement: complemento!,
-    };
+    }; 
 
     if (enderecoId === undefined) {
       mutateAddAddress(address);

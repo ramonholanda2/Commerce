@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import Quantity from "./Quantity/Quantity";
@@ -6,7 +7,6 @@ import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 import { queryClient } from "../../index";
 import spinningLoading from "../../assets/spinning-loading.gif";
-import { useState } from "react";
 import { getProductsByClient, removeProductForClient } from "../../api/productByClient";
 import { getAddresses } from "../../api/address";
 
@@ -73,6 +73,7 @@ const Chart = () => {
   }
 
   async function buy(product: Product) {
+    alert(JSON.stringify(product));
     if(addresses.length === 0) {
       alert("adicione um endereço");
       return push("/enderecos")

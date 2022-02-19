@@ -70,13 +70,12 @@ export const InputDataProduct = styled.input`
   }
 
   @media screen and (max-width: 500px) {
-    max-width: 20rem;
     width: 100%;
     font-size: medium;
   }
 
   @media screen and (max-width: 400px) {
-    max-width: 16rem;
+    width: 100%
   }
 `;
 
@@ -112,7 +111,7 @@ export const ButtonSend = styled.button`
   padding: 6px; 
   width: 100%;
   cursor: pointer;
-  background-color: #80008013;
+  background-color: #1f1f1f13;
   border: 3px solid purple;
   border-radius: 7px;
   font-weight: 550;
