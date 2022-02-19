@@ -12,7 +12,7 @@ import {
   InputDataProduct,
   LabelTitle,
   ButtonSend,
-  BackLink
+  BackLink,
 } from "./styles";
 import { useCommerceContext } from "../../contexts/ComerceContext";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -21,9 +21,8 @@ import { useHistory } from "react-router-dom";
 
 const NewProduct = () => {
   const { user } = useAuthContext();
-  const { push } = useHistory()
+  const { push } = useHistory();
   const { uploadProduct } = useCommerceContext();
-  /*   const { user } = useAuthContext(); */
   const [imagePreview, setImagePreview] = useState<
     string | undefined | ArrayBuffer | null
   >();
@@ -82,19 +81,17 @@ const NewProduct = () => {
     reader.readAsDataURL(e.target!.files[0]!);
   }
   useEffect(() => {
-
-    if(user?.id) {
-      if(!user.admin) {
-        push("/")
+    if (user?.id) {
+      if (!user.admin) {
+        push("/");
       }
     }
-
-  }, [push, user?.admin, user?.id])
+  }, [push, user?.admin, user?.id]);
 
   return (
     <AddProductGrid>
-      <BackLink to='/'>
-       <IoMdArrowRoundBack size="2.5rem"/>
+      <BackLink to="/">
+        <IoMdArrowRoundBack size="2.5rem" />
       </BackLink>
       <PreviewImage>
         <NameProduct>
@@ -109,7 +106,14 @@ const NewProduct = () => {
         />
         <ImageProduct src={imagePreview as string | undefined} alt="" />
         <PriceProduct>
-          Preço - {productPrice?.length! > 0 ? productPrice : ""} $
+          Preço -{" "}
+          {productPrice?.length! > 0
+            ? Number(productPrice).toLocaleString("pt-br", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })
+            : ""}{" "}
+          $
         </PriceProduct>
       </PreviewImage>
       <div
@@ -131,7 +135,14 @@ const NewProduct = () => {
           <div>
             <LabelTitle>Preço</LabelTitle>
             <InputDataProduct
-              onChange={(e) => setProductPrice(e.target.value)}
+              onChange={(e) =>
+                setProductPrice(
+                  String(
+                    e.target.value.length <= 11 ? e.target.value : productPrice
+                  )
+                )
+              }
+              value={String(productPrice)}
               required
               type={"number"}
               step="0.01"

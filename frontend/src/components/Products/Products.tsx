@@ -5,7 +5,9 @@ import { queryClient } from "../../index";
 import { FaPlus } from "react-icons/fa";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { MdAutoDelete, MdDelete, MdEditOff } from "react-icons/md";
-import * as api from "../../commerceAPI";
+import { getProducts, deleteProduct as deleteProductById } from "../../api/product";
+import { addProductForClient } from "../../api/productByClient";
+
 import {
   ProductsContainer,
   AddNewProduct,
@@ -37,10 +39,10 @@ const Products = () => {
   const { user } = useAuthContext();
   const [editProducts, setEditProducts] = useState<boolean>(false);
   const [indexProduct, setIndexProduct] = useState<number>();
-  const { data, isLoading, isError } = useQuery("allProducts", api.getProducts);
+  const { data, isLoading, isError } = useQuery("allProducts", getProducts);
   const { push } = useHistory();
 
-  const { mutate } = useMutation(api.addProductForClient, {
+  const { mutate } = useMutation(addProductForClient, {
     onSuccess: () => {
       queryClient.invalidateQueries(["chartClient", user?.id!]);
       push("/meus-produtos");
@@ -51,7 +53,7 @@ const Products = () => {
   });
 
   const { mutate: deleteProduct, isLoading: isDeletingProduct } = useMutation(
-    api.deleteProduct,
+    deleteProductById,
     {
       onSuccess: () => {
         queryClient.invalidateQueries("allProducts");

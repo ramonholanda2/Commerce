@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useAuthContext } from "../../../contexts/AuthContext";
-import * as api from "../../../commerceAPI";
+import { getAddresses } from "../../../api/address";
+
 import {
   DeliveryAddressContainer,
   DeliveryAddressTitle,
@@ -21,10 +22,7 @@ interface Address {
 }
 
 interface DeliveryAddressProps {
-  selectDeliveryAddress: (
-    addressOption: string,
-    address: Address
-  ) => void;
+  selectDeliveryAddress: (addressOption: string, address: Address) => void;
   deliveryAddressOption: string;
   deliveryAddress: Address | undefined;
 }
@@ -34,32 +32,34 @@ const DeliveryAddress = ({
   deliveryAddressOption,
 }: DeliveryAddressProps) => {
   const { user } = useAuthContext();
-  const { data: addresses } = useQuery(
-    ["addressesByClient", user?.id],
-    () => api.getAddresses(user?.id!)
+  const { data: addresses } = useQuery(["addressesByClient", user?.id], () =>
+    getAddresses(user?.id!)
   );
-  
+
   return (
     <DeliveryAddressContainer>
       <DeliveryAddressTitle>Escolha o endereço</DeliveryAddressTitle>
-      {addresses?.map((deliveryAddress: Address, index: number) =>  (
+      {addresses?.map((deliveryAddress: Address, index: number) => (
         <AddressContainer
           key={Number(deliveryAddress.id)}
-          onClick={() => selectDeliveryAddress(`address ${index}`, deliveryAddress)}
+          onClick={() =>
+            selectDeliveryAddress(`address ${index}`, deliveryAddress)
+          }
         >
           <OptionAddress
             type={"radio"}
             checked={deliveryAddressOption === `address ${index}`}
-            onChange={()=>{}}
+            onChange={() => {}}
             value={`address ${index}`}
             name="address"
           />
           <InfoAddressContainer>
             <OptionAddressLabel>
-              {deliveryAddress.street}, {deliveryAddress.number} 
+              {deliveryAddress.street}, {deliveryAddress.number}
             </OptionAddressLabel>
             <OptionAddressLabel>
-              {deliveryAddress.district} - {deliveryAddress.city} - {deliveryAddress.cep}
+              {deliveryAddress.district} - {deliveryAddress.city} -{" "}
+              {deliveryAddress.cep}
             </OptionAddressLabel>
           </InfoAddressContainer>
         </AddressContainer>

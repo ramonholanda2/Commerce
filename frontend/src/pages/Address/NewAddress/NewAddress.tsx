@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../contexts/AuthContext";
-import * as api from "../../../commerceAPI";
+import { addAddress, updateAddress } from "../../../api/address";
 import { useMutation } from "react-query";
 import { queryClient } from "../../../index";
 import {
@@ -49,7 +49,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
 
   const {
     mutate: mutateAddAddress,
-  } = useMutation(api.addAddress, {
+  } = useMutation(addAddress, {
     onSuccess: () => {
       queryClient.invalidateQueries(["addressesByClient", user?.id]);
       push("/enderecos");
@@ -59,7 +59,7 @@ const NewAddress = ({ toggleNewAddress }: NewAddressProps) => {
   const {
     isLoading: isLoadingUpdateAddress,
     mutate: mutateUpdateAddress,
-  } = useMutation(api.updateAddress, {
+  } = useMutation(updateAddress, {
     onSuccess: () => {
       queryClient.invalidateQueries(["addressesByClient", user?.id]);
       push("/enderecos");

@@ -97,11 +97,17 @@ const Purchase = ({ purchase, index  }: PurchaseProps) => {
         />
         <PriceContainer>
           <ProductQuantity>
-            {purchase.product.price}$ com {purchase.product.item.quantity}{" "}
+            {purchase.product.price.toLocaleString("pt-br", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })} $ com {purchase.product.item.quantity}{" "}
             Unidades
           </ProductQuantity>
           <ProductSubtotal>
-            Total: {purchase.product.item.subtotal}
+            Total: {purchase.product.item.subtotal.toLocaleString("pt-br", {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2,
+              })}
           </ProductSubtotal>
         </PriceContainer>
       </ProductContainer>

@@ -1,6 +1,6 @@
 import { useAuthContext } from "../../contexts/AuthContext";
 import Purchase from "./Purchase/Purchase";
-import * as api from "../../commerceAPI"; 
+import { getPurchases } from "../../api/purchases"; 
 import { PurchaseContainer, PurchasesTitle, PurchasesDiv } from "./styles";
 import { useQuery } from "react-query";
 
@@ -47,7 +47,7 @@ const Purchases = () => {
   const { user } = useAuthContext();
   const { data: purchases, isLoading } = useQuery(
     ["purchases", user?.id], 
-    () => api.getPurchases(user?.id!)
+    () => getPurchases(user?.id!)
   );
 
   return (

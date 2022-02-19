@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { queryClient } from "../../../index";
 import loading from "../../../assets/spinning-loading.gif";
-import * as api from "../../../commerceAPI";
+import { updateItemByProduct as updateItem } from "../../../api/item";
 import {
   ItemContainer,
   PlusAndMinus,
@@ -35,7 +35,7 @@ const Quantity = ({ item, idProduct }: ItemProps) => {
   const { user } = useAuthContext();
   const [quantity, setQuantity] = useState<number>(item.quantity);
   const { isLoading, mutate: mutateUpdateItem } = useMutation(
-    api.updateItemByProduct,
+    updateItem,
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["chartClient", user?.id!]);

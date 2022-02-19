@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { queryClient } from "../../index";
 import NewAddress from "./NewAddress/NewAddress";
-import * as api from "../../commerceAPI";
+import { deleteAddressById, getAddresses } from "../../api/address";
 
 import {
   AddressContainer,
@@ -40,9 +40,9 @@ const Address = () => {
 
   const { isLoading, isError, data } = useQuery(
     ["addressesByClient", user?.id],
-    () => api.getAddresses(user?.id!)
+    () => getAddresses(user?.id!)
   );
-  const { isLoading: loading, mutate } = useMutation(api.deleteAddressById, {
+  const { isLoading: loading, mutate } = useMutation(deleteAddressById, {
     onSuccess: () => {
       queryClient.invalidateQueries(["addressesByClient", user?.id!]);
     },

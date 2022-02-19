@@ -7,7 +7,8 @@ import { useMutation, useQuery } from "react-query";
 import { queryClient } from "../../index";
 import spinningLoading from "../../assets/spinning-loading.gif";
 import { useState } from "react";
-import * as api from "../../commerceAPI";
+import { getProductsByClient, removeProductForClient } from "../../api/productByClient";
+import { getAddresses } from "../../api/address";
 
 import {
   ChartContainer,
@@ -45,13 +46,13 @@ const Chart = () => {
 
   const { data: addresses } = useQuery(
     ["addressesByClient", user?.id],
-    () => api.getAddresses(user?.id!)
+    () => getAddresses(user?.id!)
   );
 
   const {
     isLoading: isLoadingRemoveProductForClient,
     mutate: mutateRemoveProductForClient,
-  } = useMutation(api.removeProductForClient, {
+  } = useMutation(removeProductForClient, {
     onSuccess: () => {
       queryClient.invalidateQueries(["chartClient", user?.id!]);
     },
@@ -59,7 +60,7 @@ const Chart = () => {
 
   const { data: productsByClient, isLoading } = useQuery(
     ["chartClient", user?.id!],
-    () => api.getProductsByClient(user?.id!),
+    () => getProductsByClient(user?.id!),
     {
       staleTime: 60 * 60 * 1000,
     }
