@@ -73,7 +73,6 @@ const Chart = () => {
   }
 
   async function buy(product: Product) {
-    alert(JSON.stringify(product));
     if(addresses.length === 0) {
       alert("adicione um endereço");
       return push("/enderecos")

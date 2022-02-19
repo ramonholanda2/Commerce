@@ -36,7 +36,6 @@ const Payment = () => {
   const { user } = useAuthContext();
   const { push } = useHistory();
 
-
   function selectMethodPayment(method: "pix" | "boleto" | "cartao" | "") {
     setMethodPaymentSelected(method);
   }
@@ -54,9 +53,17 @@ const Payment = () => {
       return alert("Selecione um endereço!");
 
     if (stepByStepPayment === 3) {
-      var qrCode = await generateQrCode(`${buyProduct?.item.quantity || 1} ${buyProduct?.name} para ${user?.name} na ${deliveryAddress?.street}`);
-      alert(qrCode)
-      await purchaseProduct(qrCode, Number(buyProduct?.id), user?.id!, Number(deliveryAddress?.id));
+      var qrCode = await generateQrCode(
+        `${buyProduct?.item.quantity || 1} ${buyProduct?.name} para ${
+          user?.name
+        } na ${deliveryAddress?.street}`, buyProduct?.item.subtotal!
+      );
+      await purchaseProduct(
+        qrCode,
+        Number(buyProduct?.id),
+        user?.id!,
+        Number(deliveryAddress?.id)
+      );
     }
 
     if (stepByStepPayment <= 2) setStepByStepPayment(stepByStepPayment + 1);
@@ -69,15 +76,13 @@ const Payment = () => {
   }
 
   useEffect(() => {
-    if(!buyProduct) 
-        push("/");
-
+    if (!buyProduct) push("/");
   }, [buyProduct, push]);
 
   return (
     <PaymentContainer>
       {stepByStepPayment === 1 && <Review />}
-      {stepByStepPayment === 2 && ( 
+      {stepByStepPayment === 2 && (
         <MethodPayment
           selectMethodPayment={selectMethodPayment}
           methodPaymentSelected={methodPaymentSelected}

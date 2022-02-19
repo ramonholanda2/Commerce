@@ -1,6 +1,6 @@
 const { PIX } = require("gpix/dist");
 
-async function generateQrCode(description: string) {
+async function generateQrCode(description: string, subtotal: number) {
   let pix = await PIX.static()
     .setReceiverName("Ramon Holanda")
     .setReceiverCity("Picos - PI")
@@ -9,7 +9,7 @@ async function generateQrCode(description: string) {
     .setIdentificator("123") // optional
     .setDescription(description) // optional
     .isUniqueTransaction(true) // optional
-    .setAmount(0.01); // optional
+    .setAmount(subtotal); // optional
   return await pix.getBRCode();
 }
 
