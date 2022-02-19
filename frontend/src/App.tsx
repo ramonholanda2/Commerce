@@ -10,11 +10,10 @@ import NewProduct from "./components/NewProduct/NewProduct";
 import Payment from "./pages/Payment/Payment";
 import Purchases from "./pages/Purchases/Purchases";
 import Footer from "./components/Footer/Footer";
-import "./global-styles.css";
 import Address from "./pages/Address/Address";
+import "./global-styles.css";
 
 function App() {
-
   return (
     <Router>
       <AuthContextProvider>
@@ -22,9 +21,9 @@ function App() {
           <Switch>
             <Route path="/login" exact component={Login} />
             <Route path="/criar-conta" component={CreateAccount} />
-          </Switch> 
+          </Switch>
           <Switch>
-            <Route path="/" exact> 
+            <Route path="/" exact>
               <Header />
               <Products />
               <Footer />
@@ -38,27 +37,27 @@ function App() {
           <Switch>
             <Route path={"/upload"} exact>
               <Header />
-              <NewProduct /> 
+              <NewProduct />
               <Footer />
             </Route>
           </Switch>
           <Switch>
-            <Route path={"/pagamento"} >
-              <Header/>
-              <Payment/>
+            <Route path={"/pagamento"}>
+              <Header />
+              <Payment />
             </Route>
             <Route path={"/compras"}>
-              <Header/>
+              <Header />
               <Purchases />
               <Footer />
             </Route>
             <Route path={"/enderecos"}>
-              <Header/>
+              <Header />
               <Address />
               <Footer />
             </Route>
           </Switch>
-        </CommerceContextProvider> 
+        </CommerceContextProvider>
       </AuthContextProvider>
     </Router>
   );

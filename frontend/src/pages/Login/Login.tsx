@@ -3,6 +3,7 @@ import { BsFacebook } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext"
+import { useEffect } from "react";
 import { 
   LoginContainer,
   LoginBox,
@@ -16,7 +17,6 @@ import {
   OtherLogin,
   LinkNewAccount
 } from "./styles";
-import { useEffect } from "react";
 
 type FormValues = {
   email: string;

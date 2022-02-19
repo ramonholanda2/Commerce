@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const FooterContainer = styled.footer `
     display: flex;
     align-items: center; 
@@ -9,7 +8,7 @@ export const FooterContainer = styled.footer `
     position: absolute;
     bottom: 0;
     width:100%;
-    height: 3rem;
+    height: 3rem; 
 `;
 
 export const CreatedBy = styled.h5 `
@@ -18,7 +17,8 @@ export const CreatedBy = styled.h5 `
     padding: 10px 0rem;
 `;
 
-export const TextSublined = styled.span `
+export const TextSublined = styled.a `
     text-decoration: underline;
     cursor: pointer;
+    color: #fff;
 `;

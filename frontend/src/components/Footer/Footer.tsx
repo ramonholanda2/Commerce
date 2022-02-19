@@ -38,7 +38,7 @@ const Footer = () => {
   return viewFooter ? (
     <FooterContainer>
       <CreatedBy>
-        Criado por <TextSublined>Github</TextSublined>
+        Criado por <TextSublined href="https://github.com/ramonsilva2">Ramon Holanda</TextSublined>
       </CreatedBy>
     </FooterContainer>
   ) : (
