@@ -3,12 +3,12 @@ import 'firebase/app'
 import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCxteFlmQIwIVsqcJJ8fyg3PyFiAwQyoJM",
-  authDomain: "milk-holanda.firebaseapp.com",
-  projectId: "milk-holanda",
-  storageBucket: "milk-holanda.appspot.com",
-  messagingSenderId: "445296562241",
-  appId: "1:445296562241:web:0786eab472057e26ec36c0"
+  apiKey: process.env.API_KEY_FIREBASE,
+  authDomain: process.env.AUTH_DOMAIN,
+  projectId: process.env.PROJECT_ID,
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  appId: process.env.APP_ID,
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);

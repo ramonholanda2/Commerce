@@ -80,7 +80,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           nameAndSurname.length > 1 ? nameAndSurname[1] : "";
 
         setUser({ id: uid, name: nameClient, surname: surnameClient });
-        await axios.post("https://milk-holanda.herokuapp.com/clients", {
+        await axios.post(`${process.env.API_URL}/clients`, {
           id: uid,
           name: nameClient,
           surname: surnameClient,
@@ -99,7 +99,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         .createUserWithEmailAndPassword(email, password)
         .then((response) => {
           axios
-            .post(`https://milk-holanda.herokuapp.com/clients`, {
+            .post(`${process.env.API_URL}/clients`, {
               id: response.user?.uid,
               name,
               surname,
@@ -123,7 +123,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       .then((response) => {
         axios
           .get(
-            `https://milk-holanda.herokuapp.com/clients/${response.user?.uid}`
+            `${process.env.API_URL}/clients/${response.user?.uid}`
           )
           .then((result) => {
             setUser(result.data);
@@ -157,7 +157,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           }
           
           axios
-          .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
+          .get(`${process.env.API_URL}/clients/${uid}`)
             .then((result) => {
               setUser(result.data);
               if (!localStorage.getItem("token")) {
