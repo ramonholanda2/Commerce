@@ -5,8 +5,12 @@ import { queryClient } from "../../index";
 import { FaPlus } from "react-icons/fa";
 import { AiTwotoneEdit } from "react-icons/ai";
 import { MdAutoDelete, MdDelete, MdEditOff } from "react-icons/md";
-import { getProducts, deleteProduct as deleteProductById } from "../../api/product";
+import {
+  getProducts,
+  deleteProduct as deleteProductById,
+} from "../../api/product";
 import { addProductForClient } from "../../api/productByClient";
+import { useState } from "react";
 
 import {
   ProductsContainer,
@@ -18,7 +22,6 @@ import {
   AddButton,
   EditProducts,
 } from "./styles";
-import { useState } from "react";
 
 export interface Product {
   idClient: string;
@@ -71,6 +74,7 @@ const Products = () => {
     deleteProduct(Number(idProduct));
   }
 
+
   if (isError) {
     throw new Error("erro ao carregar produtos");
   }
@@ -85,7 +89,7 @@ const Products = () => {
           <AddNewProduct to="/upload">
             <FaPlus style={{ cursor: "pointer" }} size="2rem" />
           </AddNewProduct>
-          <EditProducts onClick={() => setEditProducts(!editProducts)}> 
+          <EditProducts onClick={() => setEditProducts(!editProducts)}>
             {editProducts ? (
               <MdEditOff style={{ cursor: "pointer" }} size="2rem" />
             ) : (

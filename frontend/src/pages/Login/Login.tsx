@@ -2,9 +2,9 @@ import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { useAuthContext } from "../../contexts/AuthContext"
+import { useAuthContext } from "../../contexts/AuthContext";
 import { useEffect } from "react";
-import { 
+import {
   LoginContainer,
   LoginBox,
   Title,
@@ -15,7 +15,7 @@ import {
   FormLogin,
   ErrorMessage,
   OtherLogin,
-  LinkNewAccount
+  LinkNewAccount,
 } from "./styles";
 
 type FormValues = {
@@ -34,18 +34,24 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const {user, error, signInWithGoogle, loginWithEmailAndPassword } = useAuthContext();
+  const {
+    user,
+    error,
+    signInWithGoogle,
+    signInWithFacebook,
+    loginWithEmailAndPassword,
+  } = useAuthContext();
   const history = useHistory();
-
-  useEffect(() => {
-    if(localStorage.getItem("token")) {
-      history.push("/")
-    }
-  }, [history, user])
 
   async function onSubmit(loginData: LoginData) {
     await loginWithEmailAndPassword(loginData.email, loginData.password);
   }
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      history.push("/");
+    }
+  }, [history, user]);
 
   return (
     <LoginContainer>
@@ -76,15 +82,19 @@ const Login = () => {
               {...register("password", { required: true, minLength: 8 })}
             />
 
-              <LinkNewAccount to="/criar-conta">Criar uma conta</LinkNewAccount>
+            <LinkNewAccount to="/criar-conta">Criar uma conta</LinkNewAccount>
 
             <LoginButton type="submit">Entrar</LoginButton>
-            <div style={{display: "flex", marginTop: "1.5rem"}}>
+            <div style={{ display: "flex", marginTop: "1.5rem" }}>
               <OtherLogin>
-                  <BsFacebook size="1.8rem" color="blue" />
+                <BsFacebook
+                  onClick={signInWithFacebook}
+                  size="1.8rem"
+                  color="blue"
+                />
               </OtherLogin>
               <OtherLogin>
-                  <FcGoogle onClick={signInWithGoogle} size="1.8rem" />
+                <FcGoogle onClick={signInWithGoogle} size="1.8rem" />
               </OtherLogin>
             </div>
           </LoginFieldsContainer>

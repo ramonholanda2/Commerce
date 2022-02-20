@@ -35,7 +35,7 @@ export function CommerceContextProvider({
     idAddress: number
   ) {
     axios
-      .post(`${process.env.API_URL}/purchases`, {
+      .post("https://milk-holanda.herokuapp.com/purchases", {
         qrCodeUrl,
         idProduct,
         idClient,

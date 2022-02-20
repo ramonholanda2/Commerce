@@ -46,6 +46,7 @@ interface AuthContextType {
   user: User | undefined;
   error: string | undefined;
   signInWithGoogle: () => Promise<void>;
+  signInWithFacebook: () => Promise<void>;
   createAccountWithEmailAndPassword: (
     email: string,
     password: string,
@@ -80,7 +81,28 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           nameAndSurname.length > 1 ? nameAndSurname[1] : "";
 
         setUser({ id: uid, name: nameClient, surname: surnameClient });
-        await axios.post(`${process.env.API_URL}/clients`, {
+        await axios.post("https://milk-holanda.herokuapp.com/clients", {
+          id: uid,
+          name: nameClient,
+          surname: surnameClient,
+        });
+      }
+    }
+  }
+
+  async function signInWithFacebook(): Promise<void> {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    const result = await auth.signInWithPopup(provider);
+    if (result.user) {
+      const { uid, displayName } = result.user;
+      if (uid && displayName) {
+        var nameAndSurname = displayName.split(" ");
+        const nameClient = nameAndSurname[0];
+        const surnameClient =
+          nameAndSurname.length > 1 ? nameAndSurname[1] : "";
+
+        setUser({ id: uid, name: nameClient, surname: surnameClient });
+        await axios.post("https://milk-holanda.herokuapp.com/clients", {
           id: uid,
           name: nameClient,
           surname: surnameClient,
@@ -99,7 +121,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         .createUserWithEmailAndPassword(email, password)
         .then((response) => {
           axios
-            .post(`${process.env.API_URL}/clients`, {
+            .post(`https://milk-holanda.herokuapp.com/clients`, {
               id: response.user?.uid,
               name,
               surname,
@@ -123,7 +145,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       .then((response) => {
         axios
           .get(
-            `${process.env.API_URL}/clients/${response.user?.uid}`
+            `https://milk-holanda.herokuapp.com/clients/${response.user?.uid}`
           )
           .then((result) => {
             setUser(result.data);
@@ -157,7 +179,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           }
           
           axios
-          .get(`${process.env.API_URL}/clients/${uid}`)
+          .get(`https://milk-holanda.herokuapp.com/clients/${uid}`)
             .then((result) => {
               setUser(result.data);
               if (!localStorage.getItem("token")) {
@@ -191,6 +213,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         error,
         logout,
         signInWithGoogle,
+        signInWithFacebook,
         createAccountWithEmailAndPassword,
         loginWithEmailAndPassword,
       }}
