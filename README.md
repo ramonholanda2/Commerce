@@ -33,7 +33,7 @@ Resumo de tecnologias utilizadas
 
 Você pode acessar a aplicação do [Commerce](https://commerce-ramon-holanda.vercel.app/) por meio deste [LINK](https://commerce-ramon-holanda.vercel.app/).
 
-Para mais detalhes técnicos clique no link do [Frontend](https://github.com/ramonholanda2/Commerce/tree/main/frontend) ou [backend](https://github.com/ramonholanda2/Commerce/tree/main/backend).
+Para mais detalhes técnicos clique no link do [Frontend](https://github.com/ramonholanda2/Commerce/tree/main/frontend) ou [Backend](https://github.com/ramonholanda2/Commerce/tree/main/backend).
 
 
 ### Contato
