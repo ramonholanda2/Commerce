@@ -5,6 +5,7 @@
 ### Principais funcionalidades
 
 - Realizar autenticação.
+- Upload de imagens.
 - Visualizar produtos cadastrados.
 - usuários admin podem cadastrar ou remover produtos. 
 - Usuários podem adicionar um produto ao carrinho.
